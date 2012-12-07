@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+  // 1. 
+
+  -->
+  <mapper namespace="MainClientList">
+ 	<select id="MainClientList.getMainClientList" resultType="mainClientList">
+ 		select t1.client_idx 
+		,      t2.client_name
+		,      t1.send_term
+		,      t1.used_cpu
+		,      t1.used_memory
+		  from MAINCLIENT_LIST t1
+		,      CLIENT_MAST t2
+		 where t1.client_idx = t2.client_idx 
+ 	</select>
+ 	<update id="MainClientList.deleteMainClientList" parameterType="mainClientList">
+ 		delete from MAINCLIENT_LIST
+ 		where client_idx = #{client_idx}
+ 	</update>
+ 	<insert id="MainClientList.insertMainClientList" parameterType="mainClientList">
+ 			insert into MAINCLINET_LIST (client_idx, send_term)
+ 			values (#{client_idx} , #{send_term})
+ 	</insert> 
+  </mapper>

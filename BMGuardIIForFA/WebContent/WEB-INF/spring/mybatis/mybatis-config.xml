@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--======= Difinition of myBatis Configuration =======-->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+
+	<!--======= Difinition of MAPPER alias =======-->
+	<typeAliases>
+		<!-- <typeAlias type="com.isnetis.domain.TblUser" alias="tblUser" />
+		<typeAlias type="com.isnetis.domain.TestUser" alias="testUser" /> -->
+		<typeAlias type="com.isnetis.device.domain.ClientGroupVO" alias="ClientGroup"/>
+		<typeAlias type="com.isnetis.device.domain.ClientMastVO" alias="ClientMast"/>
+		<typeAlias type="com.isnetis.device.domain.ManagementGroupVO" alias="ManagementGroup"/>
+		<typeAlias type="com.isnetis.device.domain.ManagementUserVO" alias="ManagementUser"/>
+		<typeAlias type="com.isnetis.user.domain.UserMastVO" alias="userMast"/>
+		<typeAlias type="com.isnetis.user.domain.UserMastBean" alias="userMastBean"/>
+		<typeAlias type="com.isnetis.user.domain.SessionUserVO" alias="sessionUser"/>
+		<typeAlias type="com.isnetis.user.domain.UserGrpListVO" alias="userGrpList"/>
+		<typeAlias type="com.isnetis.user.domain.UserAttrMastVO" alias="userAttrMast"/>		
+		<typeAlias type="com.isnetis.policy.domain.FolderPolicyVO" alias="FolderPolicy"/>
+		<typeAlias type="com.isnetis.policy.domain.MediaPolicyVO" alias="MediaPolicy"/>
+		<typeAlias type="com.isnetis.policy.domain.PassPolicyVO" alias="PassPolicy"/>
+		<typeAlias type="com.isnetis.policy.domain.SystemPolicyVO" alias="SystemPolicy"/>
+		<typeAlias type="com.isnetis.policy.domain.PolicyMastVO" alias="PolicyMast"/>
+		<typeAlias type="com.isnetis.monitor.domain.ClientLimitMastVO" alias="clientLimit"/>
+		<typeAlias type="com.isnetis.monitor.domain.CpuLimitListVO" alias="cpuLimit"/>
+		<typeAlias type="com.isnetis.monitor.domain.DiskLimitListVO" alias="diskLimit"/>
+		<typeAlias type="com.isnetis.monitor.domain.MemoryLimitListVO" alias="memoryLimit"/>
+		<typeAlias type="com.isnetis.monitor.domain.MainClientListVO" alias="mainClientList"/>
+		<typeAlias type="com.isnetis.monitor.domain.LogSearchVO" alias="logSearch"/>
+		<typeAlias type="com.isnetis.common.domain.TempVO" alias="temp_T"/>
+		<typeAlias type="com.isnetis.remote.domain.RemoteMgrListVO" alias="remoteMgr"/>
+		<typeAlias type="com.isnetis.remote.domain.RemoteFileMgrVO" alias="remoteFile"/>
+		<typeAlias type="com.isnetis.remote.domain.RemotePrcMgrVO" alias="remotePrc"/>
+		<typeAlias type="com.isnetis.remote.domain.RemoteRegMgrVO" alias="remoteReg"/>
+	</typeAliases>
+
+	<!--======= Difinition of MAPPER Path =======-->
+	<mappers>
+		<mapper resource="com/isnetis/sql/Common.xml"/>
+		<!-- <mapper resource="com/isnetis/sql/UserManage.xml" /> -->
+		<mapper resource="com/isnetis/sql/ClientGroup.xml"/>
+		<mapper resource="com/isnetis/sql/ClientMast.xml"/>
+		<mapper resource="com/isnetis/sql/ManagementGroup.xml"/>
+		<mapper resource="com/isnetis/sql/ManagementUser.xml"/>
+		<mapper resource="com/isnetis/sql/UserMast.xml" />
+		<mapper resource="com/isnetis/sql/UserGrpList.xml" />
+		<mapper resource="com/isnetis/sql/UserAttrMast.xml" />
+		<mapper resource="com/isnetis/sql/BMFolderList.xml"/>
+		<mapper resource="com/isnetis/sql/BMMediaControlList.xml"/>
+		<mapper resource="com/isnetis/sql/BMPassProList.xml"/>
+		<mapper resource="com/isnetis/sql/BMSystemProcessList.xml"/>
+		<mapper resource="com/isnetis/sql/PolicyMast.xml"/>
+		<mapper resource="com/isnetis/sql/ClientLimitMast.xml"/>
+		<mapper resource="com/isnetis/sql/MainClientList.xml"/>
+		<mapper resource="com/isnetis/sql/LogSearch.xml"/>
+		<mapper resource="com/isnetis/sql/TempT.xml"/>
+		<mapper resource="com/isnetis/sql/Stats.xml"/>
+		<mapper resource="com/isnetis/sql/RemoteFileMgr.xml"/>
+		<mapper resource="com/isnetis/sql/RemoteMgrList.xml"/>
+		<mapper resource="com/isnetis/sql/RemotePrcMgr.xml"/>
+		<mapper resource="com/isnetis/sql/RemoteRegMgr.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,27 @@
+@charset "euc-kr";
+
+html, body {}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,p,button{margin:0;padding:0;}
+body,div,dl,dt,dd,h1,h2,h3,h4,h5,h6,form,fieldset,p,th,td,input{font-family:돋움, dotum, verdana, sans-serif;}
+body{font-size:12px; }
+
+img{border:0; vertical-align: middle;}
+fieldset {border:0;}
+textarea { border:1px solid #cccccc; font-family:돋움, dotum, verdana, sans-serif; font-size:12px; }
+select, input {font-family:돋움, dotum, verdana, sans-serif; vertical-align:middle; }
+ul, ol { list-style-type : none; }
+select {color:#636363;}
+a, a:link { color:#636363; text-decoration:none; }
+a:hover, a:focus { color:#636363; text-decoration:underline;}
+legend,caption, hr, figure {position:absolute; left:-10000px; top:0; width:1px; height:1px; font-size:0; line-height:0; overflow:hidden; visibility:hidden;}
+em, address { font-style:normal;}
+button {background:transparent; border:0; font-family:돋움, dotum, verdana, sans-serif; font-size:12px; cursor:pointer; padding:0; overflow:visible; vertical-align:top;}
+
+/* 링크점선 없애기(탭키활용불가능-클라이언트가원하는경우이외에는사용하지말것)
+a { selector-dummy : expression(this.hideFocus=true);} */
+
+/*  모든레이어나타내기-코딩용 
+div {border: #ff0000 1px solid;} */
+
+/* 테이블기본셋팅 */
+table {border-collapse:collapse; border-spacing:0; border:0;}

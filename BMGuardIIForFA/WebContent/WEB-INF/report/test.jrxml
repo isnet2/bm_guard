@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="47327adf-264e-4b12-960d-d70cc96fd365">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select   t3.user_no
+		,      t3.user_name
+		,      t3.login_id
+from  USER_MAST t3
+order by user_no]]>
+	</queryString>
+	<field name="user_no" class="java.lang.String"/>
+	<field name="user_name" class="java.lang.String"/>
+	<field name="login_id" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="1a2be943-157b-4866-9609-9f14a0403199" x="117" y="1" width="313" height="38"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Report Test]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<textField pattern="YYYY-MM-DD HH:mm:ss">
+				<reportElement uuid="75532c37-d9db-48e2-a303-f028336e1209" x="454" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8dc4e612-ba98-4465-a2bd-9b43a06c2018" x="2" y="0" width="62" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" pdfFontName="fonts/MALGUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[사용자 성명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6a5ad290-8682-46e2-b937-83ad5ca3e766" x="64" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" pdfFontName="fonts/MALGUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[사번]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4e6875d2-5950-46ef-b06a-68cd47b763e6" x="164" y="0" width="72" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" pdfFontName="fonts/MALGUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[사용자 권한]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="158" splitType="Stretch">
+			<textField>
+				<reportElement uuid="313b1b30-1e9e-4f83-ae70-33843e84ddb3" x="2" y="0" width="62" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" pdfFontName="fonts/MALGUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0eb8376c-042a-4cba-95fe-c05594bb1a5a" x="64" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" pdfFontName="fonts/MALGUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fab08e86-2b7d-4b98-9f63-af00e483ff5b" x="164" y="0" width="72" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" pdfFontName="fonts/MALGUN.TTF" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{login_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9f5331c5-20eb-42dc-9a26-bbadbbd7339c" x="224" y="34" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

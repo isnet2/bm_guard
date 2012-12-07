@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.isnetis.device.dao.ClientMastDao">
+
+	<resultMap type="ClientMast" id="ClientMastHistoryMap">
+		<result property="delete_date" column="delete_date"/>
+		<result property="client_name" column="client_name"/>
+		<result property="ip_addr" column="ip_addr"/>
+		<result property="mac_addr" column="mac_addr"/>
+		<result property="os_type" column="os_type"/>
+		<result property="create_date" column="create_date"/>
+		<association property="clientGrp" javaType="ClientGroup" column="clientgrp_idx" select="com.isnetis.device.dao.ClientGroupDao.getClientGroupInfo">
+			<result property="clientgrp_name" column="clientgrp_name"/>
+		</association>
+		<association property="createUser" column="createuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>
+		<association property="deleteUser" column="deleteuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>		
+	</resultMap>
+
+	<resultMap type="ClientMast" id="ClientMastForPolicyResultMap">
+		<result property="client_idx" column="client_idx"/>
+		<result property="client_name" column="client_name"/>
+		<result property="ip_addr" column="ip_addr"/>
+		<result property="mac_addr" column="mac_addr"/>
+		<result property="os_type" column="os_type"/>
+		<result property="nowsim_flag" column="nowsim_flag"/>
+		<result property="policy_nowdate" column="policy_nowdate"/>
+		<association property="nowPolicy" javaType="PolicyMast" column="policynow_idx" select="com.isnetis.policy.dao.PolicyMastDao.getSimplePolicyInfo"/>
+		<association property="clientGrp" javaType="ClientGroup" column="clientgrp_idx" select="com.isnetis.device.dao.ClientGroupDao.getClientGroupInfo"/>
+		<association property="createUser" column="createuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>
+	</resultMap>	
+
+	<resultMap type="ClientMast" id="ClientMastForPolicyResultMap2">
+		<result property="client_idx" column="client_idx"/>
+		<result property="client_name" column="client_name"/>
+		<result property="ip_addr" column="ip_addr"/>
+		<result property="mac_addr" column="mac_addr"/>
+		<result property="os_type" column="os_type"/>
+		<result property="nowsim_flag" column="nowsim_flag"/>
+		<result property="policy_nowdate" column="policy_nowdate"/>
+		<result property="policy_apply_flag" column="policy_apply_flag"/>
+		<result property="miss_apply_info" column="miss_apply_info"/>
+		<association property="policy" javaType="PolicyMast" column="policy_idx" select="com.isnetis.policy.dao.PolicyMastDao.getPolicyInfo"/>
+		<association property="nowPolicy" javaType="PolicyMast" column="policynow_idx" select="com.isnetis.policy.dao.PolicyMastDao.getPolicyInfo"/>
+		<association property="clientGrp" javaType="ClientGroup" column="clientgrp_idx" select="com.isnetis.device.dao.ClientGroupDao.getClientGroupInfo">
+			<result property="clientgrp_name" column="clientgrp_name"/>
+		</association>
+		<association property="createUser" column="createuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>
+	</resultMap>	
+
+
+
+	
+	<!-- <select id="getDeviceHistoryForPolicy" parameterType="int" resultMap="ClientMastForPolicyResultMap">
+		select client_idx, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, policynow_idx, nowsim_flag
+		from client_mast_history
+		where client_idx = #{value}
+	</select> -->
+	
+	<insert id="addDevice" parameterType="ClientMast">
+		insert into CLIENT_MAST
+		(invalid_flag, online_flag, active_flag, create_date, client_name, clientgrp_idx)
+		values
+		(0, 0, 0, date_format(now(), "%Y-%m-%d %H:%i:%s"), #{client_name}, #{clientGrp.clientgrp_idx})
+	</insert>
+	
+	<select id="getDeviceListByPolicyIdx" parameterType="map" resultMap="ClientMastForPolicyResultMap">
+		select client_idx, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, policynow_idx, nowsim_flag
+		from CLIENT_MAST
+		where policynow_idx = #{policynow_idx}
+		<if test="nowsim_flag != null">
+			and nowsim_flag = #{nowsim_flag}
+		</if>
+	</select>	
+	
+	<select id="getDeviceInfoForPolicyByClientIdx" parameterType="int" resultMap="ClientMastForPolicyResultMap2">
+		select client_idx, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, policynow_idx, nowsim_flag, create_date, createuser_idx, policy_nowdate
+		from CLIENT_MAST
+		where client_idx = #{value}
+	</select>
+	
+	<select id="getIpDuplicateClientList" resultMap="ClientMastForPolicyResultMap2">
+		select client_idx
+		,      client_name
+		,      clientgrp_idx
+		,      ip_addr
+		,      mac_addr
+		,      os_type
+		,      create_date
+		,      createuser_idx
+		  from CLIENT_MAST 
+		where IP_ADDR in 
+		                (select IP_ADDR 
+		                   from CLIENT_MAST
+		                  where invalid_flag = 0
+		                   and ip_addr is not null
+		                   and ip_addr != ''
+		                  group by IP_ADDR
+		                  having count(*) >= 2
+		                )
+		    and invalid_flag = 0
+		order by ip_addr , client_idx desc
+	</select>
+	<select id="getDeviceListForPolicyByClientGroupIdx" parameterType="map" resultMap="ClientMastForPolicyResultMap">
+		select client_idx, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, policynow_idx, nowsim_flag, create_date, createuser_idx, policy_nowdate
+		from CLIENT_MAST
+		where invalid_flag = 0
+		  and clientgrp_idx = #{clientgrp_idx}
+		<if test="nowsim_flag != null">
+			and nowsim_flag = #{nowsim_flag}		
+		</if>
+	</select>
+	
+	<select id="getDeviceList"  parameterType="int" resultType="ClientMast">
+		select client_idx,
+				create_date,
+				client_name,
+				mac_addr,
+				ip_addr,
+				os_type,
+				delete_key
+		from CLIENT_MAST
+		where clientgrp_idx = #{value}
+		and invalid_flag = 0
+		order by client_idx
+	</select>
+	
+	<select id="searchDeviceList"  parameterType="map" resultType="string">
+		select FULL_PATH
+		from CLIENTGRP_LIST
+		where INVALID_FLAG = 0
+		and CLIENTGRP_IDX in (select CLIENTGRP_IDX
+								from CLIENT_MAST
+								where INVALID_FLAG = 0 
+								<choose>
+									<when test="option == 'client_name'">
+										and client_name = #{search_str}
+									</when>
+									<when test="option == 'ip_addr'">
+										and ip_addr = #{search_str}
+									</when>
+								</choose>
+								)
+	</select>
+	
+	<update id="addDeleteKey" parameterType="ClientMast">
+		update CLIENT_MAST
+		set delete_key = #{delete_key}, update_date = date_format(now(), "%Y-%m-%d %H:%i:%s")
+		where client_idx = #{client_idx}
+	</update>
+	
+	
+	<select id="getDeleteHistory" parameterType="map" resultMap="ClientMastHistoryMap">
+		
+		select delete_date, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, create_date, createuser_idx, deleteuser_idx
+		from CLIENT_MAST
+		where invalid_flag = 1
+		<if test="start_date != null">
+			and delete_date >= #{start_date}
+		</if>
+		<if test="end_date != null">
+			and delete_date &lt;= #{end_date}
+		</if>
+		<if test="user_option != null">
+			<choose>
+				<when test="user_option == 'create'">
+					and createuser_idx = (select user_idx from USER_MAST where user_name = #{user_name})
+				</when>
+				<when test="user_option == 'delete'">
+					and deleteuser_idx = (select user_idx from USER_MAST where user_name = #{user_name})
+				</when>
+			</choose>
+		</if>
+		<if test="device_option != null">
+			<choose>
+				<when test="device_option == 'name'">
+					and client_name = #{search_str}
+				</when>
+				<when test="device_option == 'ip'">
+					and ip_addr = #{search_str}
+				</when>
+			</choose>
+		</if>
+		<if test="os_type != null">
+			and os_type = #{os_type}
+		</if>
+	</select>
+	
+	<update id="renameDevice" parameterType="ClientMast">
+		update CLIENT_MAST
+		set client_name = #{client_name}, 
+			update_date = date_format(now(), "%Y-%m-%d %H:%i:%s"),
+			backup_date = date_format(now(), "%Y-%m-%d")
+		where client_idx = #{client_idx}
+	</update>
+	
+	<update id="removeDevice" parameterType="ClientMast">
+		update CLIENT_MAST
+		set invalid_flag = 1, 
+			delete_date = date_format(now(), "%Y-%m-%d %H:%i:%s"),
+			backup_date = date_format(now(), "%Y-%m-%d")
+		where client_idx = #{client_idx}
+	</update>
+	
+	<update id="applyPolicy" parameterType="map">
+		update CLIENT_MAST
+		set policy_idx = #{policy_idx}, sim_flag = #{sim_flag}, policy_apply_flag=0,
+			update_date = date_format(now(), "%Y-%m-%d %H:%i:%s"), 
+			backup_date = date_format(now(), "%Y-%m-%d")
+		where client_idx in 
+		
+		<foreach item="item" index="index" collection="client_idxValues" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<insert id="addDeviceHistory" parameterType="int">
+		insert into CLIENT_MAST_HISTORY
+		(client_idx, backup_date,  invalid_flag, online_flag, active_flag, create_date, createuser_idx, delete_date, deleteuser_idx, 
+		 update_date, updateuser_idx, client_name, mac_addr, ip_addr, login_ldate, policy_idx, sim_flag, policynow_idx, nowsim_flag, 
+		 policy_nowdate, client_state, mode_sdate, mode_edate, os_type, delete_key, clientgrp_idx)
+		select client_idx, backup_date, invalid_flag, online_flag, active_flag, create_date, createuser_idx, delete_date, deleteuser_idx, 
+		 update_date, updateuser_idx, client_name, mac_addr, ip_addr, login_ldate, policy_idx, sim_flag, policynow_idx, nowsim_flag, 
+		 policy_nowdate, client_state, mode_sdate, mode_edate, os_type, delete_key, clientgrp_idx
+		from CLIENT_MAST
+		where client_idx = #{value}
+	</insert>
+	
+	<select id="getInertClient" resultType="ClientMast">
+		select client_idx 
+		,      client_name
+		,      mode_edate
+		from CLIENT_MAST
+		where invalid_flag = 0
+		  and active_flag = 0
+	</select>
+	
+		<select id="getLimitHistoryList" parameterType="String" resultMap ="ClientMastHistoryMap">
+		select client_idx
+		, backup_date
+		, invalid_flag
+		, online_flag
+		, active_flag
+		, create_date
+		, delete_date
+		, update_date
+		, client_name
+		, mac_addr
+		, ip_addr
+		, login_ldate
+		, policy_nowdate
+		, client_state
+		, mode_sdate
+		, mode_edate
+		, os_type
+		, delete_key
+		, clientgrp_idx
+		, sim_flag
+		, policynow_idx
+		, policy_idx
+		, nowsim_flag
+		, apply_limit
+		, mode_memo
+		, winver_major
+		, winver_minor
+		, winver_build
+		, winver_sp_major
+		, winver_sp_minor
+		, createuser_idx
+		, updateuser_idx
+		, deleteuser_idx 
+		from CLIENT_MAST_HISTORY t1
+		where backup_date = #{value}
+		  and t1.apply_limit = 0
+		  and delete_date is null
+	</select>
+	
+	<select id="getDevicePolicyList" parameterType="map" resultMap="ClientMastForPolicyResultMap2">
+		select client_idx
+		,      clientgrp_idx
+		,      getClientgrpName(clientgrp_idx) clientgrp_name
+		,      invalid_flag
+		,      client_name
+		,      ip_addr
+		,      mac_addr
+		,      policy_nowdate
+		,      policy_idx
+		,      policynow_idx
+		,      policy_apply_flag
+		,      miss_apply_info
+		,      nowsim_flag
+		,      os_type 
+		from CLIENT_MAST
+		where invalid_flag = 0
+		and (policy_idx is not null or
+		     policynow_idx is not null)
+		<if test="policynow_idx != null">
+		and (policynow_idx = #{policynow_idx} or
+    	        policy_idx = #{policynow_idx} )
+    	</if>
+		<if test="device_option != null">
+			<choose>
+				<when test="device_option == 1">
+					and (sim_flag = 0 or nowsim_flag = 0)
+				</when>
+				<when test="device_option == 2">
+					and (sim_flag = 1 or nowsim_flag = 1)
+				</when>
+			</choose>
+		</if>
+		<if test="client_idx != null">
+			and client_idx = #{client_idx}
+		</if> 
+		<if test="clientgrp_idx != null">
+			and clientgrp_idx= #{clientgrp_idx}
+		</if> 
+	</select>
+</mapper>

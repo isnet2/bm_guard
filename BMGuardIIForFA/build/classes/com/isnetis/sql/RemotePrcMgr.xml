@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="RemotePrc">
+
+	<update id="RemotePrc.insertPrc"  parameterType="remotePrc">
+         insert into REMOTEPRC_MGR(
+			create_date
+			,process_name
+			,job_desc
+			,job_type
+			,user_idx
+	     )values (
+	       DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+	     , '${process_name}'
+	     , '${job_desc}'
+	     , '${job_type}'
+	     , ${user_idx}
+	     )
+	</update>
+	
+	<update id="RemotePrc.deletePrc" parameterType="int">
+		delete from REMOTEPRC_MGR
+		where job_idx = ${job_idx}
+	</update> 
+</mapper>

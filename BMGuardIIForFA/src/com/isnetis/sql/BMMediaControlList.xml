@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.policy.dao.MediaPolicyDao">
+	
+	<insert id="addMediaPolicy" parameterType="MediaPolicy">
+		insert into BMMEDIACTL_LIST(invalid_flag, media_type, method, policy_idx)
+		values(0, #{media_type}, #{method}, #{policy_idx})
+	</insert>
+	
+	<select id="getMediaPolicyList" parameterType="int" resultType="MediaPolicy">
+		select media_type, method
+		from BMMEDIACTL_LIST
+		where policy_idx = #{value}
+	</select>
+	
+	<update id="delMediaPolicy" parameterType="int">
+		delete from BMMEDIACTL_LIST
+		where policy_idx= #{policy_idx}
+	</update>
+</mapper>

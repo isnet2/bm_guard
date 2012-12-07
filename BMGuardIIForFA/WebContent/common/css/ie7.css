@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+@import url("reset.css");  
+@import url("default.css");  
+
+section.tab > ul > li > a {cursor:pointer;}
+section.tab > ul > li > a:hover > p { font-weight:bold; width:100px;position:absolute; left:17px; text-align:center; display:block;z-index:1; }
+section.tab > ul > li.on > a > p { font-weight:bold; width:100px;position:absolute; left:17px; text-align:center; display:block;z-index:1;}
+
+section.user_log > div.log_select > ul > li { position:relative; margin-right:25px;}
+section.user_log > div.log_select > ul > li > label { position:absolute; top:2px;line-height:17px; vertical-align:bottom;}
+section.user_log > div.log_select > ul > li.type1  { width:50px; }
+section.user_log > div.log_select > ul > li.type2  { width:80px; }
+section.user_log > div.log_select > ul > li.type3  { width:70px; }
+section.user_log > div.log_select > ul > li.type4  { width:70px; }
+section.user_log > div.log_select > ul > li.type5  { width:80px; }
+section.user_log > div.log_select > ul > li.type6  { width:70px; }
+section.user_log > div.log_select > ul > li.type7  { width:60px; }
+section.user_log > div.log_select > ul > li.type8  { width:70px; }
+section.user_log > div.log_select > ul > li.type9  { width:80px; }
+section.user_log > div.log_select > ul > li.type10  { width:50px; }
+
+/*정책관리 > 허용프로세스*/
+section.admit > table { margin-top:50px; width:100%; border-top:2px solid #ed1c24;border-bottom:1px solid #dfdfdf;}
+section.admit > table th {padding:15px 0;border-bottom:1px solid #dfdfdf;background:#fbfbfb; color:#555555;}
+section.admit > table td {text-align:center;padding:13px 0;}
+section.admit > table td input[type=text] { padding:3px 0;color:#808080;border:1px solid #d5d5d5;}
+section.admit > div.box_log { position:relative;padding:20px 30px;margin:20px 0 0 0;border:4px solid #e6e6e6; }
+section.admit > div.box_log > ul{ display:inline-block;}
+section.admit > div.box_log > ul > li > p {line-height:19px;clear:both;width:100px;padding:14px 0; display:inline-block;float:left; background:url(../../common/images/bu/bu_h3.gif) no-repeat 5px 21px;padding-left:15px;}
+section.admit > div.box_log > ul > li > p.first { padding-bottom:19px;border-bottom:1px solid #666666; }
+section.admit > div.box_log > ul > li > p > img {vertical-align:middle; }
+section.admit > div.box_log > ul > li > ul { padding:14px 0 0 0;float:left; display:inline-block;}
+section.admit > div.box_log > ul > li > ul.first {border-bottom:none; }
+section.admit > div.box_log > ul > li > ul > li {float:left;  margin:0 30px; }
+section.admit > div.box_log > span.line {display:inline-block;position:absolute;top:65px; right:30px; width:90%;height:1px;z-index:-1; background:url(../../common/images/bg/bg_os.gif) repeat-x; }

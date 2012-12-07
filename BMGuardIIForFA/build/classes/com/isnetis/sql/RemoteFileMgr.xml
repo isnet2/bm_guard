@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="RemoteFile">
+
+	<resultMap type="remoteFile" id="remoteFileMap">
+		<result property="job_idx" column="job_idx"/>
+		<result property="create_date" column="create_date"/>
+		<result property="file_name" column="file_name"/>
+		<result property="folder_path" column="folder_path"/>
+		<result property="job_desc" column="job_desc"/>
+		<result property="job_type" column="job_type"/>
+		<result property="user_idx" column="user_idx"/>
+		<result property="job_kind" column="job_kind"/>
+		<association property="remoteMgr" javaType="remoteMgr" column="{job_idx,job_kind}" select="com.isnetis.policy.dao.PolicyMastDao.getSimplePolicyInfo"/>
+	</resultMap>
+
+	<update id="RemoteFile.insertFile"  parameterType="remoteFile">
+       <![CDATA[
+         insert into REMOTEFILE_MGR(
+                create_date
+	     ,      file_name
+	     ,      folder_path
+	     ,      job_desc
+	     ,      job_type
+	     ,      user_idx
+	     )values (
+	       DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+	     , '${file_name}'
+	     , '${folder_path}'
+	     , '${job_desc}'
+	     , '${job_type}'
+	     , ${user_idx}
+	     )
+	     ]]>
+	</update>
+	
+	<update id="RemoteFile.deleteFile" parameterType="int">
+		delete from REMOTEFILE_MGR
+		where job_idx = ${job_idx}
+	</update> 
+	
+</mapper>

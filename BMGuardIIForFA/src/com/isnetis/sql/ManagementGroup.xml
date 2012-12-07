@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.device.dao.ManagementGroupDao">
+	
+	<resultMap type="ManagementGroup" id="ManagementGroupResultMap">
+		<result property="user_idx" column="user_idx"/>
+		<result property="clientgrp_idx" column="clientgrp_idx"/>
+		<result property="clientgrp_name" column="clientgrp_name"/>
+		<result property="history_idx" column="history_idx"/>
+		<result property="history_user_idx" column="history_user_idx"/>
+	</resultMap>
+
+	<insert id="addManagementGroup" parameterType="ManagementGroup">
+		insert into MANAGEMENTGRP_LIST(user_idx, clientgrp_idx, user_type, invalid_flag)
+		values(#{user_idx}, #{clientgrp_idx}, #{user_type}, 0)
+	</insert>
+	
+	<select id="getManagementGroupHistoryForUser" parameterType="int" resultMap="ManagementGroupResultMap">
+		select A.user_idx, B.clientgrp_idx, B.clientgrp_name
+		from MANAGEMENTGRP_LIST_HISTORY A, CLIENTGRP_LIST B
+		where A.clientgrp_idx = B.clientgrp_idx
+		and A.user_idx = #{value}
+		and A.user_type = 'M'
+	</select>
+	
+	<select id="getManagementGroupForUser" parameterType="int" resultMap="ManagementGroupResultMap">
+		select A.user_idx, B.clientgrp_idx, B.clientgrp_name
+		from MANAGEMENTGRP_LIST A, CLIENTGRP_LIST B
+		where A.clientgrp_idx = B.clientgrp_idx
+		and A.user_idx = #{value}
+		and A.user_type = 'M'
+	</select>
+	
+	<select id="getManagementGroupForAdmin" parameterType="int" resultMap="ManagementGroupResultMap">
+		select A.user_idx, B.clientgrp_idx, B.clientgrp_name
+		from MANAGEMENTGRP_LIST A, CLIENTGRP_LIST B
+		where A.clientgrp_idx = B.clientgrp_idx
+		and A.user_idx = #{value}
+		and A.user_type = 'A'
+	</select>
+	
+	<update id="updateManagementGroup" parameterType="map">
+		update MANAGEMENTGRP_LIST 
+		set invalid_flag = 1
+		where user_idx = #{user_idx}
+		and user_type = #{user_type}
+	</update> 
+	
+	<delete id="deleteManagementGroup" parameterType="map">
+		delete from MANAGEMENTGRP_LIST 
+		where user_idx = #{user_idx}
+		and user_type = #{user_type}
+	</delete> 
+	
+	<insert id="addManagementGroupHistory" parameterType="map">
+		insert into MANAGEMENTGRP_LIST_HISTORY(user_idx, clientgrp_idx, user_type)
+		select #{historyuser_idx}, clientgrp_idx, user_type
+		from MANAGEMENTGRP_LIST
+		where user_idx = #{user_idx}
+		and user_type = #{user_type}
+	</insert>
+	
+	<select id="getAdminGrpHistory" parameterType="ManagementGroup" resultMap="ManagementGroupResultMap">
+		select t1.user_idx
+		,      t1.clientgrp_idx
+		,      t2.clientgrp_name
+		,      t1.user_type
+		  from MANAGEMENTGRP_LIST_HISTORY t1
+		  ,    CLIENTGRP_LIST t2
+		 where t1.clientgrp_idx = t2.clientgrp_idx
+		   and t1.user_idx = #{user_idx}
+		   and t1.history_user_idx = #{history_user_idx}
+		   and t1.user_type = 'A'  
+	</select>
+	
+	
+	<insert id="insertAdminGrpHistory" parameterType="ManagementGroup" >
+		insert into MANAGEMENTGRP_LIST_HISTORY
+	          (
+	            user_idx, clientgrp_idx
+	          , user_type, history_user_idx
+	          )
+		select user_idx, clientgrp_idx
+		,      user_type, #{history_user_idx} 
+		from MANAGEMENTGRP_LIST
+		where user_idx =#{user_idx}
+		  and user_type ='A'
+	</insert>
+	
+</mapper>

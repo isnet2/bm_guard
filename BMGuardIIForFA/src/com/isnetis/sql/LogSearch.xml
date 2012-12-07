@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+  // 1. 
+
+  -->
+<mapper namespace="LogSearch">
+
+	<select id="LogSearch.getLogSearch"  resultType="logSearch">
+		select  log_idx		
+		,       backup_date	
+		,	    client_name	
+		,       client_idx	
+		,       user_idx	
+		,       clientgrp_name	
+		,       clientgrp_code	
+		,       usergrp_name	
+		,       usergrp_code	
+		,       create_date	
+		,       ip_addr	
+		,       logsh_level	
+		,       logsh_flog	
+		,       logsh_mode	
+		,       logsh_process	
+		,       logsh_code	
+		,       logsh_msg	
+		,       clientatrgr_idx	
+		,       userattr_idx	
+		,       userattr_title	
+		,       szip_addr	
+		,       logmk_type	
+		,       vgrp_idx	
+		from    LOG_SEARCH
+		where   1=1
+	</select>
+
+</mapper>

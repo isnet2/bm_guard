@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="RemoteMgrList">
+	<update id="RemoteMgrList.insertResult" parameterType="remoteMgr">
+		insert into REMOTEMGR_LIST
+		(
+		  create_date
+		, client_idx
+		, job_idx
+		, job_kind
+		, job_result
+		)values(
+		  DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+		, ${client_idx}
+		, ${job_idx}
+		, '${job_kind}'
+		, '${job_result}'
+		)
+	</update>	
+	
+	<update id="RemoteMgrList.deleteResult" parameterType="map">
+		delete from REMOTEMGR_LIST
+		where job_idx = ${job_idx}
+		  and job_kind = ${job_kind}
+	</update> 
+	
+	<select id="RemoteMgrList.getResult" resultType="remoteMgr">
+		select list_idx 		  
+		,      create_date
+		,      client_idx
+		,      job_idx
+		,      job_kind
+		,      job_result
+		  from REMOTEMGR_LIST
+	   	 where job_idx = ${job_idx}
+		   and job_kind = ${job_kind}
+	</select>
+	<update id="RemoteMgrList.updateResult" parameterType="remoteMgr">
+		update set REMOTEMGR_LIST
+		           job_result = ${job_result}
+		 where job_idx = ${job_idx}
+		   and client_idx = ${client_idx}
+		   and job_kind = ${job_kind}
+		   
+	</update>
+	
+</mapper>

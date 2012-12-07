@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+  // 1. 
+
+  -->
+  <mapper namespace="ClientLimitMast">
+  	<select id="ClientLimitMast.getClientLimit"  resultType="clientLimit">
+	  	select t1.create_date
+		,     t1.update_date
+		,     t1.cpu_limit
+		,     t1.memory_limit
+		,     t1.disk_limit
+		,     t1.createuser_idx
+		,     t1.updateuser_idx
+		,     t1.acquist_term
+		,     t1.acquist_edate
+		FROM CLIENTLIMIT_MAST t1
+		order by create_date desc
+        limit 1
+	</select>
+	
+	  	<select id="ClientLimitMast.getLimitDateList"  parameterType="map"  resultType="clientLimit">
+	  	select create_date
+		,     update_date
+		,     cpu_limit
+		,     memory_limit
+		,     disk_limit
+		,     createuser_idx
+		,     updateuser_idx
+		,     acquist_term
+		,     acquist_edate
+		FROM CLIENTLIMIT_MAST t1
+		where t1.create_date &gt;= concat(#{dn_sdate}, ' 00:00:00')
+		  and  t1.create_date &lt;= concat(#{dn_edate}, ' 23:59:59')
+		order by create_date desc
+
+	</select>
+	
+		
+	<insert id="ClientLimitMast.insertClientLimit" parameterType="clientLimit">
+		INSERT INTO CLIENTLIMIT_MAST
+		( CREATE_DATE
+		, CPU_LIMIT 
+		, MEMORY_LIMIT 
+		, CREATEUSER_IDX)
+		VALUES
+		(
+		   convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char)
+		,  #{cpu_limit} 
+		,  #{memory_limit} 
+		,  #{createuser_idx}
+		)
+	</insert>
+	
+	<update id="ClientLimitMast.updateClientLimit"  parameterType="clientLimit">
+		UPDATE CLIENTLIMIT_MAST SET
+		       UPDATE_DATE = convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char)
+		,      UPDATE_IDX =  #{update_idx}
+		,      CPU_LIMIT = #{cpu_limit}
+		,      DISK_LIMIT = #{disk_limit}
+	</update>
+	
+	<update id="ClientLimitMast.deleteClientLimit">
+		DELETE FROM CLIENTLIMIT_MAST
+	</update>
+	
+	<select id="ClientLimitMast.getCpuLimitList" resultType ="cpuLimit">
+		select t1.client_idx, t1.used_cpu , t2.client_name
+		  from CPU_LIMIT_LIST t1, CLIENT_MAST t2
+		 where t1.client_idx = t2.client_idx
+	</select>
+	
+	<select id="ClientLimitMast.getMemoryLimitList" resultType ="memoryLimit">
+		select t1.client_idx, t1.used_memory , t2.client_name
+		   from MEMORY_LIMIT_LIST t1 , CLIENT_MAST t2
+		   where t1.client_idx = t2.client_idx 
+	</select>	
+	
+</mapper>

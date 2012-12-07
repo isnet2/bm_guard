@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.policy.dao.PolicyMastDao">
+
+	<resultMap type="PolicyMast" id="SimplePolicyInfoResultMap">
+		<result property="policy_idx" column="policy_idx"/>
+		<result property="policy_name" column="policy_name"/>
+		<result property="policy_desc" column="policy_desc"/>
+		<result property="create_date" column="create_date"/>
+		<association property="createUser" column="createuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="PolicyMast" id="PolicyInfoResultMap">
+		<result property="policy_idx" column="policy_idx"/>
+		<result property="policy_name" column="policy_name"/>
+		<result property="policy_desc" column="policy_desc"/>
+		<result property="create_date" column="create_date"/>
+		<association property="createUser" column="createuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>
+		<collection property="osTypeList"  select="com.isnetis.policy.dao.PolicyMastDao.getOsTypeList" column="policy_idx"></collection>
+		<collection property="folderPolicyList"  select="com.isnetis.policy.dao.FolderPolicyDao.getFolderPolicyList" column="policy_idx"></collection>
+		<collection property="passPolicyList"  select="com.isnetis.policy.dao.PassPolicyDao.getPassPolicyList" column="policy_idx"></collection>
+		<collection property="systemPolicyList"  select="com.isnetis.policy.dao.SystemPolicyDao.getSystemPolicyList" column="policy_idx"></collection>
+		<collection property="mediaPolicyList"  select="com.isnetis.policy.dao.MediaPolicyDao.getMediaPolicyList" column="policy_idx"></collection>
+	</resultMap>
+	
+	<insert id="addPolicy" parameterType="PolicyMast">
+		insert into POLICY_MAST(policy_idx, invalid_flag, create_date, policy_name, policy_desc, policy_type, createuser_idx)
+		values(#{policy_idx}, 0, DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'), #{policy_name}, #{policy_desc}, #{policy_type}, #{createUser.user_idx})
+	</insert>
+	
+	<insert id="addOsType" parameterType="map">
+		insert into OSTYPE_LIST(policy_idx, os_type)
+		values(#{policy_idx}, #{os_type})
+	</insert>
+	
+	<delete id="delOsType" parameterType="int">
+		delete from OSTYPE_LIST
+		where policy_idx = #{policy_idx}
+	</delete>
+	
+	<select id="getOsTypeList" parameterType="int" resultType="string">
+		select os_type
+		from OSTYPE_LIST
+		where policy_idx = #{value}
+	</select>
+	
+	<select id="getPolicyMastList" resultType="PolicyMast">
+		select policy_idx, policy_name
+		from POLICY_MAST
+		where invalid_flag = 0
+		order by policy_idx desc
+	</select>
+	
+	<select id="getSimplePolicyInfo" parameterType="int" resultMap="SimplePolicyInfoResultMap">
+		select policy_idx, policy_name, policy_desc, create_date, createuser_idx
+		from POLICY_MAST
+		where policy_idx = #{value}
+	</select>
+	
+	<select id="getPolicyInfo" parameterType="int" resultMap="PolicyInfoResultMap">
+		select policy_idx, policy_name, policy_desc, create_date, createuser_idx
+		from POLICY_MAST
+		where policy_idx = #{value}
+	</select>
+	
+	<insert id="addPolicyApplyClient" parameterType="map">
+		insert into POLICY_APPLY_CLIENT(client_idx, policy_idx, sim_mode, invalid_flag, create_date)
+		values(#{client_idx}, #{policy_idx}, #{sim_mode}, 0, date_format(now(), "%Y-%m-%d %H:%i:%s"))
+	</insert>
+	
+	<insert id="addPolicyFile" parameterType="map">
+		<choose>
+			<when test="otherpol_dat != null">
+				insert into POLICY_FILE_LIST(policy_idx, about_txt, folderdefines_dsf, passprocess_dsf, polst_dat, systemprocess_dat, otherpol_dat)
+				values(#{policy_idx}, #{about_txt}, #{folderdefines_dsf}, #{passprocess_dsf}, #{polst_dat}, #{systemprocess_dat}, #{otherpol_dat})
+			</when>
+			<otherwise>
+				insert into POLICY_FILE_LIST(policy_idx, about_txt, folderdefines_dsf, passprocess_dsf, polst_dat, systemprocess_dat)
+				values(#{policy_idx}, #{about_txt}, #{folderdefines_dsf}, #{passprocess_dsf}, #{polst_dat}, #{systemprocess_dat})
+			</otherwise>
+		</choose>
+	</insert>
+	
+	<update id="deletePolicy" parameterType="int" >
+		update POLICY_MAST set 
+		invalid_flag = 1
+        ,backup_date = DATE_FORMAT(NOW(),'%Y-%m-%d')
+		,update_date = DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+		where policy_idx =  #{policy_idx}
+	</update>
+	
+	<update id="updatePolicy" parameterType="PolicyMast">
+		update POLICY_MAST set 
+		       policy_name = #{policy_name}
+		     , policy_desc = #{policy_desc}
+		     , policy_type = #{policy_type}
+		     , updateuser_idx = #{createUser.user_idx}
+		     , update_date = DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+		     , backup_date = DATE_FORMAT(NOW(),'%Y-%m-%d')
+		where policy_idx = #{policy_idx}
+	</update>
+	
+	
+	<insert id="addPolicyHistory" parameterType="int">
+			insert into POLICY_MAST_HISTORY
+			(policy_idx
+			,      backup_date
+			,      invalid_flag
+			,      create_date
+			,      delete_date
+			,      policy_name
+			,      policy_desc
+			,      policy_type
+			,      createuser_idx
+			,      update_date
+			,      deleteuser_idx
+			,      updateuser_idx
+			,      sharedfolder_flag
+			)
+			select policy_idx
+			,      backup_date
+			,      invalid_flag
+			,      create_date
+			,      delete_date
+			,      policy_name
+			,      policy_desc
+			,      policy_type
+			,      createuser_idx
+			,      update_date
+			,      deleteuser_idx
+			,      updateuser_idx
+			,      sharedfolder_flag
+			from POLICY_MAST
+			where POLICY_IDX = #{policy_idx}
+	</insert>
+	
+	<select id="getNowPolicyMastList"  resultType="PolicyMast">
+	select policy_idx, policy_name
+	  from POLICY_MAST
+	where INVALID_FLAG = 0
+	and POLICY_IDX in (select POLICYNOW_IDX FROM CLIENT_MAST
+	                   where CLIENT_MAST.INVALID_FLAG = 0
+	                   and policynow_idx is not null
+	                   group by  POLICYNOW_IDX)
+	</select>
+</mapper>

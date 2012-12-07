@@ -1,0 +1,112 @@
+	<figure>파일수신</figure>
+	<section class="user_list">
+	<h2>파일수신</h2>
+	<div class="auto_wrap">
+
+	<figure>lnb_tree</figure>
+	<section class="lnb_tree" >
+		<div class="check">
+
+			<select name="tree_search_option" id="tree_search_option">
+				<option value="client_name" selected="selected">기기명</option>
+				<option value="ip_addr">IP주소</option>
+			</select>
+			<input type="text" id="tree_search_str" name="tree_search_str">
+			<input type="image" src="../common/images/btn/btn_check_03.gif" id="tree_search_bt" name="tree_search_bt">
+		</div>
+		<div class="scroll" style="overflow-x: hidden; height: 345px;">
+			<div class="manage" >
+				<h3>관리그룹</h3>
+				<div id="tree">
+					<%-- 
+					<img src="../common/images/img/@tree_01.gif" alt="">
+					--%>
+				</div>
+			</div>
+			<div  class="machine">
+				<h3>자동화기기</h3>
+				<div id="tree_device_list">
+					<!-- <img src="../common/images/img/@tree_02.gif" alt=""> -->
+				</div>
+			</div>
+		</div>
+		</section>
+	
+	<!--  트리메뉴 -->
+
+
+	<div class="board">
+		<div class="file_table">
+		<table>
+			<colgroup>
+				<col style="width:250px"/>
+				<col style="width:*"/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th><label for="forname">가져올 파일</label></th>
+					<td class="detail" style="border: 0px;">
+						<input type="text" id="transfile" name="transfile" />
+						<!-- <span>* 가져올 파일의 Full Path 입력 (예)c:\Folder\file.txt</span> -->
+					</td>
+				</tr>
+				<tr>
+					<th><label for="forname">저장할 폴더</label></th>
+					<td class="detail" style="border: 0px;">
+						<input type="text" id="savePath" name="savePath"  style="width: 520px" />
+						<!-- <span>* 가져올 파일을 저장할 폴더의 Full Path 입력 (예)c:\Folder\file.txt</span> -->
+					</td>
+				</tr>
+				<tr>
+					<th><label for="sau">파일 수신 사유</label></th>
+					<td class="detail" style="border: 0px;">
+						<input type="text" style="width:630px"  id="transReason" name="transReason" /> 
+						<a href="#" id ="transferA" class="btn type2 set25"><span>실 행</span></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h4 class="mt20">처리결과</h4>
+		<div class="tit" style="padding-right: 0px;">
+			<table class="mt10" style="border-top: 2px solid #ED1C24;">
+			<colgroup>
+					<col style="width:100px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col style="width:*"/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>구분</th>
+					<th>관리그룹</th>
+					<th>자동화<br/>기기명</th>
+					<th>IP주소</th>
+					<th>처리일시</th>
+					<th>처리결과</th>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<div class="table_body mt0 scroll" style="height: 190px;">
+			<table style="text-align: center">
+				<colgroup>
+					<col style="width:100px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col style="width:150px;"/>
+						<col style="width:*"/>
+				</colgroup>
+
+				<tbody id="devicetBody">
+	
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</section>
+
+</article>

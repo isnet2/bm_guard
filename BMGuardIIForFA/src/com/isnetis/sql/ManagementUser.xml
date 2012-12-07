@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.device.dao.ManagementUserDao">
+
+	<resultMap type="ManagementUser" id="ManagementUserResultMap">
+		<result property="user_idx" column="user_idx"/>
+		<result property="userlogin_id" column="userlogin_id" />
+		<result property="invalid_flag" column="invalid_flag"/>
+		<result property="create_date" column="create_date"/>
+		<result property="delete_date" column="delete_date"/>
+		<association property="createUser" column="createuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>
+		<association property="deleteUser" column="deleteuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>		
+		<collection property="managementGroupList"  select="com.isnetis.device.dao.ManagementGroupDao.getManagementGroupForUser" column="user_idx"></collection>  
+	</resultMap>
+	
+	<resultMap type="ManagementUser" id="ManagementUserForHistoryResultMap">
+		<result property="user_idx" column="user_idx"/>
+		<result property="userlogin_id" column="userlogin_id" />
+		<result property="invalid_flag" column="invalid_flag"/>
+		<result property="create_date" column="create_date"/>
+		<result property="delete_date" column="delete_date"/>
+		<association property="createUser" column="createuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>
+		<association property="deleteUser" column="deleteuser_idx" javaType="userMast" select="com.isnetis.device.dao.ManagementUserDao.getUserInfo">
+			<result property="user_idx" column="user_idx"/>
+			<result property="user_name" column="user_name"/>
+		</association>		
+		<collection property="managementGroupList" javaType="list" select="com.isnetis.device.dao.ManagementGroupDao.getManagementGroupForUserByHistory" column="user_idx"></collection>  
+	</resultMap>
+	
+	
+	<select id="getManagementUserList"  parameterType="map" resultMap="ManagementUserResultMap">
+		select user_idx, userlogin_id, invalid_flag, create_date, delete_date, createuser_idx, deleteuser_idx
+		from MANAGEMENTUSER_MAST 
+		<where> 
+			<if test="status != -1">
+				invalid_flag = #{status}
+			</if>			
+			<if test="clientGroupIdxValues != null">
+				and user_idx in ( select user_idx 
+									  from MANAGEMENTGRP_LIST 
+									  where clientgrp_idx in
+									<foreach item="item" index="index"  collection="clientGroupIdxValues" open="(" separator="," close=")">
+										#{item}
+									</foreach>	
+									<if test="status != -1">
+										and invalid_flag = #{status}
+									</if>	
+									)
+		</if>
+		</where>
+		order by invalid_flag , user_idx desc
+	</select>
+	
+	<select id="getManagementUserHistory" parameterType="int" resultType="ManagementUser">
+		select history_user_idx user_idx
+		, case when user_status = 'C' then '신규' 
+		       when user_status ='U' then '변경'
+		       when user_status ='D' then '삭제' end user_status
+		, case when user_status ='C' then create_date 
+		       when user_status ='D' then delete_date
+		       when user_status ='U' then update_date end  update_date
+		from MANAGEMENTUSER_MAST_HISTORY
+		where user_idx = ${value}
+		order by history_user_idx desc
+	</select>
+
+	<select id="getUserInfo" parameterType="int" resultType="userMast">
+		select user_idx, user_name
+		from USER_MAST
+		where user_idx = #{value}
+	</select>
+	
+	<insert id="addManagementUser" parameterType="ManagementUser">
+		insert into MANAGEMENTUSER_MAST(invalid_flag, create_date, createuser_idx,  update_date, updateuser_idx, userlogin_id, userlogin_pwd, user_status)
+		values(0, #{create_date}, #{createUser.user_idx}, #{create_date}, #{createUser.user_idx}, #{userlogin_id}, #{userlogin_pwd}, 'C')
+	</insert>
+	
+	<insert id="addManagementUserHistory" parameterType="int" >
+		insert into MANAGEMENTUSER_MAST_HISTORY
+		(backup_date, invalid_flag, create_date, createuser_idx, delete_date, deleteuser_idx, update_date, updateuser_idx, userlogin_id, userlogin_pwd, user_status, user_idx)
+		select backup_date, invalid_flag, create_date, createuser_idx, delete_date, deleteuser_idx, update_date, updateuser_idx, userlogin_id, userlogin_pwd, user_status, user_idx
+		from MANAGEMENTUSER_MAST
+		where user_idx = #{value}
+	</insert>
+	
+	<update id="updateManagementUser" parameterType="ManagementUser">
+		update MANAGEMENTUSER_MAST
+		set userlogin_pwd = #{userlogin_pwd}, user_status = 'U', update_date = #{update_date}, updateuser_idx = #{updateUser.user_idx}
+		where user_idx = #{user_idx}
+		and invalid_flag = 0
+	</update>
+	
+	<update id="deleteManagementUser" parameterType="int">
+		update MANAGEMENTUSER_MAST
+		set invalid_flag = 1, user_status = 'D', update_date = date_format(now(), "%Y-%m-%d %H:%i:%s"),  delete_date = date_format(now(), "%Y-%m-%d %H:%i:%s")
+		where user_idx = #{value}
+	</update>
+	
+	<select id="getUserCnt" parameterType="String" resultType="int">
+			select count(*) cnt 
+		  from MANAGEMENTUSER_MAST
+		 where userlogin_id = #{userlogin_id} 
+	</select>
+</mapper>

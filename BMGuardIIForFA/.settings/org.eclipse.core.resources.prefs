@@ -1,0 +1,16 @@
+#Wed Nov 28 11:29:50 KST 2012
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/views/auto/auto_overlap.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/common/inc/check_pop.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/common/inc/del_pop.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/common/inc/footer.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/common/inc/new_pop.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/excelTest.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/guide.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/index.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/monitor/automatic_old.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/monitor/new.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/monitor/now.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/remote/file.jsp=UTF-8
+encoding//WebContent/WEB-INF/views/remote/process5.jsp=UTF-8
+encoding/<project>=UTF-8

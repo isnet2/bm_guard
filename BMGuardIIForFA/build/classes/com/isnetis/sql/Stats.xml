@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.stats.dao.StatsDao">
+	
+	<select id="getGroupListForStats" parameterType="map" resultType="hashmap">
+		select B.clientgrp_name group_name, A.col1 group_idx, A.col2 sub_groups
+		from(select col1, group_concat(col2) col2
+			from TEMP_T
+			<if test="clientgrp_idxs != null">
+				where col1 in
+				<foreach item="item" index="index"  collection="clientgrp_idxs" open="(" separator="," close=")">
+					#{item}
+				</foreach>	
+			</if>
+			group by col1) A, CLIENTGRP_LIST B
+		where A.col1 = B.clientgrp_idx
+		order by B.clientgrp_name
+	</select>
+	
+	<!-- 자동화기기 운영현황(통계) 관리그룹별 조회-->
+	<select id="getDeviceStatsByGroup" parameterType="map" resultType="hashmap">
+		select 
+			IFNULL(sum(
+					case 
+						when A.invalid_flag = 0 and (A.create_date > #{start_date} and A.create_date &lt; #{end_date}) then 1
+						else 0
+					end
+			) , 0) new_device,
+			IFNULL(sum(
+					case 
+						when A.invalid_flag = 1 and (A.delete_date > #{start_date} and A.delete_date &lt; #{end_date}) then 1
+						else 0
+					end
+			) , 0) delete_device,
+			IFNULL(sum(
+					case 
+						when A.invalid_flag = 0  then 1
+						else 0
+					end
+			) , 0) running_device
+		from CLIENT_MAST A
+		where A.clientgrp_idx in 
+			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
+				#{item1}
+			</foreach>
+	</select>
+	
+	<!-- 자동화기기 운영현황(통계) OS별 조회-->
+	<select id="getDeviceStatsByOsType" parameterType="map" resultType="hashmap">
+		select os_type,
+			
+			IFNULL(sum(
+					case 
+						when invalid_flag = 0 and (create_date > #{start_date} and create_date &lt; #{end_date}) then 1
+						else 0
+					end
+			) , 0) new_device,
+			IFNULL(sum(
+					case 
+						when invalid_flag = 1 and (delete_date > #{start_date} and delete_date &lt; #{end_date}) then 1
+						else 0
+					end
+			) , 0) delete_device,
+			IFNULL(sum(
+					case 
+						when invalid_flag = 0  then 1
+						else 0
+					end
+			) , 0) running_device
+		from CLIENT_MAST
+		where os_type is not null
+		<if test="os_types != null">
+		and os_type in 
+			<foreach item="item2" index="index2"  collection="os_types" open="(" separator="," close=")">
+				#{item2}
+			</foreach>
+		</if>
+		group by os_type
+	</select>
+	
+	<!-- 자동화기기 운영현황(기기현황) -->
+	<select id="getDeviceStateByGroup" parameterType="map" resultType="hashmap">
+		select client_name, ip_addr, mac_addr, os_type, create_date
+		from CLIENT_MAST
+		<where>
+			<choose>
+				<when test="option == 'new'">
+					create_date > ${start_date} > and create_date &lt; ${end_date} and invalid_flag = 0
+				</when>
+				<when test="option == 'delete'">
+					delete_date > ${start_date} > and delete_date &lt; ${end_date} and invalid_flag = 1
+				</when>
+			</choose>
+			and clientgrp_idx in
+			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
+				#{item1}
+			</foreach>
+		</where>
+	</select>
+</mapper>

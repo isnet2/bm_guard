@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.policy.dao.SystemPolicyDao">
+	
+	<insert id="addSystemPolicy" parameterType="SystemPolicy">
+		insert into BMSYSTEM_LIST(invalid_flag, process_name, policy_idx)
+		values(0, #{process_name}, #{policy_idx})
+	</insert>
+	
+	<select id="getSystemPolicyList" parameterType="int" resultType="SystemPolicy">
+		select process_name
+		from BMSYSTEM_LIST
+		where policy_idx = #{value}
+	</select>
+	
+	
+	<insert id="delSystemPolicy" parameterType="int">
+		delete from BMSYSTEM_LIST
+		where policy_idx = #{policy_idx}
+	</insert>
+</mapper>

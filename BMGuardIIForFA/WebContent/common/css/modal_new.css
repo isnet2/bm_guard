@@ -1,0 +1,450 @@
+/*-------------------------------------------------
+                   modal
+-------------------------------------------------*/
+.btn_admit {display:inline-block; margin:15px 0 0 5px;}
+.btn_admit2 {display:inline-block;float:right; margin:15px 0 0 5px;}
+
+/* Overlay */
+#simplemodal-overlay {background-color:#333;}
+
+/**** 사용자관리 ****/
+#basic-modal-content {display:none; color:#808080;}
+#basic-modal-content > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content > h2 > img {vertical-align:middle; }
+#basic-modal-content div {margin:20px 30px; }
+#basic-modal-content div > table {width:500px;border:1px solid #dfdfdf;}
+#basic-modal-content div > table th {text-align:right;margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content div > table td {padding-left:10px; border-bottom:1px solid #dfdfdf;}
+#basic-modal-content div input[type=text] {padding:3px 0;}
+#basic-modal-content div input[type=image] {border:none;}
+#basic-modal-content div input.w90 {width:90%;}
+#basic-modal-content div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content ul.manage > li {float:left; padding:3px 0; width:100px; }
+
+#basic-modal-content2 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content2 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content2 {display:none;}
+#basic-modal-content2 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content2 > h2 > img {vertical-align:middle; }
+#basic-modal-content2 h3 { margin:30px 0 0 0; color:#666666;line-height:17px;background:url(../../common/images/bu/bu_check.gif) no-repeat left 1px;padding-left:18px;font-size:12px;}
+#basic-modal-content2 div.put {margin:20px 30px; }
+#basic-modal-content2 div.put > table {width:900px;border:1px solid #dfdfdf;}
+#basic-modal-content2 div.put > table th {text-align:right;margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content2 div.put > table td { padding-left:10px; border-bottom:1px solid #dfdfdf;}
+#basic-modal-content2 div.put input[type=text] {padding:3px 0;}
+#basic-modal-content2 div.put input[type=image] {border:none;}
+#basic-modal-content2 div.put input.w90 {width:90%;}
+#basic-modal-content2 div.put p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content2 div.tit { width:883px;margin-top:10px;padding-right:16px; border-top:2px solid #ed1c24;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content2 div.tit > table { width:100%;}
+#basic-modal-content2 div.tit > table th {padding:15px 0; color:#555555;}
+#basic-modal-content2 div.list {width:900px;height:165px;overflow-y:scroll;border-bottom:1px solid #dfdfdf; }
+#basic-modal-content2 div.list > table {width:100%;}
+#basic-modal-content2 div.list > table td {padding:13px 0;text-align:center;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content3 {display:none;}
+#basic-modal-content3 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content3 > h2 > img {vertical-align:middle; }
+#basic-modal-content3 div {margin:20px 30px; }
+#basic-modal-content3 div > table {width:800px;border:1px solid #dfdfdf;}
+#basic-modal-content3 div > table th {padding:10px;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content3 div > table td { padding:5px 0;text-align:center; border-bottom:1px solid #dfdfdf;line-height:18px;}
+#basic-modal-content3 div input[type=text] {padding:3px 0;}
+#basic-modal-content3 div input[type=image] {border:none;}
+#basic-modal-content3 div input.w90 {width:90%;}
+#basic-modal-content3 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+
+
+/* 정책관리 > 신규성성 > 불러오기 */
+#basic-modal-content-3-1 {display:none; color:#808080; padding:20px 30px}
+#basic-modal-content-3-1 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-3-1 > h2 > img {vertical-align:middle; }
+#basic-modal-content-3-1 div.selectbox {margin:0 0 10px}
+#basic-modal-content-3-1 table.title {margin:15px 0 0;width:100%; border-top:1px solid #ddd; background:#eee}
+#basic-modal-content-3-1 table.title td {text-align:center;height:25px; line-height:25px}
+#basic-modal-content-3-1 .list {overflow-y:auto; overflow-x:hidden; max-height:205px; border-bottom:1px solid #ddd;}
+#basic-modal-content-3-1 .list table {width:100%;}
+#basic-modal-content-3-1 .list td {border-top:1px solid #ddd;}
+#basic-modal-content-3-1 .list td input[type=text] {padding:2px 5px}
+#basic-modal-content-3-1 div.os table {width:100%;border:1px solid #dfdfdf;}
+#basic-modal-content-3-1 div.os table th {padding:10px;border-right:1px solid #f2f2f2; color:#555555; background:#fbfbfb; }
+#basic-modal-content-3-1 div.os table td {padding-left:10px;}
+#basic-modal-content-3-1 div input[type=text] {padding:3px 0;}
+#basic-modal-content-3-1 div input[type=image] {border:none;}
+#basic-modal-content-3-1 div input.w90 {width:90%;}
+#basic-modal-content-3-1 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-3-1 div.os table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-3-1 div.os table td > ul.os > li {padding:3px 0;float:left; width:90px;}
+#basic-modal-content-3-1 div.os table td > label {vertical-align:bottom;}
+#basic-modal-content-3-1 div.con_body {width:795px;}
+#basic-modal-content-3-1 div.con_body.auto_on {width:475px;}
+#basic-modal-content-3-1 div.tree {display:none}
+#basic-modal-content-3-1 div.tree.auto_on {display:block; width:260px}
+#basic-modal-content-3-1 .search_tree,
+#basic-modal-content-3-1 .search_tree select {margin:0 0 5px}
+#basic-modal-content-3-1 .search_tree input {height:16px; margin:0}
+#basic-modal-content-3-1 .search_tree a {height:24px; line-height:24px; display:inline-block; margin:0 0 0 5px; vertical-align:middle}
+
+/* 정책관리 > 통합정책관리 > 파일일괄등록 */
+#basic-modal-content-3-2 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-3-2 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-3-2 {display:none;}
+#basic-modal-content-3-2 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-3-2 > h2 > img {vertical-align:middle; }
+#basic-modal-content-3-2 div {margin:20px 30px; }
+#basic-modal-content-3-2 div > table {width:700px;border:1px solid #dfdfdf;}
+#basic-modal-content-3-2 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-3-2 div > table th.last {border-right:none;}
+#basic-modal-content-3-2 div > table td { padding:10px;border-bottom:1px solid #dfdfdf;border-right:1px solid #f2f2f2;}
+#basic-modal-content-3-2 div > table td.last {border-right:none;}
+#basic-modal-content-3-2 div > table td > select { padding:1px 0;color:#808080;border:1px solid #dfdfdf;}
+#basic-modal-content-3-2 div input[type=text] {padding:3px 0;}
+#basic-modal-content-3-2 div input[type=image] {border:none;}
+#basic-modal-content-3-2 div input.w90 {width:90%;}
+#basic-modal-content-3-2 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-3-2 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-3-2 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-3-2 div > table td > label {vertical-align:bottom;}
+
+/* 정책관리 > 통합정책관리 > 자동화기기에서선택등록 */
+#basic-modal-content-3-3 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-3-3 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-3-3 {display:none;}
+#basic-modal-content-3-3 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-3-3 > h2 > img {vertical-align:middle; }
+#basic-modal-content-3-3 div {margin:20px 30px; }
+#basic-modal-content-3-3 div > table {width:470px;border:1px solid #dfdfdf;}
+#basic-modal-content-3-3 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-3-3 div > table th.last {border-right:none;}
+#basic-modal-content-3-3 div > table td { text-align:center; padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-3-3 div > table td.last { text-align:left; border-right:none; }
+#basic-modal-content-3-3 div input[type=text] {padding:3px 0;}
+#basic-modal-content-3-3 div input[type=image] {border:none;}
+#basic-modal-content-3-3 div input.w90 {width:90%;}
+#basic-modal-content-3-3 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-3-3 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-3-3 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-3-3 div > table td > label {vertical-align:bottom;}
+
+/* 정책관리 > 통합정책관리 > 삭제리스트 */
+#basic-modal-content-3-4 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-3-4 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-3-4 {display:none;}
+#basic-modal-content-3-4 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-3-4 > h2 > img {vertical-align:middle; }
+#basic-modal-content-3-4 div {margin:20px 30px; }
+#basic-modal-content-3-4 div > table {width:900px;border:1px solid #dfdfdf;}
+#basic-modal-content-3-4 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-3-4 div > table th.last {border-right:none;}
+#basic-modal-content-3-4 div > table td { text-align:center; padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-3-4 div > table td.last { text-align:left; border-right:none; }
+#basic-modal-content-3-4 div input[type=text] {padding:3px 0;}
+#basic-modal-content-3-4 div input[type=image] {border:none;}
+#basic-modal-content-3-4 div > table td > select { padding:1px 0;color:#808080;border:1px solid #dfdfdf;}
+#basic-modal-content-3-4 div input.w90 {width:90%;}
+#basic-modal-content-3-4 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-3-4 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-3-4 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-3-4 div > table td > label {vertical-align:bottom;}
+
+/* 정책관리>통합정책관리>변경 */
+#basic-modal-content-3-5 div > table { }
+#basic-modal-content-3-5 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-3-5 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-3-5 div > table td > label {vertical-align:bottom;}
+
+#basic-modal-content-3-5 {display:none;}
+#basic-modal-content-3-5 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-3-5 > h2 > img {vertical-align:middle; }
+#basic-modal-content-3-5 div {margin:20px 30px; }
+#basic-modal-content-3-5 div > table {width:470px;border:1px solid #dfdfdf;}
+#basic-modal-content-3-5 div > table th {text-align:right;margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-3-5 div > table td { padding-left:10px; border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-3-5 div input[type=text] {padding:3px 0;}
+#basic-modal-content-3-5 div input[type=image] {border:none;}
+#basic-modal-content-3-5 div input.w90 {width:90%;}
+#basic-modal-content-3-5 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+
+/* 통계정보 > 로그검색 > 수정 */
+#basic-modal-content-5-1 {display:none; color:#808080;}
+#basic-modal-content-5-1 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-5-1 > h2 > img {vertical-align:middle; }
+#basic-modal-content-5-1 div {margin:20px 30px; }
+#basic-modal-content-5-1 div > table {width:700px;border:1px solid #dfdfdf;}
+#basic-modal-content-5-1 div > table th {text-align:right;margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-5-1 div > table th.ll {border-left:1px solid #f2f2f2;}
+#basic-modal-content-5-1 div > table td {padding-left:10px; border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-5-1 div input[type=text] {padding:3px 0;}
+#basic-modal-content-5-1 div input[type=image] {border:none;}
+#basic-modal-content-5-1 div input.w90 {width:90%;}
+#basic-modal-content-5-1 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-5-1 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-5-1 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-5-1 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-5-1 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-5-1 div > table td > label {vertical-align:bottom;}
+
+/* 통계정보 > OS별 운영현황 */
+#basic-modal-content-5-2 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-5-2 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-5-2 {display:none;}
+#basic-modal-content-5-2 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-5-2 > h2 > img {vertical-align:middle; }
+#basic-modal-content-5-2 div {margin:20px 30px; }
+#basic-modal-content-5-2 div > table {width:900px;border:1px solid #dfdfdf;}
+#basic-modal-content-5-2 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-5-2 div > table th.last {border-right:none;}
+#basic-modal-content-5-2 div > table td { text-align:center; padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-5-2 div > table td.last { border-right:none; }
+#basic-modal-content-5-2 div input[type=text] {padding:3px 0;}
+#basic-modal-content-5-2 div input[type=image] {border:none;}
+#basic-modal-content-5-2 div > table td > select { padding:1px 0;color:#808080;border:1px solid #dfdfdf;}
+#basic-modal-content-5-2 div input.w90 {width:90%;}
+#basic-modal-content-5-2 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-5-2 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-5-2 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-5-2 div > table td > label {vertical-align:bottom;}
+
+/* 통계정보 > 알람현황 */
+#basic-modal-content-5-3 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-5-3 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-5-3 {display:none;}
+#basic-modal-content-5-3 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-5-3 > h2 > img {vertical-align:middle; }
+#basic-modal-content-5-3 div {margin:20px 30px; }
+#basic-modal-content-5-3 div > table {width:900px;border:1px solid #dfdfdf;}
+#basic-modal-content-5-3 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-5-3 div > table th.last {border-right:none;}
+#basic-modal-content-5-3 div > table td { text-align:center; padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-5-3 div > table td.last { border-right:none; }
+#basic-modal-content-5-3 div input[type=text] {padding:3px 0;}
+#basic-modal-content-5-3 div input[type=image] {border:none;}
+#basic-modal-content-5-3 div > table td > select { padding:1px 0;color:#808080;border:1px solid #dfdfdf;}
+#basic-modal-content-5-3 div input.w90 {width:90%;}
+#basic-modal-content-5-3 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-5-3 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-5-3 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-5-3 div > table td > label {vertical-align:bottom;}
+
+/* 통계정보 > 프로세스차단현황 */
+#basic-modal-content-5-4 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-5-4 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-5-4 {display:none;}
+#basic-modal-content-5-4 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-5-4 > h2 > img {vertical-align:middle; }
+#basic-modal-content-5-4 div {margin:20px 30px; }
+#basic-modal-content-5-4 div > table {width:900px;border:1px solid #dfdfdf;}
+#basic-modal-content-5-4 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-5-4 div > table th.last {border-right:none;}
+#basic-modal-content-5-4 div > table td { text-align:center; padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-5-4 div > table td.last { border-right:none; }
+#basic-modal-content-5-4 div input[type=text] {padding:3px 0;}
+#basic-modal-content-5-4 div input[type=image] {border:none;}
+#basic-modal-content-5-4 div > table td > select { padding:1px 0;color:#808080;border:1px solid #dfdfdf;}
+#basic-modal-content-5-4 div input.w90 {width:90%;}
+#basic-modal-content-5-4 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-5-4 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-5-4 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-5-4 div > table td > label {vertical-align:bottom;}
+
+/* 통계정보 > 레벨별 알람형황 */
+#basic-modal-content-5-5 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-5-5 ul.manage > li {float:left; padding:3px 0; width:100px; }
+#basic-modal-content-5-5 {display:none;}
+#basic-modal-content-5-5 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-5-5 > h2 > img {vertical-align:middle; }
+#basic-modal-content-5-5 div {margin:20px 30px; }
+#basic-modal-content-5-5 div > table {width:900px;border:1px solid #dfdfdf;}
+#basic-modal-content-5-5 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-5-5 div > table th.last {border-right:none;}
+#basic-modal-content-5-5 div > table td { text-align:center; padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-5-5 div > table td.last { border-right:none; }
+#basic-modal-content-5-5 div input[type=text] {padding:3px 0;}
+#basic-modal-content-5-5 div input[type=image] {border:none;}
+#basic-modal-content-5-5 div > table td > select { padding:1px 0;color:#808080;border:1px solid #dfdfdf;}
+#basic-modal-content-5-5 div input.w90 {width:90%;}
+#basic-modal-content-5-5 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-5-5 div > table td > ul.os {display:inline-block; padding:5px 0;}
+#basic-modal-content-5-5 div > table td > ul.os > li {padding:3px 0;float:left; width:100px;}
+#basic-modal-content-5-5 div > table td > label {vertical-align:bottom;}
+
+
+/* Container */
+#simplemodal-container,
+#simplemodal-container2,
+#simplemodal-container3 {color:#bbb; background-color:#fff; border-top:3px solid #ed1c24;}
+#simplemodal-container a.modalCloseImg,
+#simplemodal-container2 a.modalCloseImg,
+#simplemodal-container3 a.modalCloseImg {background:url(../../common/images/btn/btn_close.gif) no-repeat; width:45px; height:45px; display:inline; z-index:3200; position:absolute; top:-3px; right:-45px; cursor:pointer;}
+
+
+/**** 자동화기기관리 > 유지보수용ip/pw관리 ****/
+#basic-modal-content-2-1 {display:none; color:#808080;}
+#basic-modal-content-2-1 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-2-1 > h2 > img {vertical-align:middle; }
+#basic-modal-content-2-1 div {margin:20px 30px; }
+#basic-modal-content-2-1 div > table {width:470px;border:1px solid #dfdfdf;}
+#basic-modal-content-2-1 div > table th {text-align:right;margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-2-1 div > table td {padding-left:10px; border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-2-1 div input[type=text] {padding:3px 0;}
+#basic-modal-content-2-1 div input[type=image] {border:none;}
+#basic-modal-content-2-1 div input.w90 {width:90%;}
+#basic-modal-content-2-1 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-2-1 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-2-1 ul.manage > li {float:left; padding:3px 0; width:100px; }
+
+#basic-modal-content-2-2 {display:none; color:#808080;}
+#basic-modal-content-2-2 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-2-2 > h2 > img {vertical-align:middle; }
+#basic-modal-content-2-2 div {margin:20px 30px; }
+#basic-modal-content-2-2 div > table {width:470px;border:1px solid #dfdfdf;}
+#basic-modal-content-2-2 div > table th {text-align:right;margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-2-2 div > table td {padding-left:10px; border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-2-2 div input[type=text] {padding:3px 0;}
+#basic-modal-content-2-2 div input[type=image] {border:none;}
+#basic-modal-content-2-2 div input.w90 {width:90%;}
+#basic-modal-content-2-2 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-2-2 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-2-2 ul.manage > li {float:left; padding:3px 0; width:100px; }
+
+#basic-modal-content-2-3 {display:none; color:#808080;}
+#basic-modal-content-2-3 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-2-3 > h2 > img {vertical-align:middle; }
+#basic-modal-content-2-3 div {margin:20px 30px; }
+#basic-modal-content-2-3 div > table {width:470px;border:1px solid #dfdfdf;}
+#basic-modal-content-2-3 div > table th {text-align:right;margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-2-3 div > table td {padding-left:10px; border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-2-3 div input[type=text] {padding:3px 0;}
+#basic-modal-content-2-3 div input[type=image] {border:none;}
+#basic-modal-content-2-3 div input.w90 {width:90%;}
+#basic-modal-content-2-3 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-2-3 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-2-3 ul.manage > li {float:left; padding:3px 0; width:100px; }
+
+#basic-modal-content-2-4 {display:none; color:#808080;}
+#basic-modal-content-2-4 > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#basic-modal-content-2-4 > h2 > img {vertical-align:middle; }
+#basic-modal-content-2-4 div {margin:20px 30px; }
+#basic-modal-content-2-4 div > table {width:700px;border:1px solid #dfdfdf;}
+#basic-modal-content-2-4 div > table th {margin-right:15px;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;color:#555555; background:#fbfbfb; }
+#basic-modal-content-2-4 div > table td {text-align:center;padding:10px;border-right:1px solid #f2f2f2;border-bottom:1px solid #dfdfdf;}
+#basic-modal-content-2-4 div > table th.last,
+#basic-modal-content-2-4 div > table td.last {border-right:none;}
+#basic-modal-content-2-4 div > table td.last {text-align:left; padding-left:10px;}
+#basic-modal-content-2-4 div input[type=text] {padding:3px 0;}
+#basic-modal-content-2-4 div input[type=image] {border:none;}
+#basic-modal-content-2-4 div input.w90 {width:90%;}
+#basic-modal-content-2-4 div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#basic-modal-content-2-4 ul.manage {display:inline-block;padding:5px 0; }
+#basic-modal-content-2-4 ul.manage > li {float:left; padding:3px 0; width:100px; }
+
+/* 2012-10-22 레이어 */
+.layer {padding:10px 20px;}
+.layer h4 {border-bottom:1px solid #d5d5d5; padding:0 0 5px; margin:0 0 5px; color:#666}
+.layer table {color:#999}
+
+.layer.setlimit {width:180px; text-align:center;}
+.layer.setlimit input {border:1px solid #ddd; width:79px}
+.layer.setlimit td{text-align:left}
+
+.layer.mainmanag {width:610px}
+.layer.mainmanag .layer_left {padding:2px}
+.layer.mainmanag .treelist {background:#f8f7f7; display:inline-block; *zoom:1;}
+.layer.mainmanag .treelist .treemap {padding:5px 5px 5px 0}
+.layer.mainmanag .treelist .comlist {padding:5px 0 5px 5px; border-left:2px solid #fff}
+.layer.mainmanag .layer_left .search_tree {margin:0 0 5px}
+.layer.mainmanag .layer_left .search_tree select {margin:0; height:24px}
+.layer.mainmanag .layer_left .search_tree input {width:135px; height:22px; line-height:22px; padding:0 5px; margin:0 5px 0 0}
+.layer.mainmanag .layer_left .search_tree a{display:inline-block; height:24px; vertical-align:middle}
+.layer .right_table .set_h {width:333px}
+.layer .right_table .set_h td{ background:#f8f7f7; border-bottom:1px solid #a5a5a5; height:30px; line-height:30px; font-weight:bold; text-align:center}
+.layer .right_table .setb {height:27px; border-right:1px solid #ddd; line-height:27px; background:#f8f7f7}
+.layer .right_table {margin:0 0 0 5px; width:333px}
+.layer .right_table .set_aotucom {width:100%}
+.layer .right_table .set_aotucom td{border-bottom:1px solid #eee; text-align:center}
+
+.layer.search_log {width:620px}
+.layer.search_log .due li{margin:0 0 0 5px; float:left}
+.layer.search_log .due li:first-child {margin:0}
+.layer.search_log .search_tree a {display:inline-block; vertical-align:middle; zoom:1;}
+.layer.search_log .set_h td{background:#f8f7f7; border-top:1px solid #ddd; border-bottom:1px solid #a5a5a5; height:30px; line-height:30px; font-weight:bold; text-align:center}
+.layer.search_log .table_body td{height:25px; line-height:25px;}
+
+.layer.search_log {height:260px; overflow-x:hidden; overflow-y:auto}
+
+.layer.maincom_detail_view,
+.layer.limit_detail_view {height:360px}
+
+.layer.basic-server1 {width:500px}
+.layer.basic-server2 {width:550px}
+
+.layer.set350px {height:350px;}
+
+/* 정책관리 > 정책적용 > 정책보기 */
+#policy_detail_view {padding:20px; width:650px height:400px}
+#policy_detail_view {display:none; color:#808080; padding:20px 30px}
+#policy_detail_view > h2 {background:#f8f8f8;border-bottom:1px solid #e0e0e0;padding:10px; text-align:center;}
+#policy_detail_view > h2 > img {vertical-align:middle; }
+#policy_detail_view table.title {margin:0px 0 0;width:100%; border-top:1px solid #ddd; background:#eee}
+#policy_detail_view table.title td {text-align:center;height:25px; line-height:25px}
+#policy_detail_view .list {overflow-y:auto; overflow-x:hidden; max-height:205px; border-bottom:1px solid #ddd;}
+#policy_detail_view .list table {width:100%;}
+#policy_detail_view .list td {border-top:1px solid #ddd;}
+#policy_detail_view .list td input[type=text] {padding:2px 5px}
+#policy_detail_view div.os table {width:100%;border:1px solid #dfdfdf; margin-bottom: 15px;}
+#policy_detail_view div.os table th {padding:10px 0px 10px 10px; color:#555555;  }
+#policy_detail_view div.os table td {}
+#policy_detail_view div input[type=text] {padding:3px 0;}
+#policy_detail_view div input[type=image] {border:none;}
+#policy_detail_view div input.w90 {width:90%;}
+#policy_detail_view div p.ok {text-align:center; margin:20px 0 0 0 ; }
+#policy_detail_view div.os table td > ul.os {display:inline-block; padding:5px 0;}
+#policy_detail_view div.os table td > ul.os > li {padding-right:5px; float:left;}
+#policy_detail_view div.os table td > label {vertical-align:bottom;}
+
+.pol_tab {margin:0 0 15px}
+.pol_tab ul {border-bottom:1px solid #aaa; height:31px;}
+.pol_tab ul li {float:left; margin:0 0 0 4px}
+.pol_tab ul li:first-child {margin:0}
+.pol_tab ul li a {position:relative; display:block; padding:5px 20px; height:20px; line-height:20px; background:#eee; border:1px solid #aaa;}
+.pol_tab ul li a.on,
+.pol_tab ul li a:hover {text-decoration:none; background:#fff; border-bottom:0; padding-bottom:6px;}
+
+.polbox{height:254px; overflow-x:hidden; overflow-y:auto}
+
+#policy_detail_view .polbox .list {max-height:143px;}
+#policy_detail_view .polbox .list td {text-align:center; padding:4px 0; height:20px; line-height:20px;}
+#policy_detail_view .polbox .title td {font-weight:bold}
+#policy_detail_view .polbox.body3 .list {max-height:200px;}
+#policy_detail_view .polbox.body4 .list {max-height:200px;}
+#policy_detail_view .polbox.body4 .title td {height:30px; line-height:30px}
+#policy_detail_view .polbox.body4 .list td {height:35px; line-height:35px}
+
+#policy_select_view {display:none; padding:20px; width:760px}
+#policy_select_view p {color:#666; margin:0 0 5px}
+#policy_select_view table.title {width:100%; border:1px solid #ddd; background:#eee}
+#policy_select_view table.title td,
+#policy_select_view table tr td.tit {text-align:center; padding:10px; color:#555; background:#eee; font-weight:bold}
+#policy_select_view .list {overflow-y:auto; overflow-x:hidden; max-height:205px; border-bottom:1px solid #ddd;}
+#policy_select_view .list table {width:100%; border-left:1px solid #ddd; border-right:1px solid #ddd;}
+#policy_select_view .list table td {border-top:1px solid #eee; padding:4px 0; text-align:center; color:#999}
+#policy_select_view .list table tr:first-child td {border-top:0}
+
+/* 통계정보 > 정책관리현황 > 정책별 통계  */
+#stats_detail_view {display:none; padding:20px; width:750px}
+#stats_detail_view > table {width:100%}
+#stats_detail_view > table td {padding:10px 0; color:#666}
+#stats_detail_view .st_dt {float:left;}
+#stats_detail_view .st_dt.box1 {width:68%; margin:0 1% 1% 0}
+#stats_detail_view .st_dt.box2 {width:30%; margin:0 0 1%;}
+#stats_detail_view .st_dt.box3 {clear:left; width:60%; margin:0 1% 1% 0}
+#stats_detail_view .st_dt.box4 {width:38%; margin:0 0 1%;}
+#stats_detail_view .st_dt.box5 {width:99%; clear:both}
+#stats_detail_view .st_dt table {width:100%;}
+#stats_detail_view .st_dt > table td {border-top:1px solid #ddd;background:#eee}
+#stats_detail_view .st_dt table td {color:#666; height:28px; line-height:28px;}
+#stats_detail_view .st_dt .table_body table {border-top:1px solid #ddd; border-bottom:1px solid #ddd}
+#stats_detail_view .st_dt .table_body table td {border-top:1px solid #ddd}
+#stats_detail_view .st_dt .table_body table tr:first-child td {border-top:0}
+#stats_detail_view .st_dt .table_body {max-height:180px; overflow-y:auto;}
+#stats_detail_view .st_dt table td{text-align:center}

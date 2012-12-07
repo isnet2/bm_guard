@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.isnetis.policy.dao.PassPolicyDao">
+	
+	<insert id="addPassPolicy" parameterType="PassPolicy">
+		insert into BMPASSPR_LIST(invalid_flag, process_name, comp_name, passpr_info, policy_idx)
+		values(0, #{process_name}, #{comp_name}, #{passpr_info}, #{policy_idx})
+	</insert>
+	
+	<update id="delPassPolicy" parameterType="int">
+		delete from BMPASSPR_LIST
+		where policy_idx = #{policy_idx}
+	</update>
+	
+	<select id="getPassPolicyList" parameterType="int" resultType="PassPolicy">
+		select process_name, comp_name, passpr_info
+		from BMPASSPR_LIST
+		where policy_idx = #{value}
+	</select>
+
+</mapper>

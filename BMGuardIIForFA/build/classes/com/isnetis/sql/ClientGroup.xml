@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.device.dao.ClientGroupDao">
+	
+	<select id="getClientGroupInfo" parameterType="int" resultType="ClientGroup">
+		select clientgrp_idx, 
+				clientgrp_name,
+				clientgrp_code, 
+				ref_count
+		from CLIENTGRP_LIST 
+		where clientgrp_idx = #{value}
+	</select>
+	
+	<select id="getClientGroupList" parameterType="int" resultType="ClientGroup">
+		select clientgrp_idx, 
+				clientgrp_name, 
+				clientgrp_code,
+				ref_count
+		from CLIENTGRP_LIST 
+		where clientgrp_pidx = #{value}
+		and invalid_flag = 0
+	</select>
+	
+	<insert id="insertClientGroup" parameterType="ClientGroup">
+		insert into CLIENTGRP_LIST(invalid_flag, clientgrp_pidx, clientgrp_name, clientgrp_code, ref_count)
+		values( 0, 
+				<if test='clientgrp_pidx != null and clientgrp_pidx != ""'>
+					#{clientgrp_pidx},
+				</if>
+				<if test='clientgrp_pidx == null or clientgrp_pidx == ""'>
+					(select clientgrp_idx from (SELECT clientgrp_idx from CLIENTGRP_LIST where clientgrp_name ='ROOT')t1),
+				</if>
+		 #{clientgrp_name}, #{clientgrp_code}, 0)
+	</insert>
+	
+	<update id="increaseRefCount" parameterType="int">
+		update CLIENTGRP_LIST
+		set ref_count = ref_count + 1
+		where clientgrp_idx = #{value}
+	</update>
+	
+	<update id="renameGroup" parameterType="ClientGroup">
+		update CLIENTGRP_LIST
+		set clientgrp_name = #{clientgrp_name}
+		where clientgrp_idx = #{clientgrp_idx}
+	</update>
+	
+	<update id="deleteGroup" parameterType="int">
+		update CLIENTGRP_LIST
+		set invalid_flag = 1 
+		where clientgrp_idx = #{value}
+	</update>
+	
+	<update id="decreaseRefCount" parameterType="int">
+		update CLIENTGRP_LIST
+		set ref_count = ref_count - 1 
+		where clientgrp_idx = (select A.clientgrp_pidx 
+									 from (select clientgrp_pidx 
+									 		 from CLIENTGRP_LIST 
+									 		 where clientgrp_idx = #{value}) as A)
+	</update>
+	
+	<select id="getClinetGrpName" parameterType="int" resultType="ClientGroup">
+		select getClientGrpName(#{value})
+	</select>
+	
+		<select id="getClientGrpCnt" parameterType="ClientGroup" resultType="int">
+		select count(*) cnt 
+		  from CLIENTGRP_LIST
+		where clientgrp_name =  #{clientgrp_name}
+		  and clientgrp_code = #{clientgrp_code}
+	</select>
+	
+		<select id="getClientGroupByName" parameterType="ClientGroup" resultType="ClientGroup">
+		select clientgrp_idx, 
+				clientgrp_name,
+				clientgrp_code, 
+				ref_count
+		from CLIENTGRP_LIST 
+		where clientgrp_name = #{clientgrp_name}
+		  and clientgrp_code = #{clientgrp_code}
+	</select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="com.isnetis.policy.dao.FolderPolicyDao">
+	
+	<insert id="addFolderPolicy" parameterType="FolderPolicy">
+		insert into BMFOLDER_LIST(invalid_flag, bmfolder_path, comp_name, folder_info, policy_idx)
+		values(0, #{bmfolder_path}, #{comp_name}, #{folder_info}, #{policy_idx})
+	</insert>
+	
+	<select id="getFolderPolicyList" parameterType="int" resultType="FolderPolicy">
+		select bmfolder_path, comp_name, folder_info
+		from BMFOLDER_LIST
+		where policy_idx = #{value}
+	</select>
+	
+	<update id="delFolderPolicy" parameterType="int">
+		delete from BMFOLDER_LIST
+		where policy_idx = #{policy_idx}
+	</update>
+</mapper>

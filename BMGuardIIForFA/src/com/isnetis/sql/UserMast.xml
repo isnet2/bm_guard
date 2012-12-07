@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--
+  // 1. 
+
+  -->
+
+<mapper namespace="UserMast">
+		<resultMap id="UserMastMap" type="userMast" >
+			<result property="user_idx"       column="user_idx"/>
+			<result property="backup_date"    column="backup_date"/>
+			<result property="invalid_flag"   column="invalid_flag"/>
+			<result property="create_date"    column="create_date"/>
+			<result property="createuser_idx" column="createuser_idx"/>
+			<result property="delete_date"    column="delete_date"/>
+			<result property="deleteuser_idx" column="deleteuser_idx"/>
+			<result property="update_date"    column="update_date"/>
+			<result property="updateuser_idx" column="updateuser_idx"/>
+			<result property="client_lipaddr" column="client_lipaddr"/>
+			<result property="login_ldate"    column="login_ldate"/>
+			<result property="usergrp_idx"    column="usergrp_idx"/>
+			<result property="usergrp_name"   column="usergrp_name"/>
+			<result property="userattr_idx"   column="userattr_idx"/>
+			<result property="userattr_title" column="userattr_title"/>
+			<result property="user_no"        column="user_no"/>
+			<result property="user_name"      column="user_name"/>
+			<result property="login_id"       column="login_id"/>
+			<result property="login_pwd"      column="login_pwd"/>
+			<result property="pwd_ques"       column="pwd_ques"/>
+			<result property="pwd_ans"        column="pwd_ans"/>
+			<result property="update_gubun"   column="update_gubun"/>
+			<result property="history_user_idx"   column="history_user_idx"/>
+			<collection property="managementGroupList" javaType="list" select="com.isnetis.device.dao.ManagementGroupDao.getManagementGroupForAdmin" column="user_idx"></collection>  
+		</resultMap>
+		
+		<resultMap id="UserMastHistorytMap" type="userMast" >
+			<result property="user_idx"       column="user_idx"/>
+			<result property="backup_date"    column="backup_date"/>
+			<result property="invalid_flag"   column="invalid_flag"/>
+			<result property="create_date"    column="create_date"/>
+			<result property="createuser_idx" column="createuser_idx"/>
+			<result property="delete_date"    column="delete_date"/>
+			<result property="deleteuser_idx" column="deleteuser_idx"/>
+			<result property="update_date"    column="update_date"/>
+			<result property="updateuser_idx" column="updateuser_idx"/>
+			<result property="client_lipaddr" column="client_lipaddr"/>
+			<result property="login_ldate"    column="login_ldate"/>
+			<result property="usergrp_idx"    column="usergrp_idx"/>
+			<result property="usergrp_name"   column="usergrp_name"/>
+			<result property="userattr_idx"   column="userattr_idx"/>
+			<result property="userattr_title" column="userattr_title"/>
+			<result property="user_no"        column="user_no"/>
+			<result property="user_name"      column="user_name"/>
+			<result property="login_id"       column="login_id"/>
+			<result property="login_pwd"      column="login_pwd"/>
+			<result property="pwd_ques"       column="pwd_ques"/>
+			<result property="pwd_ans"        column="pwd_ans"/>
+			<result property="update_gubun"   column="update_gubun"/>
+			<result property="history_user_idx"   column="history_user_idx"/>
+			<collection property="managementGroupList" javaType="list" select="com.isnetis.device.dao.ManagementGroupDao.getAdminGrpHistory" column="{user_idx = user_idx, history_user_idx =history_user_idx}"></collection>  
+		</resultMap>
+
+	<!-- 인자로 받은 아뒤와 비번에 해당하는 사용자 정보를 가져온다 -->
+	<select id="UserMast.getFindUserInfo"  parameterType="userMast" resultType="sessionUser">
+		 select t1.user_idx as user_idx
+				,      t1.usergrp_idx as usergrp_idx
+				,      (select t2.usergrp_code from USERGRP_LIST t2 where t2.USERGRP_IDX = t1.USERGRP_IDX) as usergrp_code
+				,      (select t2.usergrp_name from USERGRP_LIST t2 where t2.USERGRP_IDX = t1.USERGRP_IDX) as usergrp_name
+				,      t1.userattr_idx as userattr_idx
+				,      (select t3.userattr_title from USERATTR_MAST t3 where t3.USERATTR_IDX = t1.USERATTR_IDX) as userattr_title
+				,      t1.user_no as user_no
+				,      t1.user_name as user_name
+				,      t1.login_id as login_id
+				,      t1.login_pwd as login_pwd
+				,      t1.pwd_ques as pwd_ques
+				,      t1.pwd_ans as pwd_ans
+		 from USER_MAST t1
+				where t1.login_id = #{login_id}
+	</select>
+
+	<select id="UserMast.getFindByIdUserInfo"  parameterType="String" resultType="userMast">
+	   	select '0' history_user_idx
+	   	,      t1.user_idx	
+		,      t1.backup_date	
+		,      t1.invalid_flag	
+		,      t1.create_date	
+		,      t1.createuser_idx	
+		,      t1.delete_date	
+		,      t1.deleteuser_idx	
+		,      t1.update_date	
+		,      t1.updateuser_idx	
+		,      t1.client_lipaddr	
+		,      t1.login_ldate	
+		,      t1.usergrp_idx	
+	  ,      (select usergrp_name 
+	            from USERGRP_LIST
+	           where usergrp_code = t1.usergrp_idx
+	         ) usergrp_name 
+		,      t1.userattr_idx
+		,      (
+	           select userattr_title 
+	             from USERATTR_MAST 
+	            where userattr_idx = t1.userattr_idx
+	         )userattr_title 
+		,      t1.user_no		
+		,      t1.user_name	
+		,      t1.login_id	
+		,      t1.login_pwd	
+		,      t1.pwd_ques	
+		,      t1.pwd_ans		
+		,      t1.update_gubun	
+		from  USER_MAST t1
+		where login_id = #{login_id}	
+	</select>
+
+	<select id="UserMast.getCheckPwdAnser"  parameterType="userMast" resultType="int">
+		select count(*) cnt
+		from  USER_MAST
+		where login_id = #{login_id}	
+		  and pwd_ans = #{pwd_ans}
+	</select>
+
+	<update id="UserMast.getChangePassWord"  parameterType="userMast">
+		update USER_MAST 
+		SET update_date = convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char) /* varchar(20) */
+		  ,updateuser_idx = (select * from 
+		                              (select user_idx 
+		                                      from USER_MAST 
+		                                     where login_id = #{login_id})t1)  /* int(11) */
+		  ,login_pwd = md5(#{login_pwd}) /* varchar(32) */
+		WHERE login_id =#{login_id} /* int(11) */
+	</update>
+	
+	<update id="UserMast.getChangePwdQuesAns"  parameterType="userMast">
+		update USER_MAST 
+		SET update_date = convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char) /* varchar(20) */
+		  ,updateuser_idx = (select * from 
+		                              (select user_idx 
+		                                      from USER_MAST 
+		                                     where login_id = #{login_id})t1)  /* int(11) */
+		  ,pwd_ques =#{pwd_ques} /* varchar(40) */
+		  ,pwd_ans  = #{pwd_ans} /* varchar(40) */
+		WHERE login_id =#{login_id} /* int(11) */
+	</update>
+
+	<update id="UserMast.updateLogin"  parameterType="userMast">
+		update USER_MAST 
+		SET update_date = convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char) /* varchar(20) */
+		  ,updateuser_idx = (select * from 
+		                              (select user_idx 
+		                                      from USER_MAST 
+		                                     where login_id = #{login_id})t1)  /* int(11) */
+		  ,login_ldate = convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char) /* varchar(20) */
+		  ,client_lipaddr  = #{client_lipaddr} 
+		WHERE login_id =#{login_id} /* int(11) */
+	</update>	
+	
+	<select id="UserMast.getUserList"  resultMap="UserMastMap">
+		select t1.user_idx
+		,      t1.invalid_flag
+		,      t1.client_lipaddr
+		,      t1.update_date
+		,      t1.login_ldate
+		,      t1.usergrp_idx
+		,      t3.usergrp_name
+		,      t1.userattr_idx
+		,      t2.userattr_title
+		,      t1.user_no
+		,      t1.user_name
+		,      t1.login_id
+		,      t1.login_pwd
+		,      t1.pwd_ques
+		,      t1.pwd_ans
+		,      case when t1.update_gubun = 'C' then '신규'
+		            when t1.update_gubun = 'U' then '변경'
+		            when t1.update_gubun = 'D' then '삭제'
+		       end update_gubun   
+		  from USER_MAST t1
+		,      USERATTR_MAST t2
+		,      USERGRP_LIST t3
+		 where t1.userattr_idx = t2.userattr_idx
+		   and t1.usergrp_idx = t3.usergrp_code
+		<if test='update_gubun != null and update_gubun == "C"'>
+		   and t1.update_gubun != 'D'
+		   and t1.invalid_flag = 0
+		</if>
+		<if test='update_gubun != null and update_gubun == "D"'>
+		   and t1.update_gubun = 'D'
+		   and t1.invalid_flag = 1
+		</if>
+		order by t1.invalid_flag , t1.user_idx desc
+	</select>
+
+	<update id="UserMast.insertUser"  parameterType="userMast">
+		insert into USER_MAST
+		( invalid_flag
+		, create_date
+		, createuser_idx
+		, usergrp_idx
+		, userattr_idx
+		, user_no
+		, user_name
+		, login_id
+		, login_pwd
+		, update_gubun
+		) values (
+		 '0'
+		, convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char)
+		, #{createuser_idx}
+		, #{usergrp_idx}
+		, #{userattr_idx}
+		, #{user_no}
+		, #{user_name}
+		, #{login_id}
+		, md5(#{login_pwd})
+		, 'C'
+		)
+	</update>
+
+	<update id="UserMast.insertUserHistory"  parameterType="userMast">
+		insert into USER_MAST_HISTORY
+		( create_date
+		, createuser_idx
+		, usergrp_idx
+		, userattr_idx
+		, user_no
+		, user_name
+		, login_id
+		, login_pwd
+		, update_gubun
+		) values (
+		   convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char)
+		, #{createuser_idx}
+		, #{usergrp_idx}
+		, #{userattr_idx}
+		, #{user_no}
+		, #{user_name}
+		, #{login_id}
+		, #{login_pwd}
+		, 'C'
+		)
+	</update>
+	
+	<select id="UserMast.getFindByIdxUserHistory"  parameterType="String" resultType="userMast">
+	select t1.history_user_idx
+	   	,      t1.user_idx	
+		,      t1.backup_date	
+		,      t1.invalid_flag	
+		,      t1.create_date	
+		,      t1.createuser_idx	
+		,      t1.delete_date	
+		,      t1.deleteuser_idx	
+		,      case when t1.update_gubun = 'C' then t1.create_date 
+                when t1.update_gubun = 'U' then t1.update_date
+                when t1.update_gubun = 'D' then t1.DELETE_DATE
+           end update_date
+		,      t1.updateuser_idx	
+		,      t1.client_lipaddr	
+		,      t1.login_ldate	
+		,      t1.usergrp_idx	
+	  ,      (select usergrp_name 
+	            from USERGRP_LIST
+	           where usergrp_code = t1.usergrp_idx
+	         ) usergrp_name 
+		,      t1.userattr_idx
+		,      (
+	           select userattr_title 
+	             from USERATTR_MAST 
+	            where userattr_idx = t1.userattr_idx
+	         )userattr_title 
+		,      t1.user_no		
+		,      t1.user_name	
+		,      t1.login_id	
+		,      t1.login_pwd	
+		,      t1.pwd_ques	
+		,      t1.pwd_ans		
+		,      case when t1.update_gubun = 'C' then '신규'
+		            when t1.update_gubun = 'U' then '변경'
+		            when t1.update_gubun = 'D' then '삭제'
+		       end update_gubun 
+		from  USER_MAST_HISTORY t1
+		where user_idx = #{user_idx}
+		order by  t1.history_user_idx desc
+	</select>
+
+    <update id="UserMast.deleteUser"  parameterType="String">
+		update USER_MAST 
+		SET invalid_flag = 1
+		  , delete_date = convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char) /* varchar(20) */
+		  , deleteuser_idx = #{user_idx}
+		  , update_gubun ='D'
+		WHERE user_idx =#{user_idx} /* int(11) */
+	</update>
+	
+	<update id="UserMast.insertUserMastHistory"  parameterType="userMast">
+		insert into USER_MAST_HISTORY
+		(    backup_date, user_idx, invalid_flag, create_date
+			, createuser_idx, delete_date, deleteuser_idx, update_date
+			, updateuser_idx, client_lipaddr, login_ldate, usergrp_idx
+			, user_no, user_name, login_id, login_pwd, userattr_idx
+			, pwd_ques, pwd_ans, update_gubun
+	    )
+		select backup_date, user_idx, invalid_flag, create_date
+		, 	   createuser_idx, delete_date, deleteuser_idx, update_date
+		, 	   updateuser_idx, client_lipaddr, login_ldate, usergrp_idx
+		, 	   user_no, user_name, login_id, login_pwd, userattr_idx
+		, 	   pwd_ques, pwd_ans, update_gubun
+		from USER_MAST
+		where user_idx = #{user_idx}
+	</update>
+	
+	<select id="UserMast.getFindIdxUserInfo"  parameterType="String" resultMap="UserMastMap">
+		    select     '0' history_user_idx
+		        ,      t3.user_idx	
+				,      t3.backup_date	
+				,      t3.invalid_flag	
+				,      t3.create_date	
+				,      t3.createuser_idx	
+				,      t3.delete_date	
+				,      t3.deleteuser_idx	
+				,      t3.update_date	
+				,      t3.updateuser_idx	
+				,      t3.client_lipaddr	
+				,      t3.login_ldate	
+				,      t3.usergrp_idx	
+			  ,      (select usergrp_name 
+			            from USERGRP_LIST
+			           where usergrp_code = t3.usergrp_idx
+			         ) usergrp_name 
+				,      t3.userattr_idx
+				,      (
+			           select userattr_title 
+			             from USERATTR_MAST 
+			            where userattr_idx = t3.userattr_idx
+			         )userattr_title 
+				,      t3.user_no		
+				,      t3.user_name	
+				,      t3.login_id	
+				,      t3.login_pwd	
+				,      t3.pwd_ques	
+				,      t3.pwd_ans		
+				,      case when t3.update_gubun = 'C' then '신규'
+		            when t3.update_gubun = 'U' then '변경'
+		            when t3.update_gubun = 'D' then '삭제'
+		       end update_gubun 	
+		,      GROUP_CONCAT(t1.clientgrp_idx) clientgrp_idx
+		,      GROUP_CONCAT(t2.clientgrp_name) clientgrp_name
+		from   MANAGEMENTGRP_LIST t1
+		,    CLIENTGRP_LIST t2
+		,    USER_MAST t3
+		where t1.user_idx = t3.user_idx 
+		and t1.clientgrp_idx = t2.clientgrp_idx
+		and t1.user_type ='A'
+		and t1.user_idx = #{user_idx} 
+	</select>
+	
+	<select id="UserMast.getFindIdxUserHistory"  parameterType="String" resultMap="UserMastHistorytMap">
+	   	select t1.history_user_idx
+	   	,      t1.user_idx	
+		,      t1.backup_date	
+		,      t1.invalid_flag	
+		,      t1.create_date	
+		,      t1.createuser_idx	
+		,      t1.delete_date	
+		,      t1.deleteuser_idx	
+		,      case when t1.update_gubun = 'C' then t1.create_date 
+                when t1.update_gubun = 'U' then t1.update_date
+                when t1.update_gubun = 'D' then t1.DELETE_DATE
+           end update_date	
+		,      t1.updateuser_idx	
+		,      t1.client_lipaddr	
+		,      t1.login_ldate	
+		,      t1.usergrp_idx	
+	  ,      (select usergrp_name 
+	            from USERGRP_LIST
+	           where usergrp_code = t1.usergrp_idx
+	         ) usergrp_name 
+		,      t1.userattr_idx
+		,      (
+	           select userattr_title 
+	             from USERATTR_MAST 
+	            where userattr_idx = t1.userattr_idx
+	         )userattr_title 
+		,      t1.user_no		
+		,      t1.user_name	
+		,      t1.login_id	
+		,      t1.login_pwd	
+		,      t1.pwd_ques	
+		,      t1.pwd_ans		
+		,      case when t1.update_gubun = 'C' then '신규'
+                     when t1.update_gubun = 'U' then '변경'
+                     when t1.update_gubun = 'D' then '삭제'
+                end update_gubun 
+		from  USER_MAST_HISTORY t1
+		where user_idx = #{user_idx}	
+		order by t1.history_user_idx desc
+	</select>
+		
+	<select id="UserMast.getUserMastMaxIdx" resultType="int">
+		select max(user_idx) user_idx
+	  	  from USER_MAST
+	</select>
+	
+		<select id="UserMast.getUserHistoryMaxIdx" resultType="int">
+		select max(history_user_idx) history_user_idx
+	  	  from USER_MAST_HISTORY
+	</select>
+	
+	
+	<update id="UserMast.updateUser"  parameterType="userMast">
+		update USER_MAST 
+		SET update_date = convert(DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),char) /* varchar(20) */
+		  ,updateuser_idx = #{updateuser_idx}
+		  ,usergrp_idx = #{usergrp_idx}
+		  ,userattr_idx = #{userattr_idx}
+		  ,user_no = #{user_no}
+		  ,user_name = #{user_name}
+		  ,login_id =#{login_id}
+	<if test="login_pwd != null and login_pwd != '' ">
+		  ,login_pwd = md5(#{login_pwd}) /* varchar(32) */
+	</if>
+		  ,update_gubun=#{update_gubun}
+		WHERE user_idx =#{user_idx} /* int(11) */
+	</update>
+
+	<select id="UserMast.getCheckLoginIdCnt" parameterType="userMast" resultType="int">
+		select count(*) result
+		  from USER_MAST 
+		 where login_id = #{login_id}
+	</select>
+
+	<select id="UserMast.getCheckUserNoCnt" parameterType="userMast" resultType="int">
+		select count(*) result
+	      from USER_MAST 
+	     where user_no = #{user_no}
+	</select>
+	
+		<select id="UserMast.getCheckLoginId" parameterType="String" resultType="String">
+		select login_id
+		  from USER_MAST 
+		 where login_id = #{login_id}
+	</select>
+
+	<select id="UserMast.getCheckUserNo" parameterType="String" resultType="String">
+		select user_no
+	      from USER_MAST 
+	     where user_no = #{user_no}
+	</select>
+</mapper>
