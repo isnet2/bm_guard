@@ -115,6 +115,6 @@
 		<beans:property name="order" value="2" />
 	</beans:bean>  -->
 	
-	<!-- <beans:bean class="com.isnetis.common.aop.CommonAOP"></beans:bean>
-	<aop:aspectj-autoproxy/> -->
+	<beans:bean class="com.isnetis.common.aop.CommonAOP"></beans:bean>
+	<aop:aspectj-autoproxy/>
 </beans:beans>

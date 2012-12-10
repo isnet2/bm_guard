@@ -17,5 +17,6 @@ public interface StatsService {
 	
 	// 정책관리 현황(정책별 통계)
 	List<Map<String, Object>> getNewPolicyListByDate(Map<String, Object> paramMap);
-	
+	// 정책관리 현황(기기별 통계)
+	List<Map<String, Object>> getDeviceListByDate(Map<String, Object> paramMap);
 }

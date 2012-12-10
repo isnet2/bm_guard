@@ -86,4 +86,12 @@ public class StatsServiceImp implements StatsService{
 		
 		return resultList;
 	}
+	
+	// 정책관리현황 (기기별 통계)
+	@Override
+	public List<Map<String, Object>> getDeviceListByDate(Map<String, Object> paramMap) {
+		List<Map<String, Object>> resultList = statsDao.getDeviceListByDate(paramMap);
+		logger.info("["+getClass().getName()+"][getDeviceListByDate] total_data_count["+resultList.size()+"]");
+		return resultList;
+	}
 }

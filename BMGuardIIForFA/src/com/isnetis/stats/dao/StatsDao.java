@@ -10,5 +10,5 @@ public interface StatsDao {
 	List<Map<String, Object>> getDeviceStatsByOsType(Map<String, Object> param);
 	List<Map<String, Object>> getDeviceStateByGroup(Map<String, Object> param);
 	List<Map<String, Object>> getNewPolicyListByDate(Map<String, Object> param);
-	
+	List<Map<String, Object>> getDeviceListByDate(Map<String, Object> param);
 }

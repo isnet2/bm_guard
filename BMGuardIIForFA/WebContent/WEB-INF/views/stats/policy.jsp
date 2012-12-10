@@ -91,7 +91,7 @@ include "../common/inc/header.html";
 
 
 		<p class="clearboth mt10 tc">
-			<a href="srch.html" class="btn type2 setp30" id="search_bt"><span>조회</span></a>
+			<a href="#" class="btn type2 setp30" id="search_bt"><span>조회</span></a>
 		</p>
 
 		<h4 class="mt20 mb10">조회결과</h4>

@@ -119,14 +119,41 @@
 	
 	<!-- 정책관리현황(정책별 통계) -->
 	<select id="getNewPolicyByDate" parameterType="map" resultType="hashmap">
-		select A.policy_nowdate, A.policynow_idx policy_idx, A.policy_name, A.policy_desc, A.apply_device_count
+		select A.policy_nowdate, 
+				A.policynow_idx policy_idx, 
+				A.policy_name, 
+				A.policy_desc, 
+				A.apply_device_count
 		from(select policy_nowdate, policynow_idx, 
-			count(*) apply_device_count,
-			(select X.policy_name from POLICY_MAST X where policy_idx = policynow_idx)as policy_name,
-			(select Y.policy_desc from POLICY_MAST Y where policy_idx = policynow_idx)as policy_desc
-			from CLIENT_MAST 
-			where policy_nowdate &gt; #{start_date, jdbcType=VARCHAR} and policy_nowdate &lt; #{end_date, jdbcType=VARCHAR} 
-			and policy_nowdate is not null
-			group by policy_nowdate, policy_idx)  A
+				count(*) apply_device_count,
+				(select X.policy_name from POLICY_MAST X where policy_idx = policynow_idx)as policy_name,
+				(select Y.policy_desc from POLICY_MAST Y where policy_idx = policynow_idx)as policy_desc
+				from CLIENT_MAST 
+				where policy_nowdate &gt; #{start_date, jdbcType=VARCHAR} and policy_nowdate &lt; #{end_date, jdbcType=VARCHAR} 
+				and policy_nowdate is not null
+				group by policy_nowdate, policy_idx)  A
+	</select>
+	
+	<select id="getDeviceListByDate" parameterType="map" resultType="hashmap">
+		select B.clientgrp_name group_name,
+				A.client_name,
+				A.ip_addr,
+				A.os_type,
+				A.policy_nowdate,
+				A.sim_flag,
+				C.policy_name,
+				C.policy_desc
+		from(	select clientgrp_idx, 
+					client_name, 
+					ip_addr, 
+					os_type, 
+					policy_nowdate, 
+					sim_flag, 
+					policy_idx
+				from CLIENT_MAST 
+				where policy_nowdate &gt;  #{start_date, jdbcType=VARCHAR} and policy_nowdate &lt; #{end_date, jdbcType=VARCHAR} 
+				and policy_nowdate is not null) A, CLIENTGRP_LIST B, POLICY_MAST C
+		where A.policy_idx = C.policy_idx
+		and A.clientgrp_idx = B.clientgrp_idx
 	</select>
 </mapper>

@@ -39,4 +39,10 @@ public class StatsDaoImp extends SqlSessionDaoSupport implements StatsDao{
 	public List<Map<String, Object>> getNewPolicyListByDate(Map<String, Object> param) {
 		return getSqlSession().selectList("getNewPolicyByDate", param);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> getDeviceListByDate(Map<String, Object> param) {
+		return getSqlSession().selectList("getDeviceListByDate", param);
+	}
 }

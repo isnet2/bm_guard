@@ -79,6 +79,9 @@ import com.isnetis.stats.service.StatsService;
 			modelAndView.addObject("deviceStatsByGroup", deviceStatsByGroup);
 			modelAndView.addObject("deviceStatsByOstype", deviceStatsByOstype);
 			
+			logger.debug("["+getClass().getName()+"][deviceStatsByGroup] deviceStatsByGroup["+deviceStatsByGroup+"]");
+			logger.debug("["+getClass().getName()+"][deviceStatsByGroup] deviceStatsByOstype["+deviceStatsByOstype+"]");
+			
 		}catch(Exception e){
 			logger.error("["+getClass().getName()+"][deviceStatsByGroup] 자동화기기 운영현황 조회 에러");
 			logger.error("["+getClass().getName()+"][deviceStatsByGroup]"+ e.getMessage());
@@ -127,6 +130,7 @@ import com.isnetis.stats.service.StatsService;
 		try{
 			List<Map<String, Object>> list = statsService.getDeviceStateByGroup(map);
 			modelAndView.addObject("device_list", list);
+			logger.debug("["+getClass().getName()+"][getDeviceStateByGroup] deviceList["+list+"]");
 			
 		}catch(Exception e){
 			logger.error("["+getClass().getName()+"][getDeviceStateByGroup] 자동화기기 운영현황 조회 에러");
@@ -155,6 +159,7 @@ import com.isnetis.stats.service.StatsService;
 		
 		logger.info("["+getClass().getName()+"][getNewPolicyListByDate] start_date["+start_date+"]");
 		logger.info("["+getClass().getName()+"][getNewPolicyListByDate] end_date["+end_date+"]");
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start_date", start_date);
 		map.put("end_date", end_date + " 23:59:59");
@@ -167,6 +172,7 @@ import com.isnetis.stats.service.StatsService;
 		try{
 			List<Map<String, Object>> list = statsService.getNewPolicyListByDate(map);
 			modelAndView.addObject("policy_list", list);
+			logger.debug("["+getClass().getName()+"][getNewPolicyListByDate] deviceList["+list+"]");
 			
 		}catch(Exception e){
 			logger.error("["+getClass().getName()+"][getNewPolicyListByDate] 정책별통계 조회 에러");
@@ -178,12 +184,44 @@ import com.isnetis.stats.service.StatsService;
 		return modelAndView;
 	}
 
-	/**통계 관리 리스트 페이지*/
-	@RequestMapping(value="/stats/policy_dvc", method = { RequestMethod.POST,RequestMethod.GET } )
-	public ModelAndView getPolicyDvc(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
+	/** 정책관리현황(기기별 통계) 페이지 이동*/
+	@RequestMapping(value="/stats/policy_dvc", method = RequestMethod.GET  )
+	public ModelAndView goPolicyDvc(ModelAndView modelAndView){
 
 		//개발용 관리자 페이지로 이동 
 		modelAndView.setViewName("/stats/policy_dvc");
+		return modelAndView;
+	}
+	
+	/** 정책관리현황(기기별 통계) data 조회*/
+	@RequestMapping(value="/stats/policy_dvc", method = RequestMethod.POST )
+	public ModelAndView getDeviceListByDate(@RequestParam("start_date")String start_date,
+			@RequestParam("end_date")String end_date){
+
+		logger.info("["+getClass().getName()+"][getDeviceListByDate] start_date["+start_date+"]");
+		logger.info("["+getClass().getName()+"][getDeviceListByDate] end_date["+end_date+"]");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start_date", start_date);
+		map.put("end_date", end_date + " 23:59:59");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setView(mappingJacksonJsonView);
+		
+		int resultStatus = CommonConstant.REQUEST_PROCESS_SUCCEED;
+		
+		try{
+			List<Map<String, Object>> list = statsService.getDeviceListByDate(map);
+			modelAndView.addObject("device_list", list);
+			logger.debug("["+getClass().getName()+"][getDeviceListByDate] deviceList["+list+"]");
+			
+		}catch(Exception e){
+			logger.error("["+getClass().getName()+"][getDeviceListByDate] 정책별통계 조회 에러");
+			logger.error("["+getClass().getName()+"][getDeviceListByDate]"+ e.getMessage());
+			resultStatus = CommonConstant.REQUEST_PROCESS_FAIL;
+		}
+		modelAndView.addObject("status", resultStatus);
+			
 		return modelAndView;
 	}
 	
