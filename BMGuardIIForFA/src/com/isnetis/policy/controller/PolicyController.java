@@ -1,5 +1,6 @@
 package com.isnetis.policy.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class PolicyController {
 	@RequestMapping(value="/index.html")
 	public ModelAndView index(@RequestParam(value="policy_idx",required=false) Integer policy_idx){
 		
-		logger.info("["+getClass().getName() + "] policy_idx["+policy_idx+"]");
+		logger.info("["+getClass().getName() + "][index] policy_idx["+policy_idx+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -67,9 +68,13 @@ public class PolicyController {
 	@RequestMapping(value="/updatePolicy.html")
 	public ModelAndView updatePolicy(@RequestParam(value="policy_idx",required=false) Integer policy_idx){
 		
+		logger.info("["+getClass().getName() + "][updatePolicy] policy_idx["+policy_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		
 		List<PolicyMastVO> policyMastList = policyMastService.getPolicyMastList();
+		logger.debug("["+getClass().getName() + "][updatePolicy] policyMastList["+policy_idx+"]");
+		
 		mav.addObject("policyMastList", policyMastList);
 		
 		if(policy_idx !=null && policy_idx!= 0) {
@@ -123,6 +128,8 @@ public class PolicyController {
 	@RequestMapping(value="/policyInfo.html")
 	public ModelAndView getPolicyInfo(@RequestParam(value="policy_idx")int policy_idx){
 		
+		logger.info("["+getClass().getName() + "][getPolicyInfo] policy_idx["+policy_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		
@@ -169,7 +176,7 @@ public class PolicyController {
 	@RequestMapping(value="/changePolicy.html")
 	public ModelAndView changePolicy(PolicyMastVO policy){ ModelAndView mav = new ModelAndView();
 	
-		logger.info("["+getClass().getName() + "] changePolicy() policy_idx["+policy.getPolicy_idx()+"]");
+		logger.info("["+getClass().getName() + "][changePolicy] policy_idx["+policy.getPolicy_idx()+"]");
 	
 		mav.setView(mappingJacksonJsonView);
 		int resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
@@ -191,6 +198,9 @@ public class PolicyController {
 	public ModelAndView getDeviceListByClientGrpIdx(@RequestParam(value="clientgrp_idx")int clientgrp_idx,
 													@RequestParam(value="nowsim_flag", required=false, defaultValue="-1")int nowsim_flag){
 		
+		logger.info("["+getClass().getName() + "][getDeviceListByClientGrpIdx] clientgrp_idx["+clientgrp_idx+"]");
+		logger.info("["+getClass().getName() + "][getDeviceListByClientGrpIdx] nowsim_flag["+nowsim_flag+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		
@@ -202,6 +212,8 @@ public class PolicyController {
 	
 	@RequestMapping(value="/getDeviceByClientIdx.html")
 	public ModelAndView getDeviceByClientIdx(@RequestParam(value="client_idx")int client_idx){
+		
+		logger.info("["+getClass().getName() + "][getDeviceByClientIdx] client_idx["+client_idx+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -216,6 +228,10 @@ public class PolicyController {
 	@RequestMapping(value="/applyPolicyString.html")
 	public ModelAndView applyPolicyString(@RequestParam(value="policy_idx")int policy_idx,
 											 @RequestParam(value="client_idxs")String client_idxs){
+		
+		logger.info("["+getClass().getName() + "][applyPolicyString] policy_idx["+policy_idx+"]");
+		logger.info("["+getClass().getName() + "][applyPolicyString] client_idxs["+client_idxs+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		int result = 0;
@@ -223,7 +239,8 @@ public class PolicyController {
 			policyMastService.applyPolicyString(policy_idx, client_idxs);
 			result = 1;
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName() + "][applyPolicyString] 정책적용 오류");
+			logger.error("["+getClass().getName() + "][applyPolicyString] " + e.getMessage());
 			result = 0;
 		}
 		mav.addObject("result", result);
@@ -235,13 +252,17 @@ public class PolicyController {
 	public ModelAndView applyPolicyOne(@RequestParam(value="policy_idx")int policy_idx,
 									  @RequestParam(value="client_idx")int client_idx){
 		
+		logger.info("["+getClass().getName() + "][applyPolicyOne] policy_idx["+policy_idx+"]");
+		logger.info("["+getClass().getName() + "][applyPolicyOne] client_idx["+client_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		int resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
 		try {
 			policyMastService.applyPolicyOne(policy_idx, client_idx);
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName() + "][applyPolicyOne] 정책적용 오류");
+			logger.error("["+getClass().getName() + "][applyPolicyOne] " + e.getMessage());
 			resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
 		
@@ -256,13 +277,18 @@ public class PolicyController {
 											@RequestParam(value="sim_flag")int sim_flag,
 											@RequestParam(value="client_idx")int[] client_idxValues){
 		
+		logger.info("["+getClass().getName() + "][applyPolicyOne] policy_idx["+policy_idx+"]");
+		logger.info("["+getClass().getName() + "][applyPolicyOne] sim_flag["+sim_flag+"]");
+		logger.info("["+getClass().getName() + "][applyPolicyOne] client_idx["+Arrays.toString(client_idxValues)+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		int resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
 		try{
 			policyMastService.applyPolicy(policy_idx, sim_flag, client_idxValues);
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName() + "][applyPolicyForDevice] 정책적용 오류");
+			logger.error("["+getClass().getName() + "][applyPolicyForDevice] " + e.getMessage());
 			resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
 		mav.addObject("status", resultCode);
@@ -272,6 +298,8 @@ public class PolicyController {
 	
 	@RequestMapping(value="/getDeviceHistoryForPolicy.html")
 	public ModelAndView getDeviceHistoryForPolicy(@RequestParam(value="client_idx")int client_idx){
+		
+		logger.info("["+getClass().getName() + "][getDeviceHistoryForPolicy] client_idx["+client_idx+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -285,6 +313,9 @@ public class PolicyController {
 	@RequestMapping(value="/getDeviceListByPolicyIdx.html")
 	public ModelAndView getDeviceListByPolicyIdx(@RequestParam(value="policynow_idx")Integer policynow_idx,
 												 @RequestParam(value="nowsim_flag", required=false, defaultValue="-1")int nowsim_flag){
+		
+		logger.info("["+getClass().getName() + "][getDeviceListByPolicyIdx] policynow_idx["+policynow_idx+"]");
+		logger.info("["+getClass().getName() + "][getDeviceListByPolicyIdx] nowsim_flag["+nowsim_flag+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -310,9 +341,13 @@ public class PolicyController {
 											@RequestParam(value="clientgrp_idx", required=false )Integer clientgrp_idx,
 											@RequestParam(value="client_idx", required=false )Integer client_idx) {
 		
+		logger.info("["+getClass().getName() + "][getDevicePolicyList] device_option["+device_option+"]");
+		logger.info("["+getClass().getName() + "][getDevicePolicyList] policynow_idx["+policynow_idx+"]");
+		logger.info("["+getClass().getName() + "][getDevicePolicyList] clientgrp_idx["+clientgrp_idx+"]");
+		logger.info("["+getClass().getName() + "][getDevicePolicyList] client_idx["+client_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
-		
 		
 		List<ClientMastVO> deviceList = policyMastService.getDevicePolicyList(policynow_idx, device_option,clientgrp_idx, client_idx);
 		
@@ -325,7 +360,7 @@ public class PolicyController {
 	@RequestMapping(value="/deletePolicy.html")
 	public ModelAndView deletePolicy(@RequestParam(value="policy_idx")int policy_idx){
 		
-		logger.info("["+ getClass().getName() + "] deletePolicy() policy_idx["+policy_idx+"]");
+		logger.info("["+ getClass().getName() + "][deletePolicy] policy_idx["+policy_idx+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -334,7 +369,8 @@ public class PolicyController {
 			policyMastService.deletePolicy(policy_idx);
 			
 		}catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error("["+getClass().getName() + "][deletePolicy] 정책삭제 오류");
+			logger.error("["+getClass().getName() + "][deletePolicy] " + e.getMessage());
 			resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
 		mav.addObject("status", resultCode);

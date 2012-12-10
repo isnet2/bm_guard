@@ -341,7 +341,7 @@ $(document).ready(function() {
    					var group_name = device.group_name;
    					var client_name = device.client_name;
    					var ip_addr = device.ip_addr || '-';
-   					var mac_addr = device.ip_addr || '-';
+   					var mac_addr = device.mac_addr || '-';
    					var os_type = device.os_type || '-';
    					var stats_date = device.stats_date || '-';
    					

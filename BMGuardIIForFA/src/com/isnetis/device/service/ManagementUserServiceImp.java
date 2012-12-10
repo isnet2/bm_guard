@@ -12,7 +12,6 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.isnetis.common.dao.CommonDao;
 import com.isnetis.common.domain.CommonConstant;
-import com.isnetis.device.dao.ManagementGroupDao;
 import com.isnetis.device.dao.ManagementUserDao;
 import com.isnetis.device.domain.ManagementGroupVO;
 import com.isnetis.device.domain.ManagementUserVO;

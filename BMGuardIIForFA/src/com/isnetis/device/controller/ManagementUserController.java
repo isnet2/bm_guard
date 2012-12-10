@@ -1,7 +1,10 @@
 package com.isnetis.device.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
@@ -21,6 +24,7 @@ import com.isnetis.util.DateUtil;
 @RequestMapping("/auto")
 public class ManagementUserController {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private ManagementUserService managementUserService;
@@ -32,12 +36,17 @@ public class ManagementUserController {
 	@RequestMapping(value="/addManagementUser.html")
 	public ModelAndView addManagementUser(@RequestParam("userlogin_id")String userlogin_id,
 															@RequestParam("userlogin_pwd")String userlogin_pwd,
-															@RequestParam("clientGroupIdx")int[] clientGroupIdxValues) throws Exception{
+															@RequestParam("clientGroupIdx")int[] clientGroupIdxValues){
+		
+		logger.info("["+getClass().getName()+"][addManagementUser] userlogin_id["+userlogin_id+"]");
+		logger.info("["+getClass().getName()+"][addManagementUser] userlogin_pwd["+userlogin_pwd+"]");
+		logger.info("["+getClass().getName()+"][addManagementUser] clientGroupIdx["+Arrays.toString(clientGroupIdxValues)+"]");
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		
 		if(managementUserService.getManagementUserCnt(userlogin_id) > 0) {
+			logger.info("["+getClass().getName()+"][addManagementUser] userlogin_id["+userlogin_id+"] duplicate");
 			mav.addObject("resultCode", "duplicate");
 			return mav;
 		}
@@ -56,7 +65,8 @@ public class ManagementUserController {
 			}
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName()+"][addManagementUser] 사용자 등록 오류");
+			logger.error("["+getClass().getName()+"][addManagementUser] " + e.getMessage());
 			mav.addObject("resultCode", "fail");
 		}
 	
@@ -76,7 +86,8 @@ public class ManagementUserController {
 			mav.addObject("totalCount", userList.size());
 			mav.setViewName("auto/auto_user");
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName()+"][getManagementUserList] 사용자 조회 오류");
+			logger.error("["+getClass().getName()+"][getManagementUserList] " + e.getMessage());
 			mav.setViewName("redirect:/auto/index.html");
 		}
 		return mav;
@@ -85,6 +96,9 @@ public class ManagementUserController {
 	@RequestMapping(value="/searchManagementUserList.html")
 	public ModelAndView searchManagementUserList(@RequestParam(value="status", defaultValue="-1")int status, 
 																@RequestParam(value="clientGroupIdx", required=false)int[] clientGroupIdxValues){
+		logger.info("["+getClass().getName()+"][searchManagementUserList] status["+status+"]");
+		logger.info("["+getClass().getName()+"][searchManagementUserList] clientGroupIdx["+Arrays.toString(clientGroupIdxValues)+"]");
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -93,6 +107,8 @@ public class ManagementUserController {
 			mav.addObject("userList", userList);
 			mav.addObject("resultCode", "success");
 		}catch(Exception e){
+			logger.error("["+getClass().getName()+"][searchManagementUserList] 사용자 검색 오류");
+			logger.error("["+getClass().getName()+"][searchManagementUserList] " + e.getMessage());
 			mav.addObject("resultCode", "fail");
 		}
 		return mav;
@@ -100,6 +116,8 @@ public class ManagementUserController {
 	
 	@RequestMapping(value="/deleteManagementUser.html")
 	public ModelAndView deleteManagementUser(@RequestParam(value="user_idx")int[] user_idx){
+		
+		logger.info("["+getClass().getName()+"][deleteManagementUser] user_idx["+Arrays.toString(user_idx)+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -111,6 +129,8 @@ public class ManagementUserController {
 				mav.addObject("resultCode", "fail");
 			}
 		}catch(Exception e){
+			logger.error("["+getClass().getName()+"][deleteManagementUser] 사용자 삭제 오류");
+			logger.error("["+getClass().getName()+"][deleteManagementUser] " + e.getMessage());
 			mav.addObject("resultCode", "fail");
 		}
 		return mav;
@@ -121,6 +141,11 @@ public class ManagementUserController {
 																@RequestParam("userlogin_id")String userlogin_id,
 																@RequestParam("userlogin_pwd")String userlogin_pwd,
 																@RequestParam("clientGroupIdx")int[] clientGroupIdxValues) {
+		
+		logger.info("["+getClass().getName()+"][updateManagementUser] user_idx["+user_idx+"]");
+		logger.info("["+getClass().getName()+"][updateManagementUser] userlogin_id["+userlogin_id+"]");
+		logger.info("["+getClass().getName()+"][updateManagementUser] userlogin_pwd["+userlogin_pwd+"]");
+		logger.info("["+getClass().getName()+"][updateManagementUser] clientGroupIdx["+Arrays.toString(clientGroupIdxValues)+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -138,7 +163,8 @@ public class ManagementUserController {
 				mav.addObject("resultCode", "fail");
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName()+"][updateManagementUser] 사용자 정보변경 오류");
+			logger.error("["+getClass().getName()+"][updateManagementUser] " + e.getMessage());
 			mav.addObject("resultCode", "fail");
 		}
 		return mav;
@@ -146,6 +172,9 @@ public class ManagementUserController {
 	
 	@RequestMapping(value="/getUserHistory.html")
 	public ModelAndView getUserHistory(@RequestParam("user_idx")int user_idx){
+		
+		logger.info("["+getClass().getName()+"][updateManagementUser] user_idx["+user_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		

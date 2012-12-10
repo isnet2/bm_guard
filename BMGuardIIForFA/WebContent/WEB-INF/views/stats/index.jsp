@@ -194,7 +194,6 @@ include "../common/inc/header.html";
 
 $(document).ready(function() {
 	
-	$("#result_view").hide();
 	
 	//help
 	$("#helpBtn5").click(function(e){
@@ -218,8 +217,6 @@ $(document).ready(function() {
    		event.preventDefault();
    		
    		$("#searchForm").html("");
-   		$("#result_view").html(""); 
-   		$("#result_view").show();   		
    		
 	   	var write_date = getLocalDateFormat(new Date());
 	   	$("#write_date").html(write_date);
