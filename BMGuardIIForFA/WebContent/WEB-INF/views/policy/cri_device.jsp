@@ -323,7 +323,7 @@ include "../common/inc/header.html";
 						var policy_idx = $("#policy_idx_"+client_idx).val();
 						
 						$.post("applyPolicyOne.html", {"policy_idx" : policy_idx , "client_idx" : client_idx}, function(data, status){
-							if(status == "success" && data.result == 1){
+							if(status == "success" && data.status == 1){
 								rtn2++;
 							}
 						}, 'json');

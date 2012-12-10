@@ -1225,6 +1225,56 @@ function getDateStringToLocalDateFormat(date_string){
 	return getLocalDateFormat(new Date(year, month-1, day));
 }
 
+
+function init_gigan(){
+	// 시작일과 종료일을 오늘날짜로 초기화한다.
+	$("#start_date").val(getDateStringByPeriod(new Date()));
+	$("#end_date").val(getDateStringByPeriod(new Date()));
+	
+	// 월별선택 기간 셀렉터박스의 년/월을 현재 날짜의 년월로 초기화한다.
+	var now_year = new Date().getFullYear();
+	var now_month = new Date().getMonth() + 1;
+	$("#year_selectbox option:contains('"+now_year+"')").attr("selected", "selected");
+	$("#month_selectbox option:contains('"+now_month+"')").attr("selected", "selected");
+	
+	// 월별선택
+	$("#month_button").click(function(event){
+		event.preventDefault();
+		
+		var year = $("#year_selectbox").val();
+		var month = $("#month_selectbox").val();
+		
+		$("#start_date").val(getBeginDateAtMonth(year, month));
+		$("#end_date").val(getLastDateAtMonth(year, month));
+	});
+	
+	
+	// 날짜기간 버튼 클릭시
+	$("#date_button a").click(function(event){
+		event.preventDefault();
+		var date_text = $(this).text();
+		
+		if(date_text == '당일'){
+			$("#start_date").val(getDateStringByPeriod(new Date()));
+		}else if(date_text == '3일'){
+			$("#start_date").val(getDateStringByPeriod(new Date(), 2));
+		}else if(date_text == '1주'){
+			$("#start_date").val(getDateStringByPeriod(new Date(), 6));
+		}else if(date_text == '1개월'){
+			$("#start_date").val(getDateStringByPeriod(new Date(), 30));
+		}else if(date_text == '3개월'){
+			$("#start_date").val(getDateStringByPeriod(new Date(), 90));
+		}else if(date_text == '6개월'){
+			$("#start_date").val(getDateStringByPeriod(new Date(), 180));
+		}
+		
+		$("#end_date").val(getDateStringByPeriod(new Date()));
+	});
+}
+
+
+
+
 /*문자열을 byte수로 계산하여  몇자 이상 몇자 이내로 입력하는지 체크*/
 function strRestMinMax(str, type, minN, maxN) {
 	/** type == kor 2byte eng 1byte */

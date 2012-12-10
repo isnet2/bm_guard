@@ -276,7 +276,7 @@ $(document).ready(function(){
 						{ 	"policy_idx" : $("#policy_idx").val()
 						}, 
 						function (r) {
-							if(r.result == 1) {
+							if(r.status == 1) {
 								alert("정책을 삭제 하였습니다.");
 								location.href="./index.html";
 							}

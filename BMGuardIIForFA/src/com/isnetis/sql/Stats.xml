@@ -3,7 +3,6 @@
 
 
 <mapper namespace="com.isnetis.stats.dao.StatsDao">
-	
 	<select id="getGroupListForStats" parameterType="map" resultType="hashmap">
 		select B.clientgrp_name group_name, A.col1 group_idx, A.col2 sub_groups
 		from(select col1, group_concat(col2) col2
@@ -24,13 +23,13 @@
 		select 
 			IFNULL(sum(
 					case 
-						when A.invalid_flag = 0 and (A.create_date > #{start_date} and A.create_date &lt; #{end_date}) then 1
+						when A.invalid_flag = 0 and (A.create_date &gt; #{start_date,jdbcType=VARCHAR} and A.create_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
 						else 0
 					end
 			) , 0) new_device,
 			IFNULL(sum(
 					case 
-						when A.invalid_flag = 1 and (A.delete_date > #{start_date} and A.delete_date &lt; #{end_date}) then 1
+						when A.invalid_flag = 1 and (A.delete_date &gt; #{start_date,jdbcType=VARCHAR} and A.delete_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
 						else 0
 					end
 			) , 0) delete_device,
@@ -53,13 +52,13 @@
 			
 			IFNULL(sum(
 					case 
-						when invalid_flag = 0 and (create_date > #{start_date} and create_date &lt; #{end_date}) then 1
+						when invalid_flag = 0 and (create_date &gt; #{start_date,jdbcType=VARCHAR} and create_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
 						else 0
 					end
 			) , 0) new_device,
 			IFNULL(sum(
 					case 
-						when invalid_flag = 1 and (delete_date > #{start_date} and delete_date &lt; #{end_date}) then 1
+						when invalid_flag = 1 and (delete_date &gt; #{start_date,jdbcType=VARCHAR} and delete_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
 						else 0
 					end
 			) , 0) delete_device,
@@ -82,21 +81,52 @@
 	
 	<!-- 자동화기기 운영현황(기기현황) -->
 	<select id="getDeviceStateByGroup" parameterType="map" resultType="hashmap">
-		select client_name, ip_addr, mac_addr, os_type, create_date
-		from CLIENT_MAST
-		<where>
-			<choose>
-				<when test="option == 'new'">
-					create_date > ${start_date} > and create_date &lt; ${end_date} and invalid_flag = 0
-				</when>
-				<when test="option == 'delete'">
-					delete_date > ${start_date} > and delete_date &lt; ${end_date} and invalid_flag = 1
-				</when>
-			</choose>
+		select gubun, clientgrp_name group_name, client_name, ip_addr, mac_addr, os_type, stats_date
+		from(
+			select 'new_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, create_date stats_date
+			from CLIENT_MAST
+			where create_date &gt; #{start_date,jdbcType=VARCHAR} and create_date &lt; #{end_date,jdbcType=VARCHAR}
+			and invalid_flag = 0
 			and clientgrp_idx in
 			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
 				#{item1}
 			</foreach>
-		</where>
+			
+			union all
+		
+			select 'delete_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, delete_date stats_date
+			from CLIENT_MAST
+			where delete_date &gt; #{start_date,jdbcType=VARCHAR} and delete_date &lt; #{end_date,jdbcType=VARCHAR}
+			and invalid_flag = 1
+			and clientgrp_idx in
+			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
+				#{item1}
+			</foreach>
+			
+			union all
+			
+			select 'running_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, create_date stats_date
+			from CLIENT_MAST
+			where invalid_flag = 0
+			and clientgrp_idx in
+			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
+				#{item1}
+			</foreach>
+			) A, CLIENTGRP_LIST B
+			
+		where A.clientgrp_idx = B.clientgrp_idx
+	</select>
+	
+	<!-- 정책관리현황(정책별 통계) -->
+	<select id="getNewPolicyByDate" parameterType="map" resultType="hashmap">
+		select A.policy_nowdate, A.policynow_idx policy_idx, A.policy_name, A.policy_desc, A.apply_device_count
+		from(select policy_nowdate, policynow_idx, 
+			count(*) apply_device_count,
+			(select X.policy_name from POLICY_MAST X where policy_idx = policynow_idx)as policy_name,
+			(select Y.policy_desc from POLICY_MAST Y where policy_idx = policynow_idx)as policy_desc
+			from CLIENT_MAST 
+			where policy_nowdate &gt; #{start_date, jdbcType=VARCHAR} and policy_nowdate &lt; #{end_date, jdbcType=VARCHAR} 
+			and policy_nowdate is not null
+			group by policy_nowdate, policy_idx)  A
 	</select>
 </mapper>

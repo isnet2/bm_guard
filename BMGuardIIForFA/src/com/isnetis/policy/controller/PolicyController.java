@@ -172,14 +172,10 @@ public class PolicyController {
 		logger.info("["+getClass().getName() + "] changePolicy() policy_idx["+policy.getPolicy_idx()+"]");
 	
 		mav.setView(mappingJacksonJsonView);
+		int resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
 		
-		int resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
-		int result = 0;
 		try{
-			result = policyMastService.changePolicy(policy);
-			if (result == 1 ) {
-				resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
-			}
+			policyMastService.changePolicy(policy);
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage());
@@ -241,16 +237,15 @@ public class PolicyController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
-		int result = 0;
+		int resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
 		try {
 			policyMastService.applyPolicyOne(policy_idx, client_idx);
-			result = 1;
 		}catch(Exception e){
 			e.printStackTrace();
-			result = 0;
+			resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
 		
-		mav.addObject("result", result);
+		mav.addObject("status", resultCode);
 		return mav;
 	}
 	
@@ -334,14 +329,15 @@ public class PolicyController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
-		int result = 0;
+		int resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
 		try {
-			result = policyMastService.deletePolicy(policy_idx);
+			policyMastService.deletePolicy(policy_idx);
 			
 		}catch(Exception e) {
 			logger.error(e.getMessage());
+			resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
-		mav.addObject("result", result);
+		mav.addObject("status", resultCode);
 		
 		return mav;
 	}

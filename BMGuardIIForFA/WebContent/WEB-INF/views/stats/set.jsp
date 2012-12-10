@@ -71,6 +71,9 @@ include "../common/inc/header.html";
 				<ul class="due">
 					<li>
 						<select name="" id="year_selectbox">
+							<option value="2015">2015</option>
+							<option value="2014">2014</option>
+							<option value="2013">2013</option>
 							<option value="2012">2012</option>
 							<option value="2011">2011</option>
 							<option value="2010">2010</option>
@@ -145,7 +148,7 @@ include "../common/inc/header.html";
 			<h5 class="tc">자동화기기 운영현황(기기현황)</h5>
 			<p class="tc">기준일자 : <span id="search_date"></span></p>
 			<p class="tr">작성일자 : <span id="write_date"></span></p>
-			<p>신규기기(총 0 0 대수)</p>
+			<p>신규기기(총 <span id="new_total"></span> 대수)</p>
 			<table class="mt10 title_table">
 				<colgroup>
 						<col style="width:15%"/>
@@ -177,19 +180,19 @@ include "../common/inc/header.html";
 						<col style="width:25%"/>
 					</colgroup>
 					<tbody>
-						<tr>
+						<!-- <tr>
 							<td class="tc">3층기계실</td>
 							<td>2BUA01</td>
 							<td>123.234.0.1</td>
 							<td>44-44-44-66-66-66</td>
 							<td>OS</td>
 							<td>2012-10-16 10:12:12</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>
 
-			<p>제외기기(총 0 0 대수)</p>
+			<p>제외기기(총 <span id="delete_total"></span> 대수)</p>
 			<table class="mt10 title_table">
 				<colgroup>
 						<col style="width:15%"/>
@@ -221,19 +224,19 @@ include "../common/inc/header.html";
 						<col style="width:25%"/>
 					</colgroup>
 					<tbody>
-						<tr>
+						<!-- <tr>
 							<td class="tc">3층기계실</td>
 							<td>2BUA01</td>
 							<td>123.234.0.1</td>
 							<td>44-44-44-66-66-66</td>
 							<td>OS</td>
 							<td>2012-10-16 10:12:12</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>
 
-			<p>운영기기(총 0 0 대수)</p>
+			<p>운영기기(총 <span id="running_total"></span> 대수)</p>
 			<table class="mt10 title_table">
 				<colgroup>
 						<col style="width:15%"/>
@@ -265,14 +268,14 @@ include "../common/inc/header.html";
 						<col style="width:25%"/>
 					</colgroup>
 					<tbody>
-						<tr>
+						<!-- <tr>
 							<td class="tc">3층기계실</td>
 							<td>2BUA01</td>
 							<td>123.234.0.1</td>
 							<td>44-44-44-66-66-66</td>
 							<td>OS</td>
 							<td>2012-10-16 10:12:12</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>
@@ -296,49 +299,8 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	// 시작일과 종료일을 오늘날짜로 초기화한다.
-	$("#start_date").val(getDateStringByPeriod(new Date()));
-	$("#end_date").val(getDateStringByPeriod(new Date()));
-	
-	// 월별선택 기간 셀렉터박스의 년/월을 현재 날짜의 년월로 초기화한다.
-	var now_year = new Date().getFullYear();
-	var now_month = new Date().getMonth() + 1;
-	$("#year_selectbox option:contains('"+now_year+"')").attr("selected", "selected");
-	$("#month_selectbox option:contains('"+now_month+"')").attr("selected", "selected");
-	
-	// 월별선택
-	$("#month_button").click(function(event){
-		event.preventDefault();
-		
-		var year = $("#year_selectbox").val();
-		var month = $("#month_selectbox").val();
-		
-		$("#start_date").val(getBeginDateAtMonth(year, month));
-		$("#end_date").val(getLastDateAtMonth(year, month));
-	});
-	
-	
-	// 날짜기간 버튼 클릭시
-	$("#date_button a").click(function(event){
-		event.preventDefault();
-		var date_text = $(this).text();
-		
-		if(date_text == '당일'){
-			$("#start_date").val(getDateStringByPeriod(new Date()));
-		}else if(date_text == '3일'){
-			$("#start_date").val(getDateStringByPeriod(new Date(), 2));
-		}else if(date_text == '1주'){
-			$("#start_date").val(getDateStringByPeriod(new Date(), 6));
-		}else if(date_text == '1개월'){
-			$("#start_date").val(getDateStringByPeriod(new Date(), 30));
-		}else if(date_text == '3개월'){
-			$("#start_date").val(getDateStringByPeriod(new Date(), 90));
-		}else if(date_text == '6개월'){
-			$("#start_date").val(getDateStringByPeriod(new Date(), 180));
-		}
-		
-		$("#end_date").val(getDateStringByPeriod(new Date()));
-	});
+	// 기간 검색 초기화
+	init_gigan();
 	
 	// 관리그룹 전체선택/해제 처리
    	checkedAllOrNothing("group_all_checkbox", "group_checkbox");
@@ -347,6 +309,9 @@ $(document).ready(function() {
    	$("#search_bt").click(function(event){
    		event.preventDefault();
    		$("#searchForm").html("");
+ 		$("#new_device_table tbody").html("");
+ 		$("#delete_device_table tbody").html("");
+ 		$("#running_device_table tbody").html("");
    		
    		var write_date = getLocalDateFormat(new Date());
 	   	$("#write_date").html(write_date);
@@ -363,7 +328,47 @@ $(document).ready(function() {
    		$.post("set.html", $("#searchForm").serialize(), function(result){
    			
    			if(result && result.status == 1){
-   				alert(result);
+   				
+   				
+   				var device_list = result.device_list;
+   				
+   				var total_new_device = 0;
+   				var total_delete_device = 0;
+   				var total_running_device = 0;
+   				$.each(device_list, function(index, device){
+   					var gubun = device.gubun;
+   					
+   					var group_name = device.group_name;
+   					var client_name = device.client_name;
+   					var ip_addr = device.ip_addr || '-';
+   					var mac_addr = device.ip_addr || '-';
+   					var os_type = device.os_type || '-';
+   					var stats_date = device.stats_date || '-';
+   					
+   					var html = "";
+   					html += '<tr>';
+   					html += '<td class="tc">'+group_name+'</td>';
+   					html += '<td>'+client_name+'</td>';
+   					html += '<td>'+ip_addr+'</td>';
+   					html += '<td>'+mac_addr+'</td>';
+   					html += '<td>'+os_type+'</td>';
+   					html += '<td>'+stats_date+'</td>';
+					html += '</tr>';
+   					
+					$("#"+gubun + "_table tbody").append(html);
+					
+					if(gubun == 'new_device'){
+						total_new_device += 1;
+					}else if(gubun == 'delete_device'){
+						total_delete_device += 1;
+					}else{
+						total_running_device += 1;
+					}
+   				});
+   				
+   				$("#new_total").text(total_new_device);
+   				$("#delete_total").text(total_delete_device);
+   				$("#running_total").text(total_running_device);
    			}
    		});
    	});

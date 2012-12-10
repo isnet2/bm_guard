@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,7 +42,6 @@ public class ExcelToJSONController {
 	
 	@RequestMapping(value="/openfile.html")
 	public ModelAndView readExcel(@RequestParam("excelfile")MultipartFile excelfile) {
-		//logger.debug("excelfile : " + excelfile);
 	
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -75,7 +75,8 @@ public class ExcelToJSONController {
 				
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName()+"][deviceStatsByGroup] 엑셀파일처리 오류");
+			logger.error("["+getClass().getName()+"][deviceStatsByGroup]"+ e.getMessage());
 			resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
 		mav.addObject("status", resultCode);
@@ -89,6 +90,8 @@ public class ExcelToJSONController {
 		for(int i=0; i<cells; i++){
 			rowname[i] = this.getCellData(titleRow.getCell(i));
 		}
+		logger.info("["+getClass().getName()+"][getRowname] rowname["+Arrays.toString(rowname)+"]");
+		
 		return rowname;
 	}
 	
@@ -108,6 +111,8 @@ public class ExcelToJSONController {
 		Sheet sheet = null;
 		if(!excelfile.isEmpty()){
 			String filename = excelfile.getOriginalFilename();
+			logger.info("["+getClass().getName()+"][getSheet] filename["+filename+"]");
+			
 			InputStream is = excelfile.getInputStream();
 			
 			Workbook workbook = null;

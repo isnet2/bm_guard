@@ -1,6 +1,5 @@
 package com.isnetis.device.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +29,6 @@ public class ClientController {
 	private CommonService commonService;
 	@Autowired
 	private ClientMastService clientMastService;
-	@Autowired
-	private TreeJSONView treeJSONView;
 	@Autowired
 	private MappingJacksonJsonView mappingJacksonJsonView;
 	
@@ -69,18 +66,22 @@ public class ClientController {
 	public ModelAndView addDeleteKey(@RequestParam("clientgrp_idx")int clientgrp_idx,
 			                         @RequestParam("client_idx")int client_idx){
 		
+		logger.info("["+getClass().getName()+"][addDeleteKey] clientgrp_idx["+clientgrp_idx+"]");
+		logger.info("["+getClass().getName()+"][addDeleteKey] client_idx["+client_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		
 		int resultStatus = CommonConstant.REQUEST_PROCESS_SUCCEED;
 		try {
 			clientMastService.addDeleteKey(client_idx);
+			List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
+			mav.addObject("clientList", clientList);
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName()+"][addDeleteKey] 삭제키 발급 오류");
+			logger.error("["+getClass().getName()+"][addDeleteKey]" + e.getMessage());
 			resultStatus = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
-		List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
-		mav.addObject("clientList", clientList);
 		mav.addObject("status", resultStatus);
 		return mav;
 		
@@ -89,8 +90,10 @@ public class ClientController {
 	@RequestMapping(value="/auto/addDevice.html")
 	public ModelAndView addDevice(@RequestParam("clientgrp_idx")int clientgrp_idx, 
 								  @RequestParam("client_name")String client_name){
-		logger.debug("**** addDevice **** " + clientgrp_idx + " : "+ client_name);
-	
+
+		logger.info("["+getClass().getName()+"][addDevice] clientgrp_idx["+clientgrp_idx+"]");
+		logger.info("["+getClass().getName()+"][addDevice] client_name["+client_name+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		
@@ -107,15 +110,18 @@ public class ClientController {
 			
 			idx = clientMastService.addDevice(clientMast);
 		
+			if (clientgrp_idx != 0) {
+				List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
+				mav.addObject("clientList", clientList);
+			}
+			mav.addObject("idx", idx);
+			
 		}catch(Exception e){
+			logger.error("["+getClass().getName()+"][addDevice] 자동화기기 등록 오류");
+			logger.error("["+getClass().getName()+"][addDevice]" + e.getMessage());
 			resultStatus = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
-		if (clientgrp_idx != 0) {
-			List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
-			mav.addObject("clientList", clientList);
-		}
 		mav.addObject("status", resultStatus);
-		mav.addObject("idx", idx);
 		
 		return mav;
 	}
@@ -128,13 +134,22 @@ public class ClientController {
 														@RequestParam(value="device_option", required=false)String searchOption, 
 														@RequestParam(value="search_str", required=false)String searchStr, 
 														@RequestParam(value="os_type", required=false)String osType){
+		
+		logger.info("["+getClass().getName()+"][getDeviceHistory] start_date["+startDate+"]");
+		logger.info("["+getClass().getName()+"][getDeviceHistory] end_date["+endDate+"]");
+		logger.info("["+getClass().getName()+"][getDeviceHistory] user_option["+userOption+"]");
+		logger.info("["+getClass().getName()+"][getDeviceHistory] user_name["+username+"]");
+		logger.info("["+getClass().getName()+"][getDeviceHistory] device_option["+searchOption+"]");
+		logger.info("["+getClass().getName()+"][getDeviceHistory] search_str["+searchStr+"]");
+		logger.info("["+getClass().getName()+"][getDeviceHistory] os_type["+osType+"]");
+		
 
 		ModelAndView mav = new ModelAndView();	
 		mav.setView(mappingJacksonJsonView);
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("start_date", startDate);
-		map.put("end_date", endDate);
+		map.put("end_date", endDate + " 23:59:59");
 		map.put("user_option", userOption);
 		map.put("user_name", username);
 		map.put("device_option", searchOption);
@@ -152,7 +167,9 @@ public class ClientController {
                                      @RequestParam("client_idx")int client_idx,
                                      @RequestParam("client_name")String client_name){
 		
-		logger.debug("*** renameDevice *** " + clientgrp_idx + " : " + client_idx + " : " + client_name );
+		logger.info("["+getClass().getName()+"][renameDevice] clientgrp_idx["+clientgrp_idx+"]");
+		logger.info("["+getClass().getName()+"][renameDevice] client_idx["+client_idx+"]");
+		logger.info("["+getClass().getName()+"][renameDevice] client_name["+client_name+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -164,16 +181,18 @@ public class ClientController {
 			clientVO.setClient_name(client_name);
 			
 			clientMastService.renameDevice(clientVO);
+			if (clientgrp_idx != 0) {
+				List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
+				mav.addObject("clientList", clientList);
+			}
+			
+			mav.addObject("operation", "REMOVE_GROUP");
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("["+getClass().getName()+"][renameDevice] 자동화기기 이름변경 오류");
+			logger.error("["+getClass().getName()+"][renameDevice]" + e.getMessage());
 			resultStatus = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
-		if (clientgrp_idx != 0) {
-			List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
-			mav.addObject("clientList", clientList);
-		}
 		
-		mav.addObject("operation", "REMOVE_GROUP");
 		mav.addObject("status", resultStatus);
 		
 		return mav;
@@ -182,8 +201,9 @@ public class ClientController {
 	@RequestMapping(value="/auto/removeDevice.html")
 	public ModelAndView removeDevice(@RequestParam("clientgrp_idx")int clientgrp_idx,
 			                         @RequestParam("client_idx")int client_idx){
-		logger.debug("**removeDevice **" + clientgrp_idx + " : " + client_idx);
 		
+		logger.info("["+getClass().getName()+"][removeDevice] clientgrp_idx["+clientgrp_idx+"]");
+		logger.info("["+getClass().getName()+"][removeDevice] client_idx["+client_idx+"]");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -191,25 +211,30 @@ public class ClientController {
 		
 		int resultStatus = CommonConstant.REQUEST_PROCESS_SUCCEED;
 		try{
+			mav.addObject("operation", "REMOVE_GROUP");
+			
 			ClientMastVO clientVO = new ClientMastVO();
 			clientVO.setClient_idx(client_idx);
 			clientMastService.removeDevice(clientVO);
 			
+			if (clientgrp_idx != 0) {
+				List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
+				mav.addObject("clientList", clientList);
+			}
 		}catch(Exception e){
+			logger.error("["+getClass().getName()+"][removeDevice] 자동화기기 삭제 오류");
+			logger.error("["+getClass().getName()+"][removeDevice]" + e.getMessage());
 			resultStatus = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
-		if (clientgrp_idx != 0) {
-			List<ClientMastVO>clientList = clientMastService.getDeviceList(clientgrp_idx);
-			mav.addObject("clientList", clientList);
-		}
-		mav.addObject("operation", "REMOVE_GROUP");
 		mav.addObject("status", resultStatus);
 		return mav;
 	}
 	
 	@RequestMapping(value="/auto/deleteIpDuplClient.html")
 	public ModelAndView deleteIpDuplClient(@RequestParam("checkIndexs")String checkIndexs){
-		logger.debug("*********** deleteIpDuplClient ************ checkIndexs : " + checkIndexs);
+		
+		logger.info("["+getClass().getName()+"][deleteIpDuplClient] checkIndexs["+checkIndexs+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		
@@ -222,9 +247,10 @@ public class ClientController {
 				clientMastService.removeDevice(clientVO);
 			}
 		}catch(Exception e){
+			logger.error("["+getClass().getName()+"][removeDevice] 자동화기기 삭제 오류");
+			logger.error("["+getClass().getName()+"][removeDevice]" + e.getMessage());
 			resultStatus = CommonConstant.REQUEST_PROCESS_FAIL;
 		}
-		logger.debug("deleteIpDuplClient result = " + resultStatus);
 		mav.addObject("status", resultStatus);
 		
 		return mav;
@@ -232,7 +258,9 @@ public class ClientController {
 	
 	@RequestMapping(value="/auto/insertAllDevice.html")
 	public ModelAndView insertAllDevice(@RequestParam("arr") String arr) {
-		logger.debug("***** insertAllDevice *****  arr : " + arr);
+		
+		logger.info("["+getClass().getName()+"][insertAllDevice] arr["+arr+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		

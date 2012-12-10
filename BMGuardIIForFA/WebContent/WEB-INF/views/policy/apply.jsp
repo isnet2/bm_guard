@@ -441,7 +441,7 @@
 			$.post("applyPolicyForDevice.html", $("#apply_form").serialize(), function(data, status){
 				if(status == "success" && data.status == 1){
 					// 중계서버 호출
-					/* jQuery.ajax({
+					jQuery.ajax({
 						url			: "http://isnet.ipdisk.co.kr:8180/hnd",
 						data		: {SC_CODE:"510", TG_TYPE:"JSON", UUID:new Date().getTime()},
 						dataType	: "jsonp",
@@ -453,7 +453,7 @@
 						error		: function(data, status){
 							alert("ERROR : " + status);
 						}
-					});		 */
+					});		 
 					
 					alert("자동화기기에 정책 적용이 완료되었습니다.");
 					$("#device_list_table tbody").html("");

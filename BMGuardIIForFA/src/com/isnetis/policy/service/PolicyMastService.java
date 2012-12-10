@@ -18,11 +18,11 @@ public interface PolicyMastService {
 	void applyPolicy(int policy_idx, int sim_flag, int[] client_idxValues);
 	List<ClientMastVO> getDeviceListByPolicyIdx(Integer policynow_idx, Integer nowsim_flag);
 	List<ClientMastVO> getDevicePolicyList(Integer policynow_idx, Integer device_option, Integer clientgrp_idx, Integer client_idx);
-	int deletePolicy(int policy_idx);
-	int addPolicyHistory(int policy_idx);
-	int changePolicy(PolicyMastVO policy);
+	void deletePolicy(int policy_idx);
+	void addPolicyHistory(int policy_idx);
+	void changePolicy(PolicyMastVO policy);
 	List<PolicyMastVO> getNowPolicyMastList();
-	int applyPolicyString(int policy_idx, String client_idxs);
-	int applyPolicyOne(int policy_idx, int client_idx);
+	void applyPolicyString(int policy_idx, String client_idxs);
+	void applyPolicyOne(int policy_idx, int client_idx);
 }
 

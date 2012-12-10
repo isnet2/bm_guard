@@ -14,8 +14,8 @@ public interface PolicyMastDao {
 	void deletePolicyFile(int policy_idx);
 	void addPolicyFile(Map<String, String> map);
 	void addPolicyApplyClient(int policy_idx, int sim_flag, int client_idx);
-	int deletePolicy(int policy_idx);
-	int addPolicyHistory(int policy_idx);
+	void deletePolicy(int policy_idx);
+	void addPolicyHistory(int policy_idx);
 	void delOsType(int policy_idx);
 	void updatePolicy(PolicyMastVO policy);
 	List<PolicyMastVO> getNowPolicyMastList();

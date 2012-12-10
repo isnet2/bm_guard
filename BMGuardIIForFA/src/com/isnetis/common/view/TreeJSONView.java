@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.view.AbstractView;
 
 import com.google.gson.Gson;
@@ -17,12 +19,15 @@ import com.isnetis.device.domain.ClientGroupVO;
 import com.isnetis.device.domain.ClientMastVO;
 
 public class TreeJSONView extends AbstractView{
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String operation = (String)model.get("operation");
+		logger.info("["+getClass().getName()+"][renderMergedOutputModel] operation["+operation+"]");
 		
 		response.setContentType("text/plain;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -43,20 +48,26 @@ public class TreeJSONView extends AbstractView{
 				
 				array.add(node);
 			}
-			out.write(array.toString());
+			String jsonString = array.toString();
+			logger.debug("["+getClass().getName()+"][renderMergedOutputModel] json["+jsonString+"]");
+			out.write(jsonString);
 			
 		}else if("CREATE_GROUP".equals(operation)){
 			JsonObject obj = new JsonObject();
 			obj.addProperty("status", (Integer)model.get("status"));
 			obj.addProperty("id", (Integer)model.get("clientgrp_idx"));
 			
-			out.write(obj.toString());
+			String jsonString = obj.toString();
+			logger.debug("["+getClass().getName()+"][renderMergedOutputModel] json["+jsonString+"]");
+			out.write(jsonString);
 			
 		}else if("RENAME_GROUP".equals(operation) || "REMOVE_GROUP".equals(operation)){
 			JsonObject obj = new JsonObject();
 			obj.addProperty("status", (Integer)model.get("status"));
 			
-			out.write(obj.toString());
+			String jsonString = obj.toString();
+			logger.debug("["+getClass().getName()+"][renderMergedOutputModel] json["+jsonString+"]");
+			out.write(jsonString);
 			
 		}else if("GET_DEVICE".equals(operation)){
 			List<ClientMastVO> list = (List<ClientMastVO>)model.get("list");
@@ -74,7 +85,10 @@ public class TreeJSONView extends AbstractView{
 				
 				array.add(obj);
 			}
-			out.write(array.toString());
+			String jsonString = array.toString();
+			logger.debug("["+getClass().getName()+"][renderMergedOutputModel] json["+jsonString+"]");
+			out.write(jsonString);
+			
 		}else if("SEARCH_DEVICE".equals(operation)){
 			List<String> list = (List<String>)model.get("list");
 			/*
@@ -91,7 +105,9 @@ public class TreeJSONView extends AbstractView{
 			}
 
 			Gson gson = new Gson();
-			out.write(gson.toJson(elementList.toArray()));			
+			String jsonString = gson.toJson(elementList.toArray());
+			logger.debug("["+getClass().getName()+"][renderMergedOutputModel] json["+jsonString+"]");
+			out.write(jsonString);	
 		}
 	}
 }

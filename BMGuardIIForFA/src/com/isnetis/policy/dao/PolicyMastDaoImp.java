@@ -57,15 +57,13 @@ public class PolicyMastDaoImp extends SqlSessionDaoSupport implements PolicyMast
 	}
 
 	@Override
-	public int deletePolicy(int policy_idx) {
-		// TODO Auto-generated method stub
-		return getSqlSession().update("deletePolicy", policy_idx);
+	public void deletePolicy(int policy_idx) {
+		getSqlSession().update("deletePolicy", policy_idx);
 	}
 
 	@Override
-	public int addPolicyHistory(int policy_idx) {
-		// TODO Auto-generated method stub
-		return getSqlSession().update("addPolicyHistory", policy_idx);
+	public void addPolicyHistory(int policy_idx) {
+		getSqlSession().update("addPolicyHistory", policy_idx);
 	}
 
 	@Override

@@ -138,32 +138,22 @@ public class PolicyMastServiceImp implements PolicyMastService{
 	@Override
 	public List<ClientMastVO> getDevicePolicyList(Integer policynow_idx,
 			Integer device_option, Integer clientgrp_idx, Integer client_idx) {
-		// TODO Auto-generated method stub
 		return clientMastDao.getDevicePolicyList(policynow_idx, device_option, clientgrp_idx, client_idx);
 	}
 
 	@Override
-	public int deletePolicy(int policy_idx) {
-		// TODO Auto-generated method stub
-		int result = 0;
-		try {
-			result = policyMastDao.deletePolicy(policy_idx);
-			policyMastDao.addPolicyHistory(policy_idx);
-		}catch (Exception e){
-			result = 0;
-			e.printStackTrace();
-		}
-		return result;
+	public void deletePolicy(int policy_idx) {
+		policyMastDao.deletePolicy(policy_idx);
+		policyMastDao.addPolicyHistory(policy_idx);
 	}
 
 	@Override
-	public int addPolicyHistory(int policy_idx) {
-		// TODO Auto-generated method stub
-		return policyMastDao.addPolicyHistory(policy_idx);
+	public void addPolicyHistory(int policy_idx) {
+		policyMastDao.addPolicyHistory(policy_idx);
 	}
 
 	@Override
-	public int changePolicy(PolicyMastVO policy) {
+	public void changePolicy(PolicyMastVO policy) {
 		logger.info(getClass().getName() + "changePolicy() execute.");
 		
 		int result = 0;
@@ -176,66 +166,60 @@ public class PolicyMastServiceImp implements PolicyMastService{
 		List<MediaPolicyVO> mediaPolicyList = policy.getMediaPolicyList();
 		List<String> osTypeList = policy.getOsTypeList();
 		
-		try {
 		
-			policyMastDao.updatePolicy(policy);
+		policyMastDao.updatePolicy(policy);
+		
+		if(osTypeList != null){
+			//del & insert
+			policyMastDao.delOsType(policy_idx);
 			
-			if(osTypeList != null){
-				//del & insert
-				policyMastDao.delOsType(policy_idx);
-				
-				for(String os_type : osTypeList){
-					policyMastDao.addOsType(policy_idx, os_type);
-				}
+			for(String os_type : osTypeList){
+				policyMastDao.addOsType(policy_idx, os_type);
 			}
-			if(folderPolicyList != null){
-				//del & insert
-				folderPolicyDao.delFolderPolicy(policy_idx);
-				
-				for(FolderPolicyVO folderPolicy : folderPolicyList){
-					folderPolicy.setPolicy_idx(policy_idx);
-					folderPolicyDao.addFolderPolicy(folderPolicy);
-				}
-			}
-			if(passPolicyList != null){
-				//del & insert
-				passPolicyDao.delPassPolicy(policy_idx);
-				
-				for(PassPolicyVO passPolicy : passPolicyList){
-					passPolicy.setPolicy_idx(policy_idx);
-					passPolicyDao.addPassPolicy(passPolicy);
-				}
-			}
-			if(systemPolicyList != null){
-				
-				//del & insert
-				systemPolicyDao.delSystemPolicy(policy_idx);
-				
-				for(SystemPolicyVO systemPolicy : systemPolicyList){
-					systemPolicy.setPolicy_idx(policy_idx);
-					systemPolicyDao.addSystemPolicy(systemPolicy);
-				}
-			}
-			if(mediaPolicyList != null){
-				
-				//del & insert
-				mediaPolicyDao.delMediaPolicy(policy_idx);
-				
-				for(MediaPolicyVO mediaPolicy : mediaPolicyList){
-					mediaPolicy.setPolicy_idx(policy_idx);
-					mediaPolicyDao.addMediaPolicy(mediaPolicy);
-				}
-			}
-			
-			policyFileService.deletePolicyFile(policy_idx);
-			policyFileService.insertPoliceFile(policy);
-			result = 1;
-		}catch(Exception e) {
-			result = 0;
-			e.printStackTrace();
 		}
-
-		return result;
+		if(folderPolicyList != null){
+			//del & insert
+			folderPolicyDao.delFolderPolicy(policy_idx);
+			
+			for(FolderPolicyVO folderPolicy : folderPolicyList){
+				folderPolicy.setPolicy_idx(policy_idx);
+				folderPolicyDao.addFolderPolicy(folderPolicy);
+			}
+		}
+		if(passPolicyList != null){
+			//del & insert
+			passPolicyDao.delPassPolicy(policy_idx);
+			
+			for(PassPolicyVO passPolicy : passPolicyList){
+				passPolicy.setPolicy_idx(policy_idx);
+				passPolicyDao.addPassPolicy(passPolicy);
+			}
+		}
+		if(systemPolicyList != null){
+			
+			//del & insert
+			systemPolicyDao.delSystemPolicy(policy_idx);
+			
+			for(SystemPolicyVO systemPolicy : systemPolicyList){
+				systemPolicy.setPolicy_idx(policy_idx);
+				systemPolicyDao.addSystemPolicy(systemPolicy);
+			}
+		}
+		if(mediaPolicyList != null){
+			
+			//del & insert
+			mediaPolicyDao.delMediaPolicy(policy_idx);
+			
+			for(MediaPolicyVO mediaPolicy : mediaPolicyList){
+				mediaPolicy.setPolicy_idx(policy_idx);
+				mediaPolicyDao.addMediaPolicy(mediaPolicy);
+			}
+		}
+		
+		policyFileService.deletePolicyFile(policy_idx);
+		policyFileService.insertPoliceFile(policy);
+		result = 1;
+		
 	}
 
 	@Override
@@ -245,36 +229,24 @@ public class PolicyMastServiceImp implements PolicyMastService{
 	}
 
 	@Override
-	public int applyPolicyString(int policy_idx, String client_idxs) {
-		// TODO Auto-generated method stub
-		int result = 0;
+	public void applyPolicyString(int policy_idx, String client_idxs) {
+		
 		String [] client_arr = client_idxs.split(",");
-		try {
-			for(int i = 0; i < client_arr.length;i++) {
-				int client_idx = Integer.parseInt(client_arr[i]);
-				policyMastDao.addPolicyApplyClient(policy_idx, 0, client_idx);
-				clientMastDao.addDeviceHistory(client_idx);
-			}
-			result =1;
-		}catch(Exception e) {
-			result = 0;
-			e.printStackTrace();
+		
+		for(int i = 0; i < client_arr.length;i++) {
+			int client_idx = Integer.parseInt(client_arr[i]);
+			policyMastDao.addPolicyApplyClient(policy_idx, 0, client_idx);
+			clientMastDao.addDeviceHistory(client_idx);
 		}
-		return result;
+			
+		
 	}
 
 	@Override
-	public int applyPolicyOne(int policy_idx, int client_idx) {
-		// TODO Auto-generated method stub
-		int result = 0;
-		try {
-			policyMastDao.addPolicyApplyClient(policy_idx, 0, client_idx);
-			clientMastDao.addDeviceHistory(client_idx);
-			result = 1;
-		}catch(Exception e) {
-			result =0;
-			e.printStackTrace();
-		}
-		return result;
+	public void applyPolicyOne(int policy_idx, int client_idx) {
+		
+		policyMastDao.addPolicyApplyClient(policy_idx, 0, client_idx);
+		clientMastDao.addDeviceHistory(client_idx);
+		
 	}
 }
