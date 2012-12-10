@@ -172,72 +172,6 @@ include "../common/inc/header.html";
 								<td class="tc">1</td>
 								<td class="tc">3</td>
 							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">2</td>
-								<td class="tc">1</td>
-								<td class="tc">3</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">2</td>
-								<td class="tc">1</td>
-								<td class="tc">3</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">2</td>
-								<td class="tc">1</td>
-								<td class="tc">3</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">2</td>
-								<td class="tc">1</td>
-								<td class="tc">3</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">2</td>
-								<td class="tc">1</td>
-								<td class="tc">3</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">0</td>
-								<td class="tc">2</td>
-								<td class="tc">1</td>
-								<td class="tc">3</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -280,66 +214,6 @@ include "../common/inc/header.html";
 							<col style="width:70px" />
 						</colgroup>
 						<tbody>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">2BUA01</td>
-								<td class="tc">123.234.0.1</td>
-								<td class="tc">OS 종류</td>
-								<td class="tc">2012-10-16 10:12:12</td>
-								<td class="tc">시뮬이션 정책</td>
-								<td class="tc">정책명</td>
-								<td class="tc">설명</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">2BUA01</td>
-								<td class="tc">123.234.0.1</td>
-								<td class="tc">OS 종류</td>
-								<td class="tc">2012-10-16 10:12:12</td>
-								<td class="tc">시뮬이션 정책</td>
-								<td class="tc">정책명</td>
-								<td class="tc">설명</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">2BUA01</td>
-								<td class="tc">123.234.0.1</td>
-								<td class="tc">OS 종류</td>
-								<td class="tc">2012-10-16 10:12:12</td>
-								<td class="tc">시뮬이션 정책</td>
-								<td class="tc">정책명</td>
-								<td class="tc">설명</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">2BUA01</td>
-								<td class="tc">123.234.0.1</td>
-								<td class="tc">OS 종류</td>
-								<td class="tc">2012-10-16 10:12:12</td>
-								<td class="tc">시뮬이션 정책</td>
-								<td class="tc">정책명</td>
-								<td class="tc">설명</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">2BUA01</td>
-								<td class="tc">123.234.0.1</td>
-								<td class="tc">OS 종류</td>
-								<td class="tc">2012-10-16 10:12:12</td>
-								<td class="tc">시뮬이션 정책</td>
-								<td class="tc">정책명</td>
-								<td class="tc">설명</td>
-							</tr>
-							<tr>
-								<td class="tc">3층기계실</td>
-								<td class="tc">2BUA01</td>
-								<td class="tc">123.234.0.1</td>
-								<td class="tc">OS 종류</td>
-								<td class="tc">2012-10-16 10:12:12</td>
-								<td class="tc">시뮬이션 정책</td>
-								<td class="tc">정책명</td>
-								<td class="tc">설명</td>
-							</tr>
 							<tr>
 								<td class="tc">3층기계실</td>
 								<td class="tc">2BUA01</td>

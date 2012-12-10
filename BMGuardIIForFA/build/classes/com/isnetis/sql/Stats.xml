@@ -23,7 +23,7 @@
 		select 
 			IFNULL(sum(
 					case 
-						when A.invalid_flag = 0 and (A.create_date &gt; #{start_date,jdbcType=VARCHAR} and A.create_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
+						when A.invalid_flag = 0 and (A.reg_date &gt; #{start_date,jdbcType=VARCHAR} and A.reg_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
 						else 0
 					end
 			) , 0) new_device,
@@ -52,7 +52,7 @@
 			
 			IFNULL(sum(
 					case 
-						when invalid_flag = 0 and (create_date &gt; #{start_date,jdbcType=VARCHAR} and create_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
+						when invalid_flag = 0 and (reg_date &gt; #{start_date,jdbcType=VARCHAR} and reg_date &lt; #{end_date,jdbcType=VARCHAR}) then 1
 						else 0
 					end
 			) , 0) new_device,
@@ -83,9 +83,9 @@
 	<select id="getDeviceStateByGroup" parameterType="map" resultType="hashmap">
 		select gubun, clientgrp_name group_name, client_name, ip_addr, mac_addr, os_type, stats_date
 		from(
-			select 'new_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, create_date stats_date
+			select 'new_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, reg_date stats_date
 			from CLIENT_MAST
-			where create_date &gt; #{start_date,jdbcType=VARCHAR} and create_date &lt; #{end_date,jdbcType=VARCHAR}
+			where reg_date &gt; #{start_date,jdbcType=VARCHAR} and reg_date &lt; #{end_date,jdbcType=VARCHAR}
 			and invalid_flag = 0
 			and clientgrp_idx in
 			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
@@ -105,7 +105,7 @@
 			
 			union all
 			
-			select 'running_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, create_date stats_date
+			select 'running_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, reg_date stats_date
 			from CLIENT_MAST
 			where invalid_flag = 0
 			and clientgrp_idx in
@@ -156,4 +156,6 @@
 		where A.policy_idx = C.policy_idx
 		and A.clientgrp_idx = B.clientgrp_idx
 	</select>
+	
+	
 </mapper>

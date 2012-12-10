@@ -127,7 +127,7 @@
 				<ul>
 					<li class="first ${gnb5_1 }" style="margin-left:340px;"><a href="../stats/index.html" class="gnb5_1">자동화기기 현황</a></li>
 					<li class="${gnb5_2 }"><a href="../stats/policy.html" class="gnb5_2">정책관리현황</a></li>
-					<li class="${gnb5_3 }"><a href="../stats/report.html" class="gnb5_3">원격관리현황</a></li>
+					<li class="${gnb5_3 }"><a href="../stats/remote.html" class="gnb5_3">원격관리현황</a></li>
 					<li class="${gnb5_4 }"><a href="../stats/nowlog.html" class="gnb5_4">로그현황</a></li>
 				</ul>
 				<a href="#" id="helpBtn5" class="btn set25" ><span style="width:34px;">도움말</span></a>

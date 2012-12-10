@@ -226,11 +226,11 @@ import com.isnetis.stats.service.StatsService;
 	}
 	
 	/**통계 관리 리스트 페이지*/
-	@RequestMapping(value="/stats/report", method = { RequestMethod.POST,RequestMethod.GET } )
+	@RequestMapping(value="/stats/remote", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getreport(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
 		//개발용 관리자 페이지로 이동 
-		modelAndView.setViewName("/stats/report");
+		modelAndView.setViewName("/stats/remote");
 		return modelAndView;
 	}
 	
