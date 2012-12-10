@@ -5,7 +5,7 @@
 		<param name="encoding" value="UTF-8" />
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:SSS}] %-5p %C{1}.%M(%F:%L) - %m%n" />
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:SSS}] %-5p - %m%n" />
 		</layout>
 	</appender>
 
@@ -16,7 +16,7 @@
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="'.'yyyyMMdd" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%d{HH:mm:ss.SSS}] %-5p %C{1}.%M(%F:%L) - %m%n" />
+			<param name="ConversionPattern" value="[%d{HH:mm:ss.SSS}] %-5p - %m%n" />
 		</layout>
 	</appender>
 
@@ -46,18 +46,13 @@
 	</logger>
 
 	<logger name="org.springframework.web" additivity="false">
-		<level value="info" />
-		<appender-ref ref="console" />
-	</logger>
-	
-	<logger name="test.*">
-		<level value="debug" />
+		<level value="warn" />
 		<appender-ref ref="console" />
 	</logger>
 	
 	<!-- Root Log Level -->
 	<root>
-		<priority value="debug" />
+		<priority value="info" />
 		<appender-ref ref="console" />
 	</root>
 

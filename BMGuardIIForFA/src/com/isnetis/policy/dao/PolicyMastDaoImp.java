@@ -37,6 +37,11 @@ public class PolicyMastDaoImp extends SqlSessionDaoSupport implements PolicyMast
 	}
 	
 	@Override
+	public void deletePolicyFile(int policy_idx) {
+		getSqlSession().delete("deletePolicyFile", policy_idx);
+	}
+	
+	@Override
 	public void addPolicyFile(Map<String, String> map) {
 		getSqlSession().insert("addPolicyFile", map);
 	}

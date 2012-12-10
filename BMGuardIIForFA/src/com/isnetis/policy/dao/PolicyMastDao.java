@@ -11,7 +11,7 @@ public interface PolicyMastDao {
 	void addOsType(int policy_idx, String os_type);
 	List<PolicyMastVO> getPolicyMastList();
 	PolicyMastVO getPolicyInfo(int policy_idx);
-	
+	void deletePolicyFile(int policy_idx);
 	void addPolicyFile(Map<String, String> map);
 	void addPolicyApplyClient(int policy_idx, int sim_flag, int client_idx);
 	int deletePolicy(int policy_idx);

@@ -76,6 +76,11 @@
 		values(#{client_idx}, #{policy_idx}, #{sim_mode}, 0, date_format(now(), "%Y-%m-%d %H:%i:%s"))
 	</insert>
 	
+	<delete id="deletePolicyFile" parameterType="int">
+		delete from POLICY_FILE_LIST
+		where policy_idx = #{policy_idx}
+	</delete>
+	
 	<insert id="addPolicyFile" parameterType="map">
 		<choose>
 			<when test="otherpol_dat != null">

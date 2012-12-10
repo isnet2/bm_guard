@@ -35,6 +35,8 @@ public class PolicyController {
 	@RequestMapping(value="/index.html")
 	public ModelAndView index(@RequestParam(value="policy_idx",required=false) Integer policy_idx){
 		
+		logger.info("["+getClass().getName() + "] policy_idx["+policy_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		
 		List<PolicyMastVO> policyMastList = policyMastService.getPolicyMastList();
@@ -64,8 +66,7 @@ public class PolicyController {
 	
 	@RequestMapping(value="/updatePolicy.html")
 	public ModelAndView updatePolicy(@RequestParam(value="policy_idx",required=false) Integer policy_idx){
-		logger.debug("*********** updatePolicy *****************");
-		logger.debug("*********** policy_idx " + policy_idx);
+		
 		ModelAndView mav = new ModelAndView();
 		
 		List<PolicyMastVO> policyMastList = policyMastService.getPolicyMastList();
@@ -164,18 +165,18 @@ public class PolicyController {
 		return mav;
 	}
 	
-	// 정책 추가
+	// 정책 수정
 	@RequestMapping(value="/changePolicy.html")
-	public ModelAndView changePolicy(PolicyMastVO policy){
-		logger.debug("****** changePolicy ********");
-		ModelAndView mav = new ModelAndView();
+	public ModelAndView changePolicy(PolicyMastVO policy){ ModelAndView mav = new ModelAndView();
+	
+		logger.info("["+getClass().getName() + "] changePolicy() policy_idx["+policy.getPolicy_idx()+"]");
+	
 		mav.setView(mappingJacksonJsonView);
 		
 		int resultCode = CommonConstant.REQUEST_PROCESS_FAIL;
 		int result = 0;
 		try{
 			result = policyMastService.changePolicy(policy);
-			logger.debug("******** result : " + result);
 			if (result == 1 ) {
 				resultCode = CommonConstant.REQUEST_PROCESS_SUCCEED;
 			}
@@ -238,7 +239,6 @@ public class PolicyController {
 	public ModelAndView applyPolicyOne(@RequestParam(value="policy_idx")int policy_idx,
 									  @RequestParam(value="client_idx")int client_idx){
 		
-		logger.debug("****************** applyPolicyOne *************** " );
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		int result = 0;
@@ -250,7 +250,6 @@ public class PolicyController {
 			result = 0;
 		}
 		
-		logger.debug("****************** applyPolicyOne : result = " +result);
 		mav.addObject("result", result);
 		return mav;
 	}
@@ -292,10 +291,6 @@ public class PolicyController {
 	public ModelAndView getDeviceListByPolicyIdx(@RequestParam(value="policynow_idx")Integer policynow_idx,
 												 @RequestParam(value="nowsim_flag", required=false, defaultValue="-1")int nowsim_flag){
 		
-		logger.debug("*********** getDeviceListByPolicyIdx ***********");
-		logger.debug("*********** policynow_idx : " + policynow_idx);
-		logger.debug("*********** nowsim_flag : " + nowsim_flag);
-		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		
@@ -319,8 +314,6 @@ public class PolicyController {
 											@RequestParam(value="policynow_idx", required=false)Integer policynow_idx,
 											@RequestParam(value="clientgrp_idx", required=false )Integer clientgrp_idx,
 											@RequestParam(value="client_idx", required=false )Integer client_idx) {
-		logger.debug("*** Policy Controller getDevicePolicyList *** "+ policynow_idx + " : " + device_option);
-		logger.debug("*** Policy Controller getDevicePolicyList *** "+ clientgrp_idx + " : " + client_idx);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -336,18 +329,20 @@ public class PolicyController {
 
 	@RequestMapping(value="/deletePolicy.html")
 	public ModelAndView deletePolicy(@RequestParam(value="policy_idx")int policy_idx){
-		logger.debug("******* deletePolicy *******");
+		
+		logger.info("["+ getClass().getName() + "] deletePolicy() policy_idx["+policy_idx+"]");
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
 		int result = 0;
 		try {
 			result = policyMastService.deletePolicy(policy_idx);
 			
-			logger.debug("******* result : " + result);
 		}catch(Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		mav.addObject("result", result);
+		
 		return mav;
 	}
 

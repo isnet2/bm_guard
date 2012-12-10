@@ -1,9 +1,6 @@
 package com.isnetis.policy.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -16,7 +13,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.isnetis.common.dao.CommonDao;
-import com.isnetis.common.domain.CommonConstant;
 import com.isnetis.device.dao.ClientMastDao;
 import com.isnetis.device.domain.ClientMastVO;
 import com.isnetis.policy.dao.FolderPolicyDao;
@@ -36,8 +32,6 @@ public class PolicyMastServiceImp implements PolicyMastService{
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// 트랜잭션 처리 선언
-	@Inject
-	private PlatformTransactionManager tx;
 	
 	@Autowired
 	private CommonDao commonDao;
@@ -152,14 +146,11 @@ public class PolicyMastServiceImp implements PolicyMastService{
 	public int deletePolicy(int policy_idx) {
 		// TODO Auto-generated method stub
 		int result = 0;
-		TransactionStatus status = tx.getTransaction(new DefaultTransactionDefinition());
 		try {
 			result = policyMastDao.deletePolicy(policy_idx);
 			policyMastDao.addPolicyHistory(policy_idx);
-			tx.commit(status);
 		}catch (Exception e){
 			result = 0;
-			tx.rollback(status);
 			e.printStackTrace();
 		}
 		return result;
@@ -173,13 +164,11 @@ public class PolicyMastServiceImp implements PolicyMastService{
 
 	@Override
 	public int changePolicy(PolicyMastVO policy) {
-		// TODO Auto-generated method stub
+		logger.info(getClass().getName() + "changePolicy() execute.");
 		
-		logger.debug("** PolicyMastServiceImp : changePolicy ** ");
 		int result = 0;
 		
 		int policy_idx = policy.getPolicy_idx();
-		logger.debug("** changePolicy : policy_idx ** " + policy_idx);
 		
 		List<FolderPolicyVO> folderPolicyList = policy.getFolderPolicyList();
 		List<PassPolicyVO> passPolicyList = policy.getPassPolicyList();
@@ -187,7 +176,6 @@ public class PolicyMastServiceImp implements PolicyMastService{
 		List<MediaPolicyVO> mediaPolicyList = policy.getMediaPolicyList();
 		List<String> osTypeList = policy.getOsTypeList();
 		
-		TransactionStatus status = tx.getTransaction(new DefaultTransactionDefinition());
 		try {
 		
 			policyMastDao.updatePolicy(policy);
@@ -238,12 +226,12 @@ public class PolicyMastServiceImp implements PolicyMastService{
 					mediaPolicyDao.addMediaPolicy(mediaPolicy);
 				}
 			}
+			
+			policyFileService.deletePolicyFile(policy_idx);
 			policyFileService.insertPoliceFile(policy);
 			result = 1;
-			tx.commit(status);
 		}catch(Exception e) {
 			result = 0;
-			tx.rollback(status);
 			e.printStackTrace();
 		}
 

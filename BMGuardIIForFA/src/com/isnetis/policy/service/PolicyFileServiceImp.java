@@ -58,6 +58,11 @@ public class PolicyFileServiceImp implements PolicyFileService{
 		
 	}
 	
+	@Override
+	public void deletePolicyFile(int policy_idx) {
+		policyMastDao.deletePolicyFile(policy_idx);
+	}
+	
 	private String makePolstDat(PolicyMastVO policy){
 		
 		StringBuilder sb = new StringBuilder();
@@ -186,4 +191,5 @@ public class PolicyFileServiceImp implements PolicyFileService{
 		
 		return result.toString();
 	}
+	
 }
