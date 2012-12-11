@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="RemoteProg">
+<update id="RemoteProg.insertDist"  parameterType="remoteProg">
+       <![CDATA[
+		insert into 
+			REMOTEPROG_MGR(
+			create_date
+			,file_name
+			,job_desc
+			,user_idx
+			)values (
+			DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+			,'${file_name}'
+			,'${job_desc}'
+			,${user_idx}
+			)
+	     ]]>
+	</update>
+</mapper>

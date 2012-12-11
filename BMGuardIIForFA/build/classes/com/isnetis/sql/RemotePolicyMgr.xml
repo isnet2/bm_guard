@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="RemotePolicy">
+<update id="RemotePolicy.insertPolicy"  parameterType="remotePolicy">
+       <![CDATA[
+		insert into 
+			REMOTEPOLICY_MGR(
+			create_date
+			,job_type
+			,job_desc
+			,user_idx
+			)values (
+			DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+			,'${job_type}'
+			,'${job_desc}'
+			,${user_idx}
+			)
+	     ]]>
+	</update>
+</mapper>
