@@ -25,26 +25,44 @@ public class PolicyFileServiceImp implements PolicyFileService{
 	
 	@Override
 	public void insertPoliceFile(PolicyMastVO policy){
-		logger.debug("** PolicyFileServiceImp :insertPoliceFile");
-		String about_txt = makeAboutTxt(policy);
-		logger.debug(" about_txt : " + about_txt);
-		String passProcess_dsf = makePassProcessDsf(policy);
-		logger.debug(" passProcess_dsf : " + passProcess_dsf);
-		String systemProcess_dat = makeSystemProcessDat(policy);
-		logger.debug(" systemProcess_dat : " + systemProcess_dat);
-		String folderDefines_dsf = makeFolderDefinesDsf(policy);
-		logger.debug(" folderDefines_dsf : " + folderDefines_dsf);
-		String foldst_dat = makePolstDat(policy);
-		logger.debug(" foldst_dat : " + foldst_dat);
 		
+		
+		String about_txt = makeAboutTxt(policy);
+		String passProcess_dsf = makePassProcessDsf(policy);
+		String systemProcess_dat = makeSystemProcessDat(policy);
+		String folderDefines_dsf = makeFolderDefinesDsf(policy);
+		String poldst_dat = makePolstDat(policy);
+
 		Map<String, String> map = new HashMap<String, String>();
 		// 바이너리 형태로 저장할 때
 		map.put("policy_idx", String.valueOf(policy.getPolicy_idx()));
-		map.put("about_txt", toBinaryString(about_txt));
-		map.put("passprocess_dsf", toBinaryString(passProcess_dsf));
-		map.put("systemprocess_dat", toBinaryString(systemProcess_dat));
-		map.put("folderdefines_dsf", toBinaryString(folderDefines_dsf));
-		map.put("polst_dat", toBinaryString(foldst_dat));
+
+		String bin_about_txt = toBinaryString(about_txt);
+		String bin_passProcess_dsf = toBinaryString(passProcess_dsf);
+		String bin_systemprocess_date = toBinaryString(systemProcess_dat);
+		String bin_folderdefines_dsf = toBinaryString(folderDefines_dsf);
+		String bin_polst_dat = toBinaryString(poldst_dat);
+		
+		map.put("about_txt", bin_about_txt);
+		map.put("passprocess_dsf", bin_passProcess_dsf);
+		map.put("systemprocess_dat", bin_systemprocess_date);
+		map.put("folderdefines_dsf", bin_folderdefines_dsf);
+		map.put("polst_dat", bin_polst_dat);
+		
+		logger.info("["+getClass().getName()+"][insertPolicyFile] about_txt["+about_txt+"]");
+		logger.info("["+getClass().getName()+"][insertPolicyFile] bin_about_txt["+bin_about_txt+"]");
+		
+		logger.info("["+getClass().getName()+"][insertPolicyFile] passProcess_dsf["+passProcess_dsf+"]");
+		logger.info("["+getClass().getName()+"][insertPolicyFile] bin_passProcess_dsf["+bin_passProcess_dsf+"]");
+		
+		logger.info("["+getClass().getName()+"][insertPolicyFile] systemProcess_dat["+systemProcess_dat+"]");
+		logger.info("["+getClass().getName()+"][insertPolicyFile] bin_systemprocess_date["+bin_systemprocess_date+"]");
+		
+		logger.info("["+getClass().getName()+"][insertPolicyFile] folderDefines_dsf["+folderDefines_dsf+"]");
+		logger.info("["+getClass().getName()+"][insertPolicyFile] bin_folderdefines_dsf["+bin_folderdefines_dsf+"]");
+		
+		logger.info("["+getClass().getName()+"][insertPolicyFile] poldst_dat["+poldst_dat+"]");
+		logger.info("["+getClass().getName()+"][insertPolicyFile] bin_polst_dat["+bin_polst_dat+"]");
 		
 		// 텍스트 형태로 저장할 때 
 		/*

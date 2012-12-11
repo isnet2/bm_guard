@@ -440,6 +440,7 @@
 			
 			$.post("applyPolicyForDevice.html", $("#apply_form").serialize(), function(data, status){
 				if(status == "success" && data.status == 1){
+					
 					// 중계서버 호출
 					jQuery.ajax({
 						url			: "http://isnet.ipdisk.co.kr:8180/hnd",
@@ -447,11 +448,12 @@
 						dataType	: "jsonp",
 						type		: "POST",
 						jsonp		: "callback",
-						success		: function(data) {
-							alert(JSON.stringify(data));
+						success		: function(data, status) {
+							//alert(JSON.stringify(data));
+							alert("response : data["+JSON.stringify(data)+"] status["+status+"]");
 						},
 						error		: function(data, status){
-							alert("ERROR : " + status);
+							alert("response : data["+JSON.stringify(data)+"] status["+status+"]");
 						}
 					});		 
 					

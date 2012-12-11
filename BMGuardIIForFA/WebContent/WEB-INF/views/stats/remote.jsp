@@ -65,15 +65,52 @@ include "../common/inc/header.html";
 		
 		<div class="search_box">
 			<div class="ssbox float_l" style="width:100%">
-				<div class="float_l mr20">
+				<!-- <div class="float_l mr20">
 					<h3 class="mb10"><img src="../common/images/txt/h3_month.gif" alt="월단위" /></h3>
 					<select>
 						<option value="">2010-07</option>
 					</select>
-				</div>
+				</div> -->
+				<div class="ssbox float_l" style="width: 250px;">
+				<h3><img src="../common/images/txt/h3_month.gif" alt="월단위" /></h3>
+				<ul class="due">
+					<li>
+						<select name="" id="year_selectbox">
+							<option value="2015">2015</option>
+							<option value="2014">2014</option>
+							<option value="2013">2013</option>
+							<option value="2012">2012</option>
+							<option value="2011">2011</option>
+							<option value="2010">2010</option>
+							<option value="2009">2009</option>
+							<option value="2008">2008</option>
+							<option value="2007">2007</option>
+						</select>
+						<span>년</span>
+					</li>
+					<li>
+						<select name="" id="month_selectbox">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+						<span>월</span>
+					</li>
+					<li><a href="#" class="btn set25 mr20" id="month_button"><span>월별 선택</span></a></li>
+				</ul>
+			</div>
 				<div class="float_l">
-					<h3><img src="../common/images/txt/txt_log_02.gif" alt="기간" /></h3>
-					<ul class="due">
+					<h3><img src="../common/images/txt/txt_log_02.gif" alt="기간"></h3>
+					<ul class="due" id="date_button">
 						<li><a href="#" class="btn set25"><span>당일</span></a></li>
 						<li><a href="#" class="btn set25"><span>3일</span></a></li>
 						<li><a href="#" class="btn set25"><span>1주</span></a></li>
@@ -83,10 +120,10 @@ include "../common/inc/header.html";
 					</ul>
 					<ul class="date clearboth">
 						<li>
-							<input type="text" name="cal_Date" readonly />
+							<input type="text" name="cal_Date" readonly="readonly" id="start_date" />
 							<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date)" alt="" />
 							~
-							<input type="text" name="cal_Date2" readonly />
+							<input type="text" name="cal_Date2" readonly="readonly" id="end_date" />
 							<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date2)" alt="" />
 						</li>
 					</ul>
@@ -95,16 +132,14 @@ include "../common/inc/header.html";
 			<div class="ssbox mt10" style="width:100%">
 				<h3 class="log_h3"><img src="../common/images/txt/h3_remotetype.gif" alt="원격관리유형"></h3>
 				<ul>
-					<li class="type1"><input type="checkbox" checked="checked" id="type1" /> <label for="type1">전체</label></li>
-					<li class="type2"><input type="checkbox" id="type2" /> <label for="type2">Win2003</label></li>
-					<li class="type3"><input type="checkbox" id="type3" /> <label for="type3">Win2000</label></li>
-					<li class="type4"><input type="checkbox" id="type4" /> <label for="type4">WinXP</label></li>
-					<li class="type5"><input type="checkbox" id="type5" /> <label for="type5">WinNT</label></li>
-					<li class="type6"><input type="checkbox" id="type6" /> <label for="type6">WinMe</label></li>
-					<li class="type7"><input type="checkbox" id="type7" /> <label for="type7">WinM98</label></li>
-					<li class="type8"><input type="checkbox" id="type8" /> <label for="type8">WinM95</label></li>
-					<li class="type9"><input type="checkbox" id="type9" /> <label for="type9">Win3.1</label></li>
-					<li class="last type10"><input type="checkbox" id="type10" /> <label for="type10">DOS</label></li>
+					<li class="type1"><input type="checkbox" checked="checked" id="kind_all_checkbox" /> <label for="type1">전체</label></li>
+					<li class="type2"><input type="checkbox" name="kind_checkbox" id="type2" value="FM"/> <label for="type2">파일/폴더관리</label></li>
+					<li class="type3"><input type="checkbox" name="kind_checkbox" id="type3" value="SM"/> <label for="type3">프로세서/서비스관리</label></li>
+					<li class="type4"><input type="checkbox" name="kind_checkbox" id="type4" value="RM"/> <label for="type4">레지스트리 관리</label></li>
+					<li class="type5"><input type="checkbox" name="kind_checkbox" id="type5" value="PD"/> <label for="type5">프로그램배포 관리</label></li>
+					<li class="type6"><input type="checkbox" name="kind_checkbox" id="type6" value="DM"/> <label for="type6">자동화기기 종료관리</label></li>
+					<li class="type7"><input type="checkbox" name="kind_checkbox" id="type7" value="PM"/> <label for="type7">정책 관리</label></li>
+					<li class="type8"><input type="checkbox" name="kind_checkbox" id="type8" value="RC"/> <label for="type8">원격제어</label></li>
 				</ul>
 			</div>
 		</div>
@@ -138,8 +173,8 @@ include "../common/inc/header.html";
 							<td class="tit">관리그룹</td>
 							<td class="tit">파일/폴더관리</td>
 							<td class="tit">프로세스/서비스 관리</td>
-							<td class="tit">프로그램 배포</td>
-							<td class="tit">자동배포<br/>프로그램</td>
+							<td class="tit">레지스트리<br />관리</td>
+							<td class="tit">프로그램배포</td>
 							<td class="tit">자동화기기<br/>종료관리</td>
 							<td class="tit">정책관리</td>
 							<td class="tit">원격제어</td>
@@ -148,7 +183,7 @@ include "../common/inc/header.html";
 					</tbody>
 				</table>
 				<div class="table_body scroll mt0 mb10" style="height: 210px;">
-					<table>
+					<table id="remote_stats_table">
 						<colgroup>
 							<col style="width:*" />
 							<col style="width:110px" />
@@ -177,7 +212,7 @@ include "../common/inc/header.html";
 				</div>
 
 				<p class="mt20">원격관리 내역</p>
-				<table class="mt10 title_table">
+				<table class="mt10 title_table" >
 					<colgroup>
 						<col style="width:70px" />
 						<col style="width:70px" />
@@ -202,7 +237,7 @@ include "../common/inc/header.html";
 					</tbody>
 				</table>
 				<div class="table_body scroll mt0 mb10" style="height: 210px;">
-					<table>
+					<table id="remote_device_table">
 						<colgroup>
 							<col style="width:70px" />
 							<col style="width:70px" />
@@ -271,8 +306,15 @@ $(document).ready(function() {
 	$("#devicetBody a").live( "click" , function(){
 		$(this).parent().parent().remove();
 	});
+	
+	// 기간 검색 초기화
+	init_gigan();
+	
+	checkedAllOrNothing("group_all_checkbox", "group_checkbox");
+   	checkedAllCheckbox("group_all_checkbox", "group_checkbox");
 
 });
 </script>
+<form id="searchForm" method="post" action=""></form>
 </body>
 </html>

@@ -40,7 +40,8 @@
 					end
 			) , 0) running_device
 		from CLIENT_MAST A
-		where A.clientgrp_idx in 
+		where A.reg_date is not null
+		and A.clientgrp_idx in 
 			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
 				#{item1}
 			</foreach>
@@ -69,7 +70,7 @@
 					end
 			) , 0) running_device
 		from CLIENT_MAST
-		where os_type is not null
+		where reg_date is not null
 		<if test="os_types != null">
 		and os_type in 
 			<foreach item="item2" index="index2"  collection="os_types" open="(" separator="," close=")">
@@ -108,6 +109,7 @@
 			select 'running_device' gubun, clientgrp_idx, client_name, ip_addr, mac_addr, os_type, reg_date stats_date
 			from CLIENT_MAST
 			where invalid_flag = 0
+			and reg_date is not null
 			and clientgrp_idx in
 			<foreach item="item1" index="index1"  collection="sub_group_idxs" open="(" separator="," close=")">
 				#{item1}
@@ -134,6 +136,7 @@
 				group by policy_nowdate, policy_idx)  A
 	</select>
 	
+	<!-- 정책관리현황(기기별 통계) -->
 	<select id="getDeviceListByDate" parameterType="map" resultType="hashmap">
 		select B.clientgrp_name group_name,
 				A.client_name,
@@ -157,5 +160,54 @@
 		and A.clientgrp_idx = B.clientgrp_idx
 	</select>
 	
-	
+	<!-- 원격관리 현황(원격관리 건수) -->
+	<select id="getRemoteMgrStats" parameterType="map" resultType="hashmap">
+		select
+			sum(
+				case
+					when job_kind = 'FM' then 1 else 0
+				end
+			) fm_count,
+			sum(
+				case
+					when job_kind = 'SM' then 1 else 0
+				end
+			) sm_count,
+			sum(
+				case
+					when job_kind = 'RM' then 1 else 0
+				end
+			) rm_count,
+			sum(
+				case
+					when job_kind = 'PD' then 1 else 0
+				end
+			) pd_count,
+			sum(
+				case
+					when job_kind = 'PM' then 1 else 0
+				end
+			) pm_count,
+			sum(
+				case
+					when job_kind = 'RC' then 1 else 0
+				end
+			) rc_count
+		from REMOTEMGR_LIST
+		where create_date &gt;  #{start_date, jdbcType=VARCHAR} and create_date &lt; #{end_date, jdbcType=VARCHAR} 
+		<if test="job_kinds != null">
+		and job_kind in
+			<foreach item="item" index="index"  collection="job_kinds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sub_group_idxs != null">
+		and clientgrp_idx in
+			<foreach item="item" index="index"  collection="sub_group_idxs" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
 </mapper>
+
+

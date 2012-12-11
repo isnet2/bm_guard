@@ -94,7 +94,7 @@ public class MonitorController {
 		
 		
 		//개발용 관리자 페이지로 이동 
-		modelAndView.setViewName("/monitor/automatic");
+		modelAndView.setViewName("/monitor/automatic_old");
 		return modelAndView;
 	}
 	
@@ -111,7 +111,7 @@ public class MonitorController {
 		*/
 		
 		//개발용 관리자 페이지로 이동 
-		modelAndView.setViewName("/monitor/servermonitor");
+		modelAndView.setViewName("/monitor/servermonitor_old");
 		return modelAndView;
 	}
 

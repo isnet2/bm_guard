@@ -780,6 +780,22 @@
 		jQuery("#criticalBtn").click(function() {
 			jQuery("#criticalForm").attr("action","/InsertCritical.html");
 			jQuery("#criticalForm").submit();
+			
+			// 중계서버 호출
+			jQuery.ajax({
+				url			: "http://isnet.ipdisk.co.kr:8180/hnd",
+				data		: {SC_CODE:"510", TG_TYPE:"JSON", UUID:new Date().getTime()},
+				dataType	: "jsonp",
+				type		: "POST",
+				jsonp		: "callback",
+				success		: function(data, status) {
+					//alert(JSON.stringify(data));
+					alert("response : data["+JSON.stringify(data)+"] status["+status+"]");
+				},
+				error		: function(data, status){
+					alert("response : data["+JSON.stringify(data)+"] status["+status+"]");
+				}
+			});
 		});
 		
 		

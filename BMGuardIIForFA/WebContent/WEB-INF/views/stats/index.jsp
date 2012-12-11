@@ -91,7 +91,7 @@ include "../common/inc/header.html";
 			<div class="ssbox float_l group">
 				<h3 class="log_h3"><img src="../common/images/txt/h3_os.gif" alt="OS"><span><!-- 권한 : 제어 및 모니터링 --></span></h3>
 				<ul id="os_type_list">
-					<li class="type1"><input type="checkbox" id="os_all_checkbox"> <label for="#">전체</label></li>
+					<li class="type1"><input type="checkbox" id="os_all_checkbox"> <label for="os_all_checkbox">전체</label></li>
 					<li class="type2"><input type="checkbox" name="os_checkbox" value="Win98"> <label for="#">Win98</label></li>
 					<li class="type3"><input type="checkbox" name="os_checkbox" value="WinNT"> <label for="#">WinNT</label></li>
 					<li class="type4"><input type="checkbox" name="os_checkbox" value="WinME"> <label for="#">WinMe</label></li>
