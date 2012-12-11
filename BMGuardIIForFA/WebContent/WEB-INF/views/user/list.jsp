@@ -389,12 +389,17 @@
 						</c:choose>
 					</td>
 					<td>
-					
-						<c:forEach var="managementGroup" items="${userList.managementGroupList }" varStatus="status">
-							<c:if test="${not status.last }">${managementGroup.clientgrp_name },</c:if>
-							<c:if test="${status.last }">${managementGroup.clientgrp_name }</c:if>
-							
-						</c:forEach>
+						<c:choose>
+							<c:when test="${userList.grp_all_concat eq  userList.user_grp_concat}">
+								전체 <p> (총 ${userList.client_count}대)</p>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${userList.invalid_flag eq 0 && userList.grp_count ne 0 && userList.managementGroupList[0].clientgrp_name ne null}">
+									${userList.managementGroupList[0].clientgrp_name }외 ${userList.grp_count-1}그룹
+									<p> (${userList.client_count}대)</p>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
 					</td>
 					<td>${fn:substring(userList.update_date,0,10)} <p>${fn:substring(userList.update_date,11,19)}</p></td>
 					<td>${fn:substring(userList.login_ldate,0,10)} <p>${fn:substring(userList.login_ldate,11,19)}</p></td>

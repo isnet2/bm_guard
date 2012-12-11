@@ -6,22 +6,6 @@
 <c:set var="gnb" value="원격관리" />
 <c:set var="tab_1d" value="정책관리" />
 <%@ include file="../common/inc/header.jsp" %>
-<!--  
-<?php 
-$body="lnb_tree";
-$gnb4="active"; //GNB_1depth
-$gnb4_11="on"; //GNB_2depth
-$gnb="원격관리";
-$gnb_sub="정책관리";
-$tab_1d="정책관리";
-include "../common/inc/header.html";
-?>
--->
-<!-- <nav class="tab_1depth">
-	<ul>
-		<li class="on"><a href="/remote/policy.html">정책관리</a></li>
-	</ul>
-</nav> -->
 </header>
 
 <article>
@@ -29,7 +13,7 @@ include "../common/inc/header.html";
 
 	<figure>정책관리</figure>
 	<section class="user_list">
-	<h2>정책관리</h2>
+<!-- 	<h2>정책관리</h2> -->
 	<div class="auto_wrap">
 
 	<figure>lnb_tree</figure>
@@ -70,16 +54,18 @@ include "../common/inc/header.html";
 			<tr>
 				<th>정책유형</th>
 				<td class="rela">
-					<select name="" id="">
-						<option value="보안정책 ON">보안정책 ON</option>
-						<option value="보안정책 OFF">보안정책 OFF</option>
+					<select name="job_type" id="job_type">
+						<option value="ST" selected>보안정책 ON</option>
+						<option value="SF">보안정책 OFF</option>
 					</select>
+					<input type="hidden" id="job_idx" name="job_idx"/>
 				</td>
 			</tr>
 			<tr>
 				<th><label for="sau">종료 사유</label></th>
 				<td>
-					<input type="text" style="width:664px" id="sau" name="" /> <a href="#" class="btn type2 set25 btn_action"><span>실 행</span></a>
+					<input type="text" style="width:664px" id="reason" name="reason" /> 
+					<a href="#" id="submitBtn" class="btn type2 set25 btn_action"><span>실 행</span></a>
 				</td>
 			</tr>
 		</tbody>
@@ -118,76 +104,7 @@ include "../common/inc/header.html";
 					<col style="width:150px"/>
 					<col style="width:*"/>
 				</colgroup>
-				<tbody>
-	<!--
-					<tr>
-						<td style="text-align:center" colspan="6">결과가 없습니다.</td>
-					</tr>
-	-->
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
+				<tbody id="devicetBody">
 				</tbody>
 			</table>
 		</div>
@@ -195,6 +112,10 @@ include "../common/inc/header.html";
 	</section>
 
 </article>
+
+<!-- axtiveX -->
+<div id="activeXWrite"></div>
+<script type="text/javascript" charset="UTF-8" src="/resource/libs/common/BMSupoAxInstall.js"></script>
 
 
 <script type="text/javascript" charset="UTF-8" src="../jstree/lib/jquery.cookie.js"></script>
@@ -204,6 +125,7 @@ include "../common/inc/header.html";
 <script type="text/javascript" charset="UTF-8" src="/resource/libs/common/common.util.js"></script>
 <script type="text/javascript"> 
 
+var submitFlag = false;
 $(document).ready(function() {
 	
 	//help
@@ -228,9 +150,137 @@ $(document).ready(function() {
   	}) ; 
 
 	$("#devicetBody a").live( "click" , function(){
-		$(this).parent().parent().remove();
+		//실행이 이미 되었으면
+		if (!submitFlag) {
+			$(this).parent().parent().remove();
+		}else {
+			alert("이미 실행된 건에 대해서는 삭제하실 수 없습니다.");
+			return;
+		}	});
+
+	$("#submitBtn").click(function() {  
+		// 실행 버튼 클릭시 
+		submitFlag = true;
+		
+		var job_type = $("#job_type").val();
+		var reason = $("#reason").val();
+
+		if(job_type.trim().length==0) {
+			alert("정책유형을 선택하여 주세요.");
+			return;
+		}
+
+		if(reason.trim().length ==0) {
+			alert("정책 사유를 입력하여 주세요.");
+			return;
+		}
+		//전송할 device idx, ip
+		var device_idxs = $("input[name='device_idx\[\]']");
+		var device_ips = $("input[name='device_ip\[\]']");
+		
+		if(device_idxs.length == 0) {
+			alert("정책 관리할 자동화 기기를 선택하여 주세요.");
+			return;
+		}
+		
+		$.post(
+				"./insertPolicy.html", 
+				{ 
+					"job_type" : job_type,
+					"job_desc" : reason,
+				}, 
+				function (r) {
+					if(r.status) {  
+						$("#job_idx").val(r.job_idx);
+					}else {
+						submitFlag = false;
+					}   
+				},
+				"json"
+			); 
+		
+		/* document.BMSupoAx.SendFile(보낼IP, port, 전송파일경로, 수신파일경로, 0, 클라이언트 idx)*/
+		for(var i = 0 ; i < device_idxs.length;i++) {
+		
+			var device_idx = $(device_idxs[i]).val();
+			var device_ip =  $(device_ips[i]).val();
+/* 			if(device_ip == "" || device_ip == "null") {
+				device_ip = "192.168.0.73";
+			}
+ */			//alert("("+device_ip +", 7997 ," +transfile+","+savePath+","+ 0 +"," +device_idx+" )");
+			//document.BMSupoAx.SendFile( "192.168.0.73", 7997, transfile, savePath, 0, device_idx);
+			alert("OnMessage 호출");
+			OnMessage(device_idx,3);
+		}
+
 	});
 
 });
+ 
+function OnMessage(nlIndex, nlResultCode) {
+	$.post("./insertResult.html" ,
+			{ 
+			"job_idx" : $("#job_idx").val(),
+			"client_idx" : nlIndex,
+			"job_kind" : "PM",
+			"job_result" : nlResultCode
+			}, 
+			function (r) {
+				if(r.status == 1) {  
+					//alert("OnMessage 성공");
+				}   
+			},
+			"json"
+		); 
+	rtnValue(nlIndex, nlResultCode);
+
+}
+function rtnValue(nlIndex, nlResultCode) {
+	var date = new Date();
+	var rtnTime = getDateTimeFormat(date);
+
+	$("#rtnVal_" + nlIndex).html(nlResultCode);
+	$("#rtnTime_" + nlIndex).html(rtnTime);
+	$("#result_idx_" + nlIndex).val(nlResultCode);
+	
+}
+
+function rtnResultAddTbody(device){
+	
+	var client_idx = device.client_idx;
+	var length = $("#device_ip_"+client_idx).length;
+	if(length == 0){
+		
+		var htmls = "";
+	
+		htmls += "<tr>";
+		htmls += "<td><a href=\"#\" id=\"del_"+ device.client_idx +"\" class=\"btn type2 set25\"><span>삭제</span></a></td>";
+		htmls += "<td>";
+		htmls += "<input type=\"hidden\" name=\"device_idx[]\" id=\"device_"+device.client_idx+"\" value=\""+device.client_idx+"\">";
+		
+		if (device.clientGrp != null)
+		htmls +=      device.clientGrp.clientgrp_name + "</td>";
+		else 
+		htmls += "</td>";
+		
+		htmls += "<td>" +device.client_name+'</td>';
+		htmls += "<td><input type=\"hidden\" name=\"device_ip[]\" id=\"device_ip_"+device.client_idx+"\" value=\""+device.ip_addr+"\">";
+		htmls += (device.ip_addr||'')+"</td>";
+		htmls += "<td><input type=\"hidden\" name=\"job_idx[]\" id=\"job_idx_"+device.client_idx+"\">";
+		htmls += "<div id=\"rtnTime_" +device.client_idx +"\"></div></td>";
+		htmls += "<td ><input type=\"hidden\" name=\"result_idx[]\" id=\"result_idx_"+device.client_idx+"\" value=\""+device.ip_addr+"\">";
+		htmls += "<div id=\"rtnVal_" +device.client_idx +"\"></div></td>";
+		htmls += "</tr>";
+		
+		$("#devicetBody").append(htmls);
+	}
+	
+}
+
 </script>
+
+<script language="javascript" event="ResultNoti2WEB(nlIndex, nlResultCode)" for="BMSupoAx">
+	OnMessage(nlIndex, nlResultCode);
+</script>
+
 <%@ include file="../common/inc/footer.jsp" %>

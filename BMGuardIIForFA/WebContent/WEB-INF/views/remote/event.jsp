@@ -71,21 +71,21 @@ include "../common/inc/header.html";
 				<tr>
 					<th>상태</th>
 					<td class="bl">
-						<select name="#" id="#">
-							<option value="전체" selected>전체</option>
-							<option value="응용프로그램">응용프로그램</option>
-							<option value="보안">보안</option>
-							<option value="시스템">시스템</option>
+						<select name="job_type" id="job_type">
+							<option value="AL" selected>전체</option>
+							<option value="AP">응용프로그램</option>
+							<option value="SC">보안</option>
+							<option value="SS">시스템</option>
 						</select>
+						<input type="hidden" id="job_idx" name="job_idx" />
 					</td>
 				</tr>
 				<tr>
 					<th>저장할 폴더<span style="display:block;font-weight:normal;margin-top:5px;"></span></th>
 					<td>
-						<input type="text" id="sau" name=""> &nbsp;
-						<a href="#" class="btn type2 set25"><span>저장할 폴더 지정</span></a>
+						<input type="text" style="width:450px" id="folder_path" name="folder_path"> &nbsp;
 						<br/>[예) c:\download]
-						<a href="#" class="btn type2 set25 btn_action"><span>실 행</span></a>
+						<a href="#" id="submitBtn" class="btn type2 set25 btn_action"><span>실 행</span></a>
 					</td>
 				</tr>
 			</tbody>
@@ -125,76 +125,7 @@ include "../common/inc/header.html";
 					<col style="width:150px"/>
 					<col style="width:*"/>
 				</colgroup>
-				<tbody>
-	<!--
-					<tr>
-						<td style="text-align:center" colspan="6">결과가 없습니다.</td>
-					</tr>
-	-->
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn type2 set25"><span>삭제</span></a></td>
-						<td>3층기계실</td>
-						<td>2BUA01</td>
-						<td>123.234.0.1</td>
-						<td>2012-10-16 10:12:12</td>
-						<td></td>
-					</tr>
+				<tbody id="devicetBody">
 				</tbody>
 			</table>
 		</div>
@@ -202,6 +133,10 @@ include "../common/inc/header.html";
 	</section>
 
 </article>
+<!-- axtiveX -->
+<div id="activeXWrite"></div>
+<script type="text/javascript" charset="UTF-8" src="/resource/libs/common/BMSupoAxInstall.js"></script>
+
 
 <script type="text/javascript" charset="UTF-8" src="../jstree/lib/jquery.cookie.js"></script>
 <script type="text/javascript" charset="UTF-8" src="../jstree/lib/jquery.hotkeys.js"></script>
@@ -210,7 +145,7 @@ include "../common/inc/header.html";
 <script type="text/javascript" charset="UTF-8" src="/resource/libs/common/common.util.js"></script>
 
 <script type="text/javascript"> 
-
+var submitFlag = false;
 $(document).ready(function() {
 	
 	//help
@@ -235,8 +170,149 @@ $(document).ready(function() {
   	}) ; 
 
 	$("#devicetBody a").live( "click" , function(){
-		$(this).parent().parent().remove();
+		//실행이 이미 되었으면
+		if (!submitFlag) {
+			$(this).parent().parent().remove();
+		}else {
+			alert("이미 실행된 건에 대해서는 삭제하실 수 없습니다.");
+			return;
+		}	
 	});
+
+	$("#submitBtn").click(function() {  
+		// 실행 버튼 클릭시 
+		submitFlag = true;
+		
+		var job_type = $("#job_type").val();
+		var folder_path = $("#folder_path").val();
+
+		if(job_type.trim().length==0) {
+			alert("상태를 선택하여 주세요.");
+			return;
+		}
+
+		if(folder_path.trim().length ==0) {
+			alert("저장할 폴더를 입력하여 주세요.");
+			return;
+		}
+		//전송할 device idx, ip
+		var device_idxs = $("input[name='device_idx\[\]']");
+		var device_ips = $("input[name='device_ip\[\]']");
+		
+		if(device_idxs.length == 0) {
+			alert("이벤트 로그 수집할 자동화 기기를 선택하여 주세요.");
+			return;
+		}
+	
+		folder_path = folder_path.replace(/\\/g,'\\\\');
+		
+		$.post(
+				"./insertState.html", 
+				{ 
+					"job_type" : job_type,
+					"folder_path" : folder_path,
+				}, 
+				function (r) {
+					if(r.status) {  
+						$("#job_idx").val(r.job_idx);
+					}else {
+						submitFlag = false;
+					}   
+				},
+				"json"
+			); 
+		
+		/*AL : 전체  AP: 응용프로그램 SC : 보안  SS: 시스템 */
+		/* document.BMSupoAx.GetAppEventLog(보낼IP, port, 다운경로, 클라이언트 idx)*/
+		/* document.BMSupoAx.GetSysEventLog(보낼IP, port, 다운경로, 클라이언트 idx)*/
+		/* document.BMSupoAx.GetSecuEventLog(보낼IP, port, 다운경로, 클라이언트 idx)*/
+		for(var i = 0 ; i < device_idxs.length;i++) {
+		
+			var device_idx = $(device_idxs[i]).val();
+			var device_ip =  $(device_ips[i]).val();
+/* 			if(device_ip == "" || device_ip == "null") {
+				device_ip = "192.168.0.73";
+			}
+ */			//alert("("+device_ip +", 7997 ," +transfile+","+savePath+","+ 0 +"," +device_idx+" )");
+			
+ 			if (job_type == "P") {
+ 				document.BMSupoAx.GetAppEventLog( device_ip, 7997, folder_path, device_idx);
+ 			}else if (job_type == "SC") {
+ 				document.BMSupoAx.GetSecuEventLog( device_ip, 7997, folder_path, device_idx);
+ 			}else if (job_type == "SS") {
+ 				document.BMSupoAx.GetSysEventLog( device_ip, 7997, folder_path, device_idx);
+ 			}
+
+		}
+
+	});
+
 });
+ 
+function OnMessage(nlIndex, nlResultCode) {
+	$.post("./insertResult.html" ,
+			{ 
+			"job_idx" : $("#job_idx").val(),
+			"client_idx" : nlIndex,
+			"job_kind" : "EL",
+			"job_result" : nlResultCode
+			}, 
+			function (r) {
+				if(r.status == 1) {  
+					//alert("OnMessage 성공");
+				}   
+			},
+			"json"
+		); 
+	rtnValue(nlIndex, nlResultCode);
+
+}
+function rtnValue(nlIndex, nlResultCode) {
+	var date = new Date();
+	var rtnTime = getDateTimeFormat(date);
+
+	$("#rtnVal_" + nlIndex).html(nlResultCode);
+	$("#rtnTime_" + nlIndex).html(rtnTime);
+	$("#result_idx_" + nlIndex).val(nlResultCode);
+	
+}
+
+function rtnResultAddTbody(device){
+	
+	var client_idx = device.client_idx;
+	var length = $("#device_ip_"+client_idx).length;
+	if(length == 0){
+		
+		var htmls = "";
+	
+		htmls += "<tr>";
+		htmls += "<td><a href=\"#\" id=\"del_"+ device.client_idx +"\" class=\"btn type2 set25\"><span>삭제</span></a></td>";
+		htmls += "<td>";
+		htmls += "<input type=\"hidden\" name=\"device_idx[]\" id=\"device_"+device.client_idx+"\" value=\""+device.client_idx+"\">";
+		
+		if (device.clientGrp != null)
+		htmls +=      device.clientGrp.clientgrp_name + "</td>";
+		else 
+		htmls += "</td>";
+		
+		htmls += "<td>" +device.client_name+'</td>';
+		htmls += "<td><input type=\"hidden\" name=\"device_ip[]\" id=\"device_ip_"+device.client_idx+"\" value=\""+device.ip_addr+"\">";
+		htmls += (device.ip_addr||'')+"</td>";
+		htmls += "<td><input type=\"hidden\" name=\"job_idx[]\" id=\"job_idx_"+device.client_idx+"\">";
+		htmls += "<div id=\"rtnTime_" +device.client_idx +"\"></div></td>";
+		htmls += "<td ><input type=\"hidden\" name=\"result_idx[]\" id=\"result_idx_"+device.client_idx+"\" value=\""+device.ip_addr+"\">";
+		htmls += "<div id=\"rtnVal_" +device.client_idx +"\"></div></td>";
+		htmls += "</tr>";
+		
+		$("#devicetBody").append(htmls);
+	}
+	
+}
+
 </script>
+
+<script language="javascript" event="ResultNoti2WEB(nlIndex, nlResultCode)" for="BMSupoAx">
+	OnMessage(nlIndex, nlResultCode);
+</script>
+
 <%@ include file="../common/inc/footer.jsp" %>

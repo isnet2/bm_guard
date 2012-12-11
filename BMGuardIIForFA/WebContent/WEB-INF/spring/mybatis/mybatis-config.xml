@@ -37,6 +37,9 @@
 		<typeAlias type="com.isnetis.remote.domain.RemoteFileMgrVO" alias="remoteFile"/>
 		<typeAlias type="com.isnetis.remote.domain.RemotePrcMgrVO" alias="remotePrc"/>
 		<typeAlias type="com.isnetis.remote.domain.RemoteRegMgrVO" alias="remoteReg"/>
+		<typeAlias type="com.isnetis.remote.domain.RemoteProgMgrVO" alias="remoteProg"/>
+		<typeAlias type="com.isnetis.remote.domain.RemoteDeviceMgrVO" alias="remoteDevice"/>
+		<typeAlias type="com.isnetis.remote.domain.RemotePolicyMgrVO" alias="remotePolicy"/>
 	</typeAliases>
 
 	<!--======= Difinition of MAPPER Path =======-->
@@ -64,5 +67,8 @@
 		<mapper resource="com/isnetis/sql/RemoteMgrList.xml"/>
 		<mapper resource="com/isnetis/sql/RemotePrcMgr.xml"/>
 		<mapper resource="com/isnetis/sql/RemoteRegMgr.xml"/>
+		<mapper resource="com/isnetis/sql/RemoteProgMgr.xml"/>
+		<mapper resource="com/isnetis/sql/RemoteDeviceMgr.xml"/>
+		<mapper resource="com/isnetis/sql/RemotePolicyMgr.xml"/>
 	</mappers>
 </configuration>

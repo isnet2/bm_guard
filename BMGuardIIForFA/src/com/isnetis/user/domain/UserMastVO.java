@@ -35,6 +35,11 @@ public class UserMastVO extends BaseObjectBean
 	private String update_gubun;     /*변경구분                                */
 	private String clientgrp_idx;
 	private String history_user_idx;
+	private String grp_count;
+	private String client_count;
+	private String grp_all_concat;
+	private String user_grp_concat;
+	
 	private List<ManagementGroupVO> managementGroupList; /*관리그룹*/
 	
 	public String getUser_idx() {
@@ -193,6 +198,30 @@ public class UserMastVO extends BaseObjectBean
 	}
 	public void setHistory_user_idx(String history_user_idx) {
 		this.history_user_idx = history_user_idx;
+	}
+	public String getGrp_count() {
+		return grp_count;
+	}
+	public void setGrp_count(String grp_count) {
+		this.grp_count = grp_count;
+	}
+	public String getClient_count() {
+		return client_count;
+	}
+	public void setClient_count(String client_count) {
+		this.client_count = client_count;
+	}
+	public String getGrp_all_concat() {
+		return grp_all_concat;
+	}
+	public void setGrp_all_concat(String grp_all_concat) {
+		this.grp_all_concat = grp_all_concat;
+	}
+	public String getUser_grp_concat() {
+		return user_grp_concat;
+	}
+	public void setUser_grp_concat(String user_grp_concat) {
+		this.user_grp_concat = user_grp_concat;
 	}
 	
 }

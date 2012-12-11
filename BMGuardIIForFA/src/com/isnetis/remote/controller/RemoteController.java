@@ -15,11 +15,17 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import sun.rmi.runtime.Log;
 
+import com.isnetis.remote.domain.RemoteDeviceMgrVO;
+import com.isnetis.remote.domain.RemotePolicyMgrVO;
+import com.isnetis.remote.domain.RemoteProgMgrVO;
 import com.isnetis.remote.domain.RemoteRegMgrVO;
+import com.isnetis.remote.service.RemoteDeviceService;
 import com.isnetis.remote.service.RemoteFileService;
 import com.isnetis.remote.service.RemoteMgrService;
+import com.isnetis.remote.service.RemotePolicyService;
 import com.isnetis.remote.service.RemotePrcService;
 import com.isnetis.remote.service.RemoteRegService;
+import com.isnetis.remote.service.RemoteProgService;
 import com.isnetis.util.SessionUtil;
 
 @Controller
@@ -42,6 +48,15 @@ public class RemoteController {
 	
 	@Autowired
 	private RemoteRegService remoteRegService;
+	
+	@Autowired
+	private RemoteProgService remoteProgService;
+	
+	@Autowired
+	private RemoteDeviceService remoteDeviceService;
+	
+	@Autowired
+	private RemotePolicyService remotePolicyService;
 	
 	
 	/**파일전송*/
@@ -294,14 +309,6 @@ public class RemoteController {
 										 @RequestParam(value="job_type")String job_type,
 										 HttpServletRequest request ) throws Throwable {
 		
-		logger.debug("============= insertRegistry =============");
-		logger.debug("============= key_name : " + key_name);
-		logger.debug("============= subkey_name: " + subkey_name);
-		logger.debug("============= value_name : " + value_name);
-		logger.debug("============= data_type : " + data_type);
-		logger.debug("============= reg_value : " + reg_value);
-		logger.debug("============= job_desc : " + job_desc);
-		logger.debug("============= job_type : " + job_type);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(mappingJacksonJsonView);
@@ -339,7 +346,7 @@ public class RemoteController {
 	}
 	
 	
-	/**모니터링 관리 리스트 페이지*/
+	/**프로그램 배포*/
 	@RequestMapping(value="/program.html", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getProgram(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
@@ -347,8 +354,45 @@ public class RemoteController {
 		modelAndView.setViewName("/remote/program");
 		return modelAndView;
 	}
+	
+	/**프로그램 배포*/
+	@RequestMapping(value="/insertDist.html", method = { RequestMethod.POST,RequestMethod.GET } )
+	public ModelAndView insertDist(@RequestParam(value="file_name")String file_name,
+										 @RequestParam(value="job_desc")String job_desc,
+										 HttpServletRequest request ) throws Throwable {
+		
 
-	/**모니터링 관리 리스트 페이지*/
+		ModelAndView mav = new ModelAndView();
+		mav.setView(mappingJacksonJsonView);
+		
+		int job_idx =0;
+		int user_idx = 0;
+		SessionUtil sessions = new  SessionUtil(request);
+		if (sessions.getLoginUser()!= null) {
+			user_idx = Integer.parseInt(sessions.getLoginUser().getUser_idx());
+		}
+		RemoteProgMgrVO remoteP = new RemoteProgMgrVO();
+		remoteP.setFile_name(file_name);
+		remoteP.setJob_desc(job_desc);
+		remoteP.setUser_idx(user_idx);
+		
+		try {
+			job_idx = remoteProgService.insertDist(remoteP);
+		}catch(Exception e) {
+			job_idx =0;
+			e.printStackTrace();
+		}
+		//개발용 관리자 페이지로 이동
+		if(job_idx != 0) 
+			mav.addObject("status", true);
+		else
+			mav.addObject("status", false);
+		
+		mav.addObject("job_idx", job_idx);
+		return mav;
+	}
+
+	/**자동화 기기 종료관리*/
 	@RequestMapping(value="/pc_end.html", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getPcEnd(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
@@ -357,7 +401,50 @@ public class RemoteController {
 		return modelAndView;
 	}
 
-	/**모니터링 관리 리스트 페이지*/
+	/**자동화 기기 종료 추가*/
+	@RequestMapping(value="/insertState.html", method = { RequestMethod.POST,RequestMethod.GET } )
+	public ModelAndView insertState(@RequestParam(value="job_type")String job_type,
+										 @RequestParam(value="job_desc")String job_desc,
+										 HttpServletRequest request ) throws Throwable {
+		
+		logger.debug("============= job_desc: " + job_desc);
+		logger.debug("============= job_type : " + job_type);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setView(mappingJacksonJsonView);
+		
+		int job_idx =0;
+		int user_idx = 0;
+		SessionUtil sessions = new  SessionUtil(request);
+		if (sessions.getLoginUser()!= null) {
+			user_idx = Integer.parseInt(sessions.getLoginUser().getUser_idx());
+			
+		}
+		RemoteDeviceMgrVO remoteD = new RemoteDeviceMgrVO();
+		remoteD.setJob_type(job_type);
+		remoteD.setJob_desc(job_desc);
+		remoteD.setUser_idx(user_idx);
+		
+		try {
+			job_idx = remoteDeviceService.insertState(remoteD);
+			
+			logger.debug("============= job_idx: " + job_idx);
+		}catch(Exception e) {
+			job_idx =0;
+			e.printStackTrace();
+		}
+		//개발용 관리자 페이지로 이동
+		if(job_idx != 0) 
+			mav.addObject("status", true);
+		else
+			mav.addObject("status", false);
+		
+		mav.addObject("job_idx", job_idx);
+		return mav;
+	}
+	
+	
+	/**이벤트*/
 	@RequestMapping(value="/event.html", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getEvent(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
@@ -366,7 +453,7 @@ public class RemoteController {
 		return modelAndView;
 	}
 
-	/**모니터링 관리 리스트 페이지*/
+	/**자동화기기 덤프관리*/
 	@RequestMapping(value="/pc_dump.html", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getPcDump(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
@@ -374,8 +461,8 @@ public class RemoteController {
 		modelAndView.setViewName("/remote/pc_dump");
 		return modelAndView;
 	}
-
-	/**모니터링 관리 리스트 페이지*/
+	
+	/**자동화기기 정책관리*/
 	@RequestMapping(value="/policy.html", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getPolicy(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
@@ -383,8 +470,51 @@ public class RemoteController {
 		modelAndView.setViewName("/remote/policy");
 		return modelAndView;
 	}
-
-	/**모니터링 관리 리스트 페이지*/
+	
+	/**자동화 기기 정책관리 추가*/
+	@RequestMapping(value="/insertPolicy.html", method = { RequestMethod.POST,RequestMethod.GET } )
+	public ModelAndView insertPolicy(@RequestParam(value="job_type")String job_type,
+										 @RequestParam(value="job_desc")String job_desc,
+										 HttpServletRequest request ) throws Throwable {
+		
+		logger.debug("============= job_desc: " + job_desc);
+		logger.debug("============= job_type : " + job_type);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setView(mappingJacksonJsonView);
+		
+		int job_idx =0;
+		int user_idx = 0;
+		SessionUtil sessions = new  SessionUtil(request);
+		if (sessions.getLoginUser()!= null) {
+			user_idx = Integer.parseInt(sessions.getLoginUser().getUser_idx());
+			
+		}
+		RemotePolicyMgrVO remotePolicy = new RemotePolicyMgrVO();
+		remotePolicy.setJob_type(job_type);
+		remotePolicy.setJob_desc(job_desc);
+		remotePolicy.setUser_idx(user_idx);
+		
+		try {
+			job_idx = remotePolicyService.insertPolicy(remotePolicy);
+			
+			logger.debug("============= job_idx: " + job_idx);
+		}catch(Exception e) {
+			job_idx =0;
+			e.printStackTrace();
+		}
+		//개발용 관리자 페이지로 이동
+		if(job_idx != 0) 
+			mav.addObject("status", true);
+		else
+			mav.addObject("status", false);
+		
+		mav.addObject("job_idx", job_idx);
+		return mav;
+	}
+	
+	
+	/** 원격제어 */
 	@RequestMapping(value="/remote.html", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getRemote(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
@@ -393,7 +523,7 @@ public class RemoteController {
 		return modelAndView;
 	}
 
-	/**모니터링 관리 리스트 페이지*/
+	/**화면 캡쳐*/
 	@RequestMapping(value="/capture.html", method = { RequestMethod.POST,RequestMethod.GET } )
 	public ModelAndView getCapture(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) throws Throwable {
 
