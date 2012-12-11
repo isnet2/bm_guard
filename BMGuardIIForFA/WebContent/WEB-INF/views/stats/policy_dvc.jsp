@@ -32,76 +32,57 @@ include "../common/inc/header.html";
 	<section class="stats mt20">
 		<h2>기기별 통계</h2>
 		<div class="search_box">
-			<div class="ssbox float_l" style="width: 250px;">
-				<h3><img src="../common/images/txt/txt_log_02.gif" alt="기간"></h3>
-				<ul class="due">
-					<li>
-						<select name="" id="year_selectbox">
-							<option value="2015">2015</option>
-							<option value="2014">2014</option>
-							<option value="2013">2013</option>
-							<option value="2012">2012</option>
-							<option value="2011">2011</option>
-							<option value="2010">2010</option>
-							<option value="2009">2009</option>
-							<option value="2008">2008</option>
-							<option value="2007">2007</option>
-						</select>
-						<span>년</span>
-					</li>
-					<li>
-						<select name="" id="month_selectbox">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
-						</select>
-						<span>월</span>
-					</li>
-					<li><a href="#" class="btn set25 mr20" id="month_button"><span>월별 선택</span></a></li>
-				</ul>
-			</div>
-			<div class="ssbox float_l group" style="margin-top: 16px;">
-				<ul class="clearboth"  id="date_button">
-					<li><a href="#" class="btn set25"><span>당일</span></a></li>
-					<li><a href="#" class="btn set25"><span>3일</span></a></li>
-					<li><a href="#" class="btn set25"><span>1주</span></a></li>
-					<li><a href="#" class="btn set25"><span>1개월</span></a></li>
-					<li><a href="#" class="btn set25"><span>3개월</span></a></li>
-					<li><a href="#" class="btn set25"><span>6개월</span></a></li>
-				</ul>
-				<ul class="clearboth">
-					<li>
-						<input type="text" name="cal_Date" readonly="readonly" id="start_date">
-						<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date)" />
-						 ~
-						<input type="text" name="cal_Date2" readonly="readonly" id="end_date">
-						<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date2)" />
-					</li>
-				</ul>
+			<div>
+				<div class="float_l mr20" style="width: 250px">
+					<h3 class="mb10"><img src="../common/images/txt/h3_month.gif" alt="월단위"></h3>
+					<select name="#" id="#">
+						<option value="">2010-07</option>
+					</select>
+				</div>
+				<div class="ssbox float_l group" style="width: 70%">
+					<h3><img src="../common/images/txt/txt_log_02.gif" alt="기간"></h3>
+					<ul class="due">
+						<li><a href="#" class="btn set25"><span>당일</span></a></li>
+						<li><a href="#" class="btn set25"><span>3일</span></a></li>
+						<li><a href="#" class="btn set25"><span>1주</span></a></li>
+						<li><a href="#" class="btn set25"><span>1개월</span></a></li>
+						<li><a href="#" class="btn set25"><span>3개월</span></a></li>
+						<li><a href="#" class="btn set25"><span>6개월</span></a></li>
+					</ul>
+					<ul class="date clearboth">
+						<li>
+							<input type="text" name="cal_Date" readonly/>
+							<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date)" />
+							~
+							<input type="text" name="cal_Date2" readonly/>
+							<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date2)" />
+						</li>
+						<li class="nth3">
+							<select name="#" id="#">
+								<option value="">3</option>
+							</select>시
+							~
+							<select name="#" id="#">
+								<option value="">20</option>
+							</select>시
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 
 
 		<p class="clearboth mt10 tc">
-			<a href="#" class="btn type2 setp30" id="search_bt"><span>검색</span></a>
+			<a href="srch.html" class="btn type2 setp30"><span>검색</span></a>
 		</p>
 
 		<h4 class="mt20 mb10">조회결과</h4>
 		<div class="stats_result">
 			<h5 class="tc">기기별 신규정책 운영현황</h5>
-			<p class="tc">기준일자 : <span id="search_date"></span></p>
-			<p class="tr">작성일자 : <span id="write_date"></span></p>
+			<p class="tc">기준일자 : 2021년 9월 1일~2012년 9월 15일</p>
+			<p class="tr">작성일자 : 2012년 10월 25일</p>
 			<div>
-				<p>기기별 신규 정책 리스트 (총 <span id="device_total"></span>건)</p>
+				<p>기기별 신규 정책 리스트 (총 00건)</p>
 				<table class="title_table mt10">
 					<colgroup>
 						<col style="width:140px">
@@ -127,7 +108,7 @@ include "../common/inc/header.html";
 					</tbody>
 				</table>
 				<div class="table_body scroll mt0 mb10" style="height: 210px;">
-					<table id="device_list_table">
+					<table>
 						<colgroup>
 						<col style="width:140px">
 						<col style="width:140px">
@@ -139,7 +120,7 @@ include "../common/inc/header.html";
 						<col style="width:*">
 						</colgroup>
 						<tbody>
-							<!-- <tr>
+							<tr>
 								<td class="tc">3층기계실</td>
 								<td class="tc">2BUA01</td>
 								<td class="tc">123.234.0.1</td>
@@ -148,7 +129,67 @@ include "../common/inc/header.html";
 								<td class="tc">시뮬이션 정책</td>
 								<td class="tc">정책명</td>
 								<td class="tc">설명</td>
-							</tr> -->
+							</tr>
+							<tr>
+								<td class="tc">3층기계실</td>
+								<td class="tc">2BUA01</td>
+								<td class="tc">123.234.0.1</td>
+								<td class="tc">OS 종류</td>
+								<td class="tc">2012-10-16 10:12:12</td>
+								<td class="tc">시뮬이션 정책</td>
+								<td class="tc">정책명</td>
+								<td class="tc">설명</td>
+							</tr>
+							<tr>
+								<td class="tc">3층기계실</td>
+								<td class="tc">2BUA01</td>
+								<td class="tc">123.234.0.1</td>
+								<td class="tc">OS 종류</td>
+								<td class="tc">2012-10-16 10:12:12</td>
+								<td class="tc">시뮬이션 정책</td>
+								<td class="tc">정책명</td>
+								<td class="tc">설명</td>
+							</tr>
+							<tr>
+								<td class="tc">3층기계실</td>
+								<td class="tc">2BUA01</td>
+								<td class="tc">123.234.0.1</td>
+								<td class="tc">OS 종류</td>
+								<td class="tc">2012-10-16 10:12:12</td>
+								<td class="tc">시뮬이션 정책</td>
+								<td class="tc">정책명</td>
+								<td class="tc">설명</td>
+							</tr>
+							<tr>
+								<td class="tc">3층기계실</td>
+								<td class="tc">2BUA01</td>
+								<td class="tc">123.234.0.1</td>
+								<td class="tc">OS 종류</td>
+								<td class="tc">2012-10-16 10:12:12</td>
+								<td class="tc">시뮬이션 정책</td>
+								<td class="tc">정책명</td>
+								<td class="tc">설명</td>
+							</tr>
+							<tr>
+								<td class="tc">3층기계실</td>
+								<td class="tc">2BUA01</td>
+								<td class="tc">123.234.0.1</td>
+								<td class="tc">OS 종류</td>
+								<td class="tc">2012-10-16 10:12:12</td>
+								<td class="tc">시뮬이션 정책</td>
+								<td class="tc">정책명</td>
+								<td class="tc">설명</td>
+							</tr>
+							<tr>
+								<td class="tc">3층기계실</td>
+								<td class="tc">2BUA01</td>
+								<td class="tc">123.234.0.1</td>
+								<td class="tc">OS 종류</td>
+								<td class="tc">2012-10-16 10:12:12</td>
+								<td class="tc">시뮬이션 정책</td>
+								<td class="tc">정책명</td>
+								<td class="tc">설명</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -161,7 +202,7 @@ include "../common/inc/header.html";
 	</section>
 </article>
 
-<script type="text/javascript" src="../resource/libs/common/common.util.js"></script>
+
 <script type="text/javascript"> 
 
 $(document).ready(function() {
@@ -172,63 +213,7 @@ $(document).ready(function() {
 		//e.preventDefault();
 		return false;
 	});
-	
-	// 기간 검색 초기화
-	init_gigan();
-	
-	$("#search_bt").click(function(event){
-		event.preventDefault();
-		$("#searchForm").html("");
-		$("#device_list_table tbody").html("");
-		
-		var write_date = getLocalDateFormat(new Date());
-	   	$("#write_date").html(write_date);
-		var search_date = getDateStringToLocalDateFormat($("#start_date").val()) + " ~ " + getDateStringToLocalDateFormat($("#end_date").val());
-		$("#search_date").html(search_date);
-		
-		$("#searchForm").append("<input type='hidden' name='start_date' value='"+$("#start_date").val()+"'/>");
-		$("#searchForm").append("<input type='hidden' name='end_date' value='"+$("#end_date").val()+"'/>");
-		
-		$.post("policy_dvc.html", $("#searchForm").serialize(), function(result){
-			if(result && result.status == 1){
-				
-				var html = "";
-				$.each(result.device_list, function(index, device){
-
-					var group_name = (device.group_name || '-');
-					var client_name = (device.client_name || '-');
-					var ip_addr = (device.ip_addr || '-');
-					var os_type = (device.os_type || '-');
-					var reg_date = (device.policy_nowdate || '-');
-					var policy_mode = (device.sim_flag == '1' ? '시뮬레이션 정책' : '보안모드');
-					policy_mode = (policy_mode || '-');
-					var policy_name = (device.policy_name || '-');
-					var policy_desc = (device.policy_desc || '-');
-					
-					html += '<tr>';
-					html += '<td class="tc">'+group_name+'</td>';
-					html += '<td class="tc">'+client_name+'</td>';
-					html += '<td class="tc">'+ip_addr+'</td>';
-					html += '<td class="tc">'+os_type+'</td>';
-					html += '<td class="tc">'+reg_date+'</td>';
-					html += '<td class="tc">'+policy_mode+'</td>';
-					html += '<td class="tc">'+policy_name+'</td>';
-					html += '<td class="tc">'+policy_desc+'</td>';
-					html += '</tr>';
-					
-				});
-				
-				$("#device_total").text(result.device_list.length);
-				$("#device_list_table tbody").html(html);
-			}
-		});
-		
-	});
-	
-	
-	
 });
 </script>
-<form id="searchForm" method="post" action=""></form>
 </body>
 </html>

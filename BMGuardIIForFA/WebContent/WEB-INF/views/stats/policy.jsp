@@ -35,10 +35,7 @@ include "../common/inc/header.html";
 				<h3><img src="../common/images/txt/txt_log_02.gif" alt="기간"></h3>
 				<ul class="due">
 					<li>
-						<select name="" id="year_selectbox">
-							<option value="2015">2015</option>
-							<option value="2014">2014</option>
-							<option value="2013">2013</option>
+						<select name="" id="">
 							<option value="2012">2012</option>
 							<option value="2011">2011</option>
 							<option value="2010">2010</option>
@@ -49,27 +46,21 @@ include "../common/inc/header.html";
 						<span>년</span>
 					</li>
 					<li>
-						<select name="" id="month_selectbox">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
+						<select name="" id="">
+							<option value="01">01</option>
+							<option value="02">02</option>
+							<option value="03">03</option>
+							<option value="04">04</option>
+							<option value="05">05</option>
+							<option value="06">06</option>
 						</select>
 						<span>월</span>
 					</li>
-					<li><a href="#" class="btn set25 mr20" id="month_button"><span>월별 선택</span></a></li>
+					<li><a href="#" class="btn set25 mr20"><span>월별 선택</span></a></li>
 				</ul>
 			</div>
 			<div class="ssbox float_l group" style="margin-top: 16px;">
-				<ul class="clearboth"  id="date_button">
+				<ul class="clearboth">
 					<li><a href="#" class="btn set25"><span>당일</span></a></li>
 					<li><a href="#" class="btn set25"><span>3일</span></a></li>
 					<li><a href="#" class="btn set25"><span>1주</span></a></li>
@@ -79,10 +70,10 @@ include "../common/inc/header.html";
 				</ul>
 				<ul class="clearboth">
 					<li>
-						<input type="text" name="cal_Date" readonly="readonly" id="start_date">
+						<input type="text" name="cal_Date" readonly>
 						<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date)" />
 						 ~
-						<input type="text" name="cal_Date2" readonly="readonly" id="end_date">
+						<input type="text" name="cal_Date2" readonly>
 						<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date2)" />
 					</li>
 				</ul>
@@ -91,16 +82,16 @@ include "../common/inc/header.html";
 
 
 		<p class="clearboth mt10 tc">
-			<a href="#" class="btn type2 setp30" id="search_bt"><span>조회</span></a>
+			<a href="srch.html" class="btn type2 setp30"><span>조회</span></a>
 		</p>
 
 		<h4 class="mt20 mb10">조회결과</h4>
 		<div class="stats_result float_l" style="width: 100%; padding: 0px;">
 		<div style="padding: 15px 20px;">
 		<h5 class="tc">신규정책 운영현황</h5>
-			<p class="tc">기준일자 : <span id="search_date"></span></p>
-			<p class="tr">작성일자 : <span id="write_date"></span></p>
-		<p class="mb10">신규정책 리스트 (총 <span id="policy_total"></span>건)<!-- <span><a href="#"><img src="../common/images/btn/btn_excel.gif" alt="엑셀저장"></a></span> --></p>
+			<p class="tc">기준일자 : 2021년 9월 1일~2012년 9월 15일</p>
+			<p class="tr">작성일자 : 2012년 10월 25일</p>
+		<p class="mb10">신규정책 리스트 (총 00건)<!-- <span><a href="#"><img src="../common/images/btn/btn_excel.gif" alt="엑셀저장"></a></span> --></p>
 
 	<table class="list title_table" style="border-bottom: 1px solid #ddd;">
 		<colgroup>
@@ -121,7 +112,7 @@ include "../common/inc/header.html";
 		</thead>
 	</table>
 	<div class="scroll" style="height: 329px;">
-	<table style="text-align: center; " id="policy_list_table">
+	<table style="text-align: center; ">
 		<colgroup>
 			<col style="width:150px">
 			<col style="width:300px">
@@ -130,13 +121,119 @@ include "../common/inc/header.html";
 			<col style="width:200px">
 		</colgroup>
 		<tbody>
-			<!-- <tr>
+			<tr>
 				<td>2012-09-14 10:14:20</td>
 				<td>강제베이스 정책_2012-09-14</td>
 				<td>OS 패치 관련</td>
 				<td>12</td>
 				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
-			</tr> -->
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+			<tr>
+				<td>2012-09-14 10:14:20</td>
+				<td>강제베이스 정책_2012-09-14</td>
+				<td>OS 패치 관련</td>
+				<td>12</td>
+				<td><a class="btn type2 set20" href="#"><span>세부내역조회</span></a></td>
+			</tr>
+
 		</tbody>
 	</table>
 	</div>
@@ -302,6 +399,30 @@ include "../common/inc/header.html";
 									<td></td>
 									<td>2012-10-25 11:22:33</td>
 								</tr>
+								<tr>
+									<td>성형>MMI>2공장</td>
+									<td>2BUAOS</td>
+									<td>192.168.0.1</td>
+									<td>OS</td>
+									<td></td>
+									<td>2012-10-25 11:22:33</td>
+								</tr>
+								<tr>
+									<td>성형>MMI>2공장</td>
+									<td>2BUAOS</td>
+									<td>192.168.0.1</td>
+									<td>OS</td>
+									<td></td>
+									<td>2012-10-25 11:22:33</td>
+								</tr>
+								<tr>
+									<td>성형>MMI>2공장</td>
+									<td>2BUAOS</td>
+									<td>192.168.0.1</td>
+									<td>OS</td>
+									<td></td>
+									<td>2012-10-25 11:22:33</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -314,7 +435,7 @@ include "../common/inc/header.html";
 	</section>
 </article>
 
-<script type="text/javascript" src="../resource/libs/common/common.util.js"></script>
+
 <script type="text/javascript"> 
 
 $(document).ready(function() {
@@ -325,54 +446,6 @@ $(document).ready(function() {
 		//e.preventDefault();
 		return false;
 	});
-	
-	// 기간 검색 초기화
-	init_gigan();
-	
-	$("#search_bt").click(function(event){
-		event.preventDefault();
-		$("#searchForm").html("");
-		$("#policy_list_table tbody").html("");
-		
-		var write_date = getLocalDateFormat(new Date());
-	   	$("#write_date").html(write_date);
-   		var search_date = getDateStringToLocalDateFormat($("#start_date").val()) + " ~ " + getDateStringToLocalDateFormat($("#end_date").val());
-   		$("#search_date").html(search_date);
-		
-		$("#searchForm").append("<input type='hidden' name='start_date' value='"+$("#start_date").val()+"'/>");
-   		$("#searchForm").append("<input type='hidden' name='end_date' value='"+$("#end_date").val()+"'/>");
-		
-		$.post("policy.html", $("#searchForm").serialize(), function(result){
-			if(result && result.status == 1){
-				
-				var html = "";
-				$.each(result.policy_list, function(index, policy){
-					html += '<tr>';
-					html += '<td>'+policy.policy_nowdate+'</td>';
-					html += '<td>'+policy.policy_name+'</td>';
-					html += '<td>'+policy.policy_desc+'</td>';
-					html += '<td>'+policy.apply_device_count+'</td>';
-					html += '<td><a class="btn type2 set20" href="#" id="detail_bt_'+policy.policy_idx+'"><span>세부내역조회</span></a></td>';
-					html += '</tr>';
-				});
-				
-				$("#policy_list_table tbody").html(html);
-				$("#policy_total").text(result.policy_list.length);
-			}
-		}, "json");
-			
-	});
-	
-	$("#policy_list_table tbody a").live("click",function(event){
-		event.preventDefault();
-		
-		var policy_idx = $(this).attr("id").replace("detail_bt_", "");
-		
-		$.getJSON("../policy/policyInfo.html", {policy_idx:policy_idx}, function(result){
-			console.log(result);
-		});
-	});
-	
 });
 </script>
 
@@ -380,6 +453,6 @@ $(document).ready(function() {
 <!-- <script type="text/javascript" src="../common/js/jquery.js"></script> -->
 <script type="text/javascript" src="../common/js/jquery.simplemodal.js"></script>
 <script type="text/javascript" src="../common/js/basic.js"></script>
-<form id="searchForm" method="post" action=""></form>
+
 </body>
 </html>

@@ -28,10 +28,11 @@ include "../common/inc/header.html";
 <article>
 	<%@ include file="../common/inc/direction.jsp" %>
 
-	<!--
 	<figure>자동화기기 운영현황(기기현황)</figure>
 	<section class="user_list">
+	<h2>자동화기기 운영현황(기기현황)</h2>
 	<div>
+	<!--
 	<figure>lnb_tree</figure>
 	<section class="lnb_tree" >
 		<div class="check">
@@ -58,22 +59,18 @@ include "../common/inc/header.html";
 		</div>
 		</div>
 	</section>
-	<div>
 	-->
+	<div>
 
 	<figure>자동화기기 운영현황(기기현황)</figure>
 	<section class="stats remote">
-	<h2>자동화기기 운영현황(기기현황)</h2>
 		
 		<div class="search_box">
 			<div class="ssbox float_l date">
 				<h3><img src="../common/images/txt/txt_log_02.gif" alt="기간"></h3>
 				<ul class="due">
 					<li>
-						<select name="" id="year_selectbox">
-							<option value="2015">2015</option>
-							<option value="2014">2014</option>
-							<option value="2013">2013</option>
+						<select name="" id="">
 							<option value="2012">2012</option>
 							<option value="2011">2011</option>
 							<option value="2010">2010</option>
@@ -84,25 +81,19 @@ include "../common/inc/header.html";
 						<span>년</span>
 					</li>
 					<li>
-						<select name="" id="month_selectbox">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
+						<select name="" id="">
+							<option value="01">01</option>
+							<option value="02">02</option>
+							<option value="03">03</option>
+							<option value="04">04</option>
+							<option value="05">05</option>
+							<option value="06">06</option>
 						</select>
 						<span>월</span>
 					</li>
-					<li><a href="#" class="btn set25" id="month_button"><span>월별 선택</span></a></li>
+					<li><a href="#" class="btn set25"><span>월별 선택</span></a></li>
 				</ul>
-				<ul class="clearboth" id="date_button">
+				<ul class="clearboth">
 					<li><a href="#" class="btn set25"><span>당일</span></a></li>
 					<li><a href="#" class="btn set25"><span>3일</span></a></li>
 					<li><a href="#" class="btn set25"><span>1주</span></a></li>
@@ -112,21 +103,23 @@ include "../common/inc/header.html";
 				</ul>
 				<ul class="date clearboth">
 					<li>
-						<input type="text" name="cal_Date" readonly="readonly" id="start_date">
+						<input type="text" name="cal_Date" readonly>
 						<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date)" />
 						 ~
-						<input type="text" name="cal_Date2" readonly="readonly" id="end_date">
+						<input type="text" name="cal_Date2" readonly>
 						<img src="../common/images/bu/ico_date.gif" onclick="Calendar_D(document.all.cal_Date2)" />
 					</li>
 				</ul>
 			</div>
 			<div class="ssbox float_l os mt10">
 				<h3 class="log_h3"><img src="../common/images/txt/h3_manage.gif" alt="관리그룹"><span><!-- 권한 : 제어 및 모니터링 --></span></h3>
-				<ul id="manage_group_list">
-					<li class="type1"><input type="checkbox" id="group_all_checkbox"> <label for="#">전체</label></li>
-					<c:forEach var="group" items="${groupList }">
-						<li class="type1"><input type="checkbox" name="group_checkbox" value="${group.clientgrp_idx }"> <label for="group_${group.clientgrp_idx }">${group.clientgrp_name }</label></li>
-					</c:forEach>
+				<ul>
+					<li class="type1"><input type="checkbox"> <label for="#">전체</label></li>
+					<li class="type2"><input type="checkbox"> <label for="#">Green</label></li>
+					<li class="type3"><input type="checkbox"> <label for="#">Blue</label></li>
+					<li class="type4"><input type="checkbox"> <label for="#">Orange</label></li>
+					<li class="type5"><input type="checkbox"> <label for="#">Yellow</label></li>
+					<li class="type6"><input type="checkbox"> <label for="#">Red</label></li>
 				</ul>
 			</div>
 			<div class="ssbox float_l group">
@@ -140,15 +133,15 @@ include "../common/inc/header.html";
 		</div>
 
 		<p class="clearboth mt10 tc">
-			<a href="srch.html" class="btn type2 setp30" id="search_bt"><span>조회</span></a>
+			<a href="srch.html" class="btn type2 setp30"><span>조회</span></a>
 		</p>
 
 		<h4 class="mt20 mb10">조회결과</h4>
 		<div class="stats_result mb20">
 			<h5 class="tc">자동화기기 운영현황(기기현황)</h5>
-			<p class="tc">기준일자 : <span id="search_date"></span></p>
-			<p class="tr">작성일자 : <span id="write_date"></span></p>
-			<p>신규기기(총 <span id="new_total"></span> 대수)</p>
+			<p class="tc">기준일자 : 2021년 9월 1일~2012년 9월 15일</p>
+			<p class="tr">작성일자 : 2012년 10월 25일</p>
+			<p>신규기기(총 0 0 대수)</p>
 			<table class="mt10 title_table">
 				<colgroup>
 						<col style="width:15%"/>
@@ -170,7 +163,7 @@ include "../common/inc/header.html";
 				</tbody>
 			</table>
 			<div class="table_body mt0 mb10">
-				<table id="new_device_table">
+				<table>
 					<colgroup>
 						<col style="width:15%"/>
 						<col style="width:10%"/>
@@ -180,19 +173,75 @@ include "../common/inc/header.html";
 						<col style="width:25%"/>
 					</colgroup>
 					<tbody>
-						<!-- <tr>
+						<tr>
 							<td class="tc">3층기계실</td>
 							<td>2BUA01</td>
 							<td>123.234.0.1</td>
 							<td>44-44-44-66-66-66</td>
 							<td>OS</td>
 							<td>2012-10-16 10:12:12</td>
-						</tr> -->
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<p>제외기기(총 <span id="delete_total"></span> 대수)</p>
+			<p>제외기기(총 0 0 대수)</p>
 			<table class="mt10 title_table">
 				<colgroup>
 						<col style="width:15%"/>
@@ -214,7 +263,7 @@ include "../common/inc/header.html";
 				</tbody>
 			</table>
 			<div class="table_body mt0 mb10">
-				<table id="delete_device_table">
+				<table>
 					<colgroup>
 						<col style="width:15%"/>
 						<col style="width:10%"/>
@@ -224,19 +273,75 @@ include "../common/inc/header.html";
 						<col style="width:25%"/>
 					</colgroup>
 					<tbody>
-						<!-- <tr>
+						<tr>
 							<td class="tc">3층기계실</td>
 							<td>2BUA01</td>
 							<td>123.234.0.1</td>
 							<td>44-44-44-66-66-66</td>
 							<td>OS</td>
 							<td>2012-10-16 10:12:12</td>
-						</tr> -->
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<p>운영기기(총 <span id="running_total"></span> 대수)</p>
+			<p>운영기기(총 0 0 대수)</p>
 			<table class="mt10 title_table">
 				<colgroup>
 						<col style="width:15%"/>
@@ -258,7 +363,7 @@ include "../common/inc/header.html";
 				</tbody>
 			</table>
 			<div class="table_body mt0 mb10">
-				<table id="running_device_table">
+				<table>
 					<colgroup>
 						<col style="width:15%"/>
 						<col style="width:10%"/>
@@ -268,14 +373,70 @@ include "../common/inc/header.html";
 						<col style="width:25%"/>
 					</colgroup>
 					<tbody>
-						<!-- <tr>
+						<tr>
 							<td class="tc">3층기계실</td>
 							<td>2BUA01</td>
 							<td>123.234.0.1</td>
 							<td>44-44-44-66-66-66</td>
 							<td>OS</td>
 							<td>2012-10-16 10:12:12</td>
-						</tr> -->
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
+						<tr>
+							<td class="tc">3층기계실</td>
+							<td>2BUA01</td>
+							<td>123.234.0.1</td>
+							<td>44-44-44-66-66-66</td>
+							<td>OS</td>
+							<td>2012-10-16 10:12:12</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -286,8 +447,9 @@ include "../common/inc/header.html";
 		</div><!--stats_result-->
 
 	</section>
+	</div>
 </article>
-<script type="text/javascript" src="../resource/libs/common/common.util.js"></script>
+
 <script type="text/javascript"> 
 
 $(document).ready(function() {
@@ -298,82 +460,8 @@ $(document).ready(function() {
 		//e.preventDefault();
 		return false;
 	});
-	
-	// 기간 검색 초기화
-	init_gigan();
-	
-	// 관리그룹 전체선택/해제 처리
-   	checkedAllOrNothing("group_all_checkbox", "group_checkbox");
-   	checkedAllCheckbox("group_all_checkbox", "group_checkbox");
-   	
-   	$("#search_bt").click(function(event){
-   		event.preventDefault();
-   		$("#searchForm").html("");
- 		$("#new_device_table tbody").html("");
- 		$("#delete_device_table tbody").html("");
- 		$("#running_device_table tbody").html("");
-   		
-   		var write_date = getLocalDateFormat(new Date());
-	   	$("#write_date").html(write_date);
-   		var search_date = getDateStringToLocalDateFormat($("#start_date").val()) + " ~ " + getDateStringToLocalDateFormat($("#end_date").val());
-   		$("#search_date").html(search_date);
-   		
-   		$("#searchForm").append("<input type='hidden' name='start_date' value='"+$("#start_date").val()+"'/>");
-   		$("#searchForm").append("<input type='hidden' name='end_date' value='"+$("#end_date").val()+"'/>");
-   		
-   		$("#manage_group_list li :checkbox[name='group_checkbox']:checked").each(function(index, obj){
-   			$("#searchForm").append("<input type='hidden' name='clientgrp_idx' value='"+$(obj).val()+"'/>");
-   		});
-   		
-   		$.post("set.html", $("#searchForm").serialize(), function(result){
-   			
-   			if(result && result.status == 1){
-   				
-   				
-   				var device_list = result.device_list;
-   				
-   				var total_new_device = 0;
-   				var total_delete_device = 0;
-   				var total_running_device = 0;
-   				$.each(device_list, function(index, device){
-   					var gubun = device.gubun;
-   					
-   					var group_name = device.group_name;
-   					var client_name = device.client_name;
-   					var ip_addr = device.ip_addr || '-';
-   					var mac_addr = device.mac_addr || '-';
-   					var os_type = device.os_type || '-';
-   					var stats_date = device.stats_date || '-';
-   					
-   					var html = "";
-   					html += '<tr>';
-   					html += '<td class="tc">'+group_name+'</td>';
-   					html += '<td>'+client_name+'</td>';
-   					html += '<td>'+ip_addr+'</td>';
-   					html += '<td>'+mac_addr+'</td>';
-   					html += '<td>'+os_type+'</td>';
-   					html += '<td>'+stats_date+'</td>';
-					html += '</tr>';
-   					
-					$("#"+gubun + "_table tbody").append(html);
-					
-					if(gubun == 'new_device'){
-						total_new_device += 1;
-					}else if(gubun == 'delete_device'){
-						total_delete_device += 1;
-					}else{
-						total_running_device += 1;
-					}
-   				});
-   				
-   				$("#new_total").text(total_new_device);
-   				$("#delete_total").text(total_delete_device);
-   				$("#running_total").text(total_running_device);
-   			}
-   		});
-   	});
 });
 </script>
-<form id="searchForm" action="" method="post"></form>
+
 </body>
 </html>
